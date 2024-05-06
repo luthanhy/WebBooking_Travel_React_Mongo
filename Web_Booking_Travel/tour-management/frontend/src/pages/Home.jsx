@@ -10,6 +10,7 @@ import heroImg02 from '../assets/images/hero-img02.jpg'
 import heroVideo from '../assets/images/hero-video.mp4'
 import wordImg from "../assets/images/world.png"
 import experienceImg from '../assets/images/experience.png'
+import MasonryImagesGalley from '../components/ImgGallery/MasonryImagesGalley'
 const Home = () => <>
   {/* hero section start*/}
   <section>
@@ -104,6 +105,21 @@ const Home = () => <>
           <div className='experience_img'> 
               <img src={experienceImg} alt="" />
           </div>
+        </Col>
+      </Row>
+    </Container>
+  </section>
+
+  {/* gallery section  */}
+  <section>
+    <Container>
+      <Row>
+        <Col lg='12'>
+          <Subtitle subtitle={"Gallery"}></Subtitle>
+          <h2 className='gallery_title'>Visit our customer tour gallery</h2>
+        </Col>
+        <Col lg='12'>
+          <MasonryImagesGalley></MasonryImagesGalley>  
         </Col>
       </Row>
     </Container>
