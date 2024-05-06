@@ -48,4 +48,16 @@ hero__content p{
     font-size: 2.5rem;
     font-weight: 500;
 }
-
+.secction_subtitle{
+    font-family: var(--subtitle-font-name);
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.featured__tour_title{
+    font-size: 2.3 rem;
+    font-weight: 500;
+}

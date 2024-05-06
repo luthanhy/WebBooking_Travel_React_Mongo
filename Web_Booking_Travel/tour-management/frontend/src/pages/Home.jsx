@@ -3,6 +3,7 @@ import {Container,Row,Col} from 'reactstrap'
 import Subtitle from "../shared/Subtitle"
 import SearchBar from '../shared/SearchBar'
 import ServiceList from '../service/service_list'
+import FeatureList from '../components/FeaturedTour/FeatureList'
 import "../styles/home.css"
 import heroImg from '../assets/images/hero-img01.jpg'
 import heroImg02 from '../assets/images/hero-img02.jpg'
@@ -58,6 +59,19 @@ const Home = () => <>
       <ServiceList></ServiceList>
     </Row>
   </Container>
+  </section>
+
+  {/* feature tour section  */}
+  <section>
+    <Container>
+      <Row>
+          <Col lg='12' className="mb-5">
+              <Subtitle subtitle={'Explore'}></Subtitle>
+              <h2 className='featured__tour_title'> Our feature tours</h2>
+          </Col>
+          <FeatureList></FeatureList>
+      </Row>
+    </Container>
   </section>
 </>
 
