@@ -38,3 +38,14 @@ hero__content p{
 .Hero_img_box{
     padding-top: 2rem;
 }
+.service__subtitle{
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: #ee6e6e;
+    font-family: var(--subtitle-font-name);
+}
+.service__title{
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
