@@ -113,3 +113,10 @@ hero__content p{
     -ms-transform: scale(1.1);
     -o-transform: scale(1.1);
 }
+.gallery_title{
+    font-size: 2.3 rem;
+    padding-bottom: 2%;
+}
+.testimonial_title{
+    font-size: 2.3rem;
+}

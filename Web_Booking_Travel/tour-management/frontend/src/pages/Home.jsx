@@ -11,6 +11,8 @@ import heroVideo from '../assets/images/hero-video.mp4'
 import wordImg from "../assets/images/world.png"
 import experienceImg from '../assets/images/experience.png'
 import MasonryImagesGalley from '../components/ImgGallery/MasonryImagesGalley'
+import Testimonial from '../components/Testimonial/Testimonial'
+import Newsletter from '../shared/Newsletter'
 const Home = () => <>
   {/* hero section start*/}
   <section>
@@ -124,6 +126,21 @@ const Home = () => <>
       </Row>
     </Container>
   </section>
+  {/* testimonial section */}
+  <section>
+    <Container>
+      <Row>
+        <Col lg='12'>
+            <Subtitle subtitle={'Fan Love'}></Subtitle>
+            <h2 className='testimonial_title'>What out fan say about</h2>
+        </Col>
+        <Col lg='12'>
+          <Testimonial/>
+        </Col>
+      </Row>
+    </Container>
+  </section>
+  <Newsletter></Newsletter>
 </>
 
 export default Home
