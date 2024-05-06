@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container,Row,Col} from 'reactstrap'
 import Subtitle from "../shared/Subtitle"
+import SearchBar from '../shared/SearchBar'
 import "../styles/home.css"
 import heroImg from '../assets/images/hero-img01.jpg'
 import heroImg02 from '../assets/images/hero-img02.jpg'
@@ -42,6 +43,7 @@ const Home = () => {
               <img src={heroImg02} alt='' ></img>
             </div>
           </Col>
+          <SearchBar/>
         </Row>
       </Container>
     </section>
