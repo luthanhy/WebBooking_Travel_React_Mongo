@@ -61,3 +61,41 @@ hero__content p{
     font-size: 2.3 rem;
     font-weight: 500;
 }
+.experience__content h2{
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+.counter_wrapper p{
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-top: 1rem;
+}
+.counter_wrapper{
+    margin-top: 2.5 rem;
+}
+.counter_box span{
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-radius: 10px 5px 10px 5px;
+    -webkit-border-radius: 10px 5px 10px 5px;
+    -moz-border-radius: 10px 5px 10px 5px;
+    -ms-border-radius: 10px 5px 10px 5px;
+    -o-border-radius: 10px 5px 10px 5px;
+}
+.counter_box h6{
+    font-size: 1.1 rem;
+    margin-top: 0.7rem ;
+    color:var(--text-color)
+}
+.experience_img img{
+    width: 90%;
+}
