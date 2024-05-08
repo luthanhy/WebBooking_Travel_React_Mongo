@@ -13,6 +13,8 @@ const SearchBar = () => {
 
         if(location === '' || distance ==='' || maxgroupsize ===''){
             return alert("Fail searching")
+        }else{
+            // return SearchResult
         }
     }
 
