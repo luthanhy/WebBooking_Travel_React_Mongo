@@ -7,6 +7,7 @@ import Register from '../pages/Register'
 import Tours from '../pages/Tours'
 import ToursDetails from '../pages/ToursDetails.jsx'
 import SearchResultList from '../pages/SearchResultList'
+import Admin from '../pages/Admin.jsx'
 const Routers = () => {
   return (
     <div>
@@ -18,7 +19,7 @@ const Routers = () => {
             <Route path='/Login' element = {<Login/>}/>
             <Route path='/Register' element = {<Register/>}/>
             <Route path='/tour/search' element = {<SearchResultList/>}/>
-
+            <Route path='/admin' element = {<Admin/>}/>
         </Routes>
     </div>
   )
