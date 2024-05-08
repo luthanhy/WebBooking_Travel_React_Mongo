@@ -1,10 +1,13 @@
 import React,{useRef} from 'react'
 import '../styles/searchbar.css'
+import {useNavigate} from 'react-router-dom'
 import { Col, Form, FormGroup } from 'reactstrap'
+//import {BASE_URL} from './../utils/conf'
 const SearchBar = () => {
     const locationRef = useRef('')
     const distanceRef = useRef(0)
     const maxGroupSizeRef = useRef(0)
+    const navigate = useNavigate()
 
     const SearchHandle = () => {
         const location = locationRef.current.value
@@ -14,7 +17,10 @@ const SearchBar = () => {
         if(location === '' || distance ==='' || maxgroupsize ===''){
             return alert("Fail searching")
         }else{
-            // return SearchResult
+        //     const res= await(`${BASE_URL}/tour/search`)
+        //   if(!res.ok) alert ('Something went wrong');
+        //  const result  = await res.json();
+          navigate(`/tour/search`)
         }
     }
 
@@ -50,6 +56,7 @@ const SearchBar = () => {
                     </div>
                 </FormGroup>
                 <span className='search_icon' type="submit" onClick={SearchHandle}>
+                    
                     <i className='ri-search-line'></i>
                 </span>
                 </Form> 
