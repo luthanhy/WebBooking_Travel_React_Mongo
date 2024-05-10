@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row,Col, ListGroup, ListGroupItem} from 'reactstrap'
+import { Row,Col, ListGroup, ListGroupItem, Container} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import "./Footer.css"
 import Logo from '../../assets/images/logo.png'
@@ -35,6 +35,7 @@ const Footer = () => {
   const year = new Date().getFullYear()
   return (
     <footer className='footer'>
+        <Container>
         <Row>
           <Col lg='3'>
             <div className='logo'>
@@ -117,6 +118,7 @@ const Footer = () => {
             <p className='copyright'>Copyright{year}</p>
           </Col>
         </Row>
+        </Container>
     </footer>
   )
 }
