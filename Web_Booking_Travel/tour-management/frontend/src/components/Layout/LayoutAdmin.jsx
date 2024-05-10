@@ -1,10 +1,13 @@
 import React from 'react'
-import Admin from '../../pages/Admin'
 import RoutersAdmin from '../../router/RoutersAdmin'
+import HeaderAdmin from '../Header/HeaderAdmin'
+import FooterAdmin from '../Footer/FooterAdmin'
 const LayoutAdmin = () => {
   return (
     <>
-    <RoutersAdmin></RoutersAdmin>
+    <HeaderAdmin/>
+    <RoutersAdmin/>
+    <FooterAdmin/>
     </>
   )
 }
