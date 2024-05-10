@@ -6,8 +6,6 @@ import Register from '../pages/Register.jsx'
 import Tours from '../pages/Tours'
 import ToursDetails from '../pages/ToursDetails.jsx'
 import SearchResultList from '../pages/SearchResultList'
-import Admin from '../pages/Admin.jsx'
-//Them duong dan about
 import About from '../pages/About.jsx'
 const Routers = () => {
   return (

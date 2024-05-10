@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container,Row,Col, ListGroup, ListGroupItem} from 'reactstrap'
+import { Row,Col, ListGroup, ListGroupItem} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import "./Footer.css"
 import Logo from '../../assets/images/logo.png'
