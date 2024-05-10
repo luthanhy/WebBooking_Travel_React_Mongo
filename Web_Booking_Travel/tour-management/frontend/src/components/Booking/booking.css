@@ -1,0 +1,30 @@
+
+.booking{
+    border-radius: 0.5rem;
+    border: 1px solid rgb(229, 231, 235);
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+    padding: 1rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem;
+    border: 1px solid rgb(229, 231, 235);
+    position: sticky;
+    top:80px
+}
+
+.booking_top h3{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.booking_top{
+    padding-top: 2rem;
+    border-bottom: 1px solid rgb(229, 231, 235);
+}
+.booking_top span i{
+    color: var(--secondary-color);
+}

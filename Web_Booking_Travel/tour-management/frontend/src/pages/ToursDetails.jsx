@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import TourData from '../assets/data/tours'
 import CalculateAvgRationg from '../utils/avgRating'
 import Avatar_User from '../assets/images/avatar.jpg'
+import Booking from '../components/Booking/Booking'
 const ToursDetails = () => {
   //format date time
   const options = {day:'numeric',month:'long',year:'numeric'}
@@ -96,6 +97,9 @@ const ToursDetails = () => {
                   </ListGroup>
               </div>
             </div>
+          </Col>
+          <Col lg='4'>
+            <Booking tour={tour} AgvRating={avgRating}></Booking>
           </Col>
         </Row>
       </Container>
