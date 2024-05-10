@@ -13,6 +13,7 @@ const RoutersAdmin = () => {
             <Route path='/admin/dashboard' element={<Dashboard />}/>
             <Route path='/admin/product' element={<Product/>}/>
             <Route path='/admin/customer' element={<Customer />}/>
+            <Route path='/admin/ReviewProduct' element={<Customer />}/>
         </Routes>
     </div>
   )
