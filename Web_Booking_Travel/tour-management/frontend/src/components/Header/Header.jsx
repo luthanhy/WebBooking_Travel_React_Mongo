@@ -43,10 +43,12 @@ const Header = () => {
         <header className='header' ref={headerRef}>
             <Container>
                 <Row>
-                    <div className=' nav__wrapper d-flex align-items-center justify-content-between'>
+                    <div className='nav__wrapper d-flex align-items-center justify-content-between'>
                         {/* logo */}
                         <div className='logo'>
-                            <img src={logo} alt='' />
+                            <a href='./home'>
+                                <img src={logo} alt='' />
+                            </a>
                         </div>
                         {/* end logo */}
 
@@ -55,7 +57,7 @@ const Header = () => {
                             <ul className='menu d-flex align-items-center gap-5'>
                                 {nav_link.map((item, index) => (
                                     <li className='nav_item' key={index}>
-                                        <NavLink to={item.path} activeClassName='active_link'>
+                                        <NavLink to={item.path} className={navClass=>navClass.isActive?"active_link":""}>
                                             {item.display}
                                         </NavLink>
                                     </li>
@@ -65,15 +67,14 @@ const Header = () => {
                         {/* end menu */}
 
                         <div className='nav__right d-flex align-items-center gap-4'>
-                            <div className='nav__btns'>
-                                {/* Sử dụng NavLink thay vì Link */}
+                            <div className='nav__btn'>
                                 <Button className='btn secondary__btn'>
-                                    <NavLink to='/login' activeClassName='active_link'>
+                                    <NavLink to='/login' className={navClass=>navClass.isActive?"active_link":""}>
                                         Login
                                     </NavLink>
                                 </Button>
                                 <Button className='btn primary__btn'>
-                                    <NavLink to='/register' activeClassName='active_link'>
+                                    <NavLink to='/register' className={navClass=>navClass.isActive?"active_link":""}>
                                         Register
                                     </NavLink>
                                 </Button>
