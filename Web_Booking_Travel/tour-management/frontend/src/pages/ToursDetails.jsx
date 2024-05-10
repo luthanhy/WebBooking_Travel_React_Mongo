@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import TourData from '../assets/data/tours'
 import CalculateAvgRationg from '../utils/avgRating'
 import Avatar_User from '../assets/images/avatar.jpg'
+import Booking from '../components/Booking/Booking'
 const ToursDetails = () => {
   //format date time
   const options = {day:'numeric',month:'long',year:'numeric'}
@@ -20,12 +21,12 @@ const ToursDetails = () => {
   const reviewMsgRef = useRef(null)
   const [tourRating,StateTourRating] = useState(null)
 
-  // const submitHandler = e =>{
-  //   // e.preventDefault();
-  //   const reviewText = reviewMsgRef.current.value
+  const submitHandler = e =>{
+     e.preventDefault();
+    const reviewText = reviewMsgRef.current.value
     
-  //   alert(`${reviewText},${tourRating}`)
-  // }
+    alert(`${reviewText},${tourRating}`)
+  }
   return (
     <>
     <section>
@@ -56,7 +57,7 @@ const ToursDetails = () => {
               {/* review feature */}
               <div className='review_tours mt-4'>
                   <h4>Reviews ({reviews.length}) reviews</h4>
-                  <Form >
+                  <Form onSubmit={submitHandler}>
                     <div className=' rating_group d-flex align-items-center gap-3 mb-4'>
                         <span onClick={()=>StateTourRating(1)}>1<i className=" ri-star-fill"></i></span>
                         <span onClick={()=>StateTourRating(2)}>2<i className=" ri-star-fill"></i></span>
@@ -96,6 +97,9 @@ const ToursDetails = () => {
                   </ListGroup>
               </div>
             </div>
+          </Col>
+          <Col lg='4'>
+            <Booking tour={tour} AgvRating={avgRating}></Booking>
           </Col>
         </Row>
       </Container>
