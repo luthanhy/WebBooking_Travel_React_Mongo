@@ -2,28 +2,34 @@ import React,{useRef} from 'react'
 import '../styles/searchbar.css'
 import {useNavigate} from 'react-router-dom'
 import { Col, Form, FormGroup } from 'reactstrap'
+//import tourData from '../assets/data/tours' có thể k xài
+
 //import {BASE_URL} from './../utils/conf'
 const SearchBar = () => {
     const locationRef = useRef('')
     const distanceRef = useRef(0)
     const maxGroupSizeRef = useRef(0)
     const navigate = useNavigate()
-
-    const SearchHandle = () => {
+    
+    const SearchHandle = async() => {
         const location = locationRef.current.value
         const distance = distanceRef.current.value
-        const maxgroupsize = maxGroupSizeRef.current.value
+        const maxGroupSize = maxGroupSizeRef.current.value
 
-        if(location === '' || distance ==='' || maxgroupsize ===''){
+        if(location === '' || distance ==='' || maxGroupSize ===''){
             return alert("Fail searching")
         }else{
-        //     const res= await(`${BASE_URL}/tour/search`)
-        //   if(!res.ok) alert ('Something went wrong');
-        //  const result  = await res.json();
-          navigate(`/tour/search`)
-        }
+            //Đoạn code để khi nào callAPI sẽ thực hiện quá trình search
+            // // const res = await fetch(`${BASE_URL}/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
+            // // if(res.ok){
+            // //     alert('Something went wrong');
+            // // }
+            // // const result = await res.json();
+            // // Điều hướng tới trang kết quả tìm kiếm
+            //   navigate(`/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`,{state:result.data});
+            navigate(`/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`);
+     }
     }
-
     return (
     <Col lg="12">
         <div className="search_bar">

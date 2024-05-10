@@ -8,6 +8,7 @@ import '../styles/tours.css'
 const Tours = () => {
   const [CountPage,SetPageCount] = useState(0);
   const [Page,SetPage] = useState(0);
+  
 
   useEffect(()=>{
     const pages = Math.ceil(5/4)
