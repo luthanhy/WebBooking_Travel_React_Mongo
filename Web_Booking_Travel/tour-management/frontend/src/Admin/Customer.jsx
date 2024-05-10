@@ -21,7 +21,6 @@ function Customer() {
 
   return (
     <div className="customer-container">
-      <h2 className="customer-heading">Customer Management</h2>
 
       <div className="customer-list">
         {customers.map((customer) => (

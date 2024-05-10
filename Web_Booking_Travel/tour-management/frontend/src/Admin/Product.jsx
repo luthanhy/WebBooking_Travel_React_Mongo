@@ -90,7 +90,6 @@ const Product = () => {
 
     return (
         <div className="product-container">
-        <h2 className="product-heading">Product Management</h2>
         <ProductList products={products} onDelete={handleDeleteProduct} onEdit={handleEditProduct} />
         </div>
     );
