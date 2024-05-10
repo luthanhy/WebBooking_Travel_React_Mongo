@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../Booking/booking.css'
 import { ListGroup,ListGroupItem,FormGroup,Button,Form, Input} from 'reactstrap'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Booking = ({tour,AgvRating}) => {
   const {price,reviews} = tour
@@ -18,10 +18,12 @@ const Booking = ({tour,AgvRating}) => {
   const handleChange = e =>{
     setCredentials(prev=> ({...prev,[e.target.id]:e.target.value}))
   }
+  const navigate = useNavigate();
   const handleClick = e =>{
     e.preventDefault();
     console.log(credentials)
-}
+    navigate("/thank-you")
+    }
   return (
     <>
         <div className='booking'>
