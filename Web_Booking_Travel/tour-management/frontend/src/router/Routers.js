@@ -7,11 +7,13 @@ import Tours from '../pages/Tours'
 import ToursDetails from '../pages/ToursDetails.jsx'
 import SearchResultList from '../pages/SearchResultList'
 import About from '../pages/About.jsx'
+import PageError from '../pages/PageError.jsx'
 const Routers = () => {
   return (
     <div>
         <Routes>
             <Route path='/'element = {<Navigate to = '/home'/>}/>
+            <Route path='*'element = {<PageError/>}/>
             <Route path='/home' element = {<Home/>}/>
             <Route path='/tours' element = {<Tours/>}/>
             <Route path='/tours/:id' element = {<ToursDetails/>}/>
