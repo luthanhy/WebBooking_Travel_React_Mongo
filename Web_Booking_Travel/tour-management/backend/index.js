@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import tourRoute from './routes/tours'
+import tourRoute from './routes/tours.js'
 
 dotenv.config()
 
