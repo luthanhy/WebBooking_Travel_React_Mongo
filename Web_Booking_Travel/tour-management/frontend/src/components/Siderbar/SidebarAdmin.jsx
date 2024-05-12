@@ -10,7 +10,7 @@ function Adminsiderbar({ openSidebarToggle }){
             icon: BsGrid1X2Fill 
         },
         {
-            path: '/admin/tour',
+            path: '/admin/tours',
             display: 'tour',
             icon: BsFillArchiveFill
         },
