@@ -1,5 +1,4 @@
 .product-container {
-    display: flex;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
@@ -10,6 +9,12 @@
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     min-height: calc(100vh - 80px);
+}
+.tour-card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Hiển thị 3 tour cards trên mỗi dòng */
+    grid-gap: 2rem; /* Khoảng cách giữa các tour cards */
+    margin-top: 20px; /* Thêm khoảng cách trên */
 }
 
 .product-image img {

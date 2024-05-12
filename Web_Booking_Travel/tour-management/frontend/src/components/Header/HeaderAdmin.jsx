@@ -15,8 +15,8 @@ function HeaderAdmin({openSidebarToggle, OpenSidebar}) {
             </a>
         </li>
         <li className='admin-sidebar-list-item'>
-            <a href="product">
-                <BsFillArchiveFill className='icon' /> Products
+            <a href="tour">
+                <BsFillArchiveFill className='icon' /> Tours
             </a>
         </li>
         <li className='admin-sidebar-list-item'>
