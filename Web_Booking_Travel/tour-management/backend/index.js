@@ -10,7 +10,10 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 8000;
-
+const corOption = {
+    origin:true,
+    Credential:true
+}
 //connect databases
 mongoose.set("strictQuery",false)
 const connect = async() =>{
@@ -31,11 +34,13 @@ app.get("/",(req,res)=>{
 })
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corOption));
 app.use(cookieParser());
-app.use("/auth",authRoute)
-app.use("/tours",tourRoute)
-app.use("/user",userRoute)
+
+
+app.use("/api/v1/auth",authRoute)
+app.use("/api/v1/tours",tourRoute)
+app.use("/api/v1/user",userRoute)
 
 app.listen(port,()=>{
     connect();
