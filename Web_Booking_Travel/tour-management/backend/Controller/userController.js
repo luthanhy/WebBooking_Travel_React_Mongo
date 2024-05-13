@@ -86,3 +86,4 @@ export const GetUserCount = async(req,res)=>{
         res.status(404).json({success:false,message:'Count User failed'})
     }
 }
+

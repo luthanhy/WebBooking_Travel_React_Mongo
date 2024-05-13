@@ -89,3 +89,11 @@ export const GetTourCount = async(req,res)=>{
         res.status(404).json({success:false,message:'Count tour failed'})
     }
 }
+export const GetFeaturedTour = async(req,res)=>{
+  try{
+      const getFeatureTour = await Tour.find({featured:true});
+      res.status(200).json({success:true,message:'Find Featured Tour Success',data:getFeatureTour})
+  }catch(error){
+      res.status(404).json({success:false,message:"find feature failed"})
+  }
+}
