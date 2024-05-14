@@ -37,9 +37,9 @@ const AdminTourCard = ({ tour, handleAdd, handleEdit, handleDelete }) => {
           </h5>
         </div>
         <div>
-          <button className=' btn btn_booking' onClick={handleAdd}>Add</button>
-          <button className=' btn btn_booking' onClick={() => handleEdit(tour.id)}>Edit</button>
-          <button className=' btn btn_booking' onClick={() => handleDelete(tour.id)}>Delete</button>
+         
+          <button className=' btn btn_edit' onClick={() => handleEdit(tour.id)}>Edit</button>
+          <button className=' btn btn_delete' onClick={() => handleDelete(tour.id)}>Delete</button>
         </div>
       </CardBody>
     </div>
