@@ -1,7 +1,20 @@
 import express from 'express'
-import { CreateNewTour } from '../Controller/tourController'
+import { CreateNewTour , UpdateTour , GetSingleTour, DeleteTour , GetAllTour , GetTourBySearch , GetTourCount , GetFeaturedTour} from '../Controller/tourController.js'
 const route = express.Router()
 
 route.post('/',CreateNewTour)
 
-export default router;
+route.post('/:id',UpdateTour)
+
+route.get('/:id',GetSingleTour)
+
+route.get('/',GetAllTour)
+
+route.delete('/:id',DeleteTour)
+
+route.get('/search/getTourBySearch',GetTourBySearch)
+
+route.get('/search/getCountTour',GetTourCount)
+
+route.get('/search/getFeatureTour',GetFeaturedTour)
+export default route;
