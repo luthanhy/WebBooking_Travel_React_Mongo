@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import '../styles/productReview.css'; 
+import '../styles/productReview.css';
 
-function ReviewProduct() {
+function ReviewProduct({ tourInfo }) {
     const [tours, setTours] = useState([
-        { id: 1, name: 'Tour 1', description: 'Description of Tour 1' },
-        { id: 2, name: 'Tour 2', description: 'Description of Tour 2' },
-        { id: 3, name: 'Tour 3', description: 'Description of Tour 3' },
-        { id: 4, name: 'Tour 4', description: 'Description of Tour 4' }
+        { id: 1, name: 'Tour 1', location: 'Location of Tour 1', price: '1000' },
+        { id: 2, name: 'Tour 2', location: 'Location of Tour 2', price: '1000' },
+        { id: 3, name: 'Tour 3', location: 'Location of Tour 3', price: '1000' },
+        { id: 4, name: 'Tour 4', location: 'Location of Tour 4', price: '1000' }
     ]);
 
+    // Cập nhật state tours khi có dữ liệu được truyền từ Header
+    const addNewTour = (newTour) => {
+        const newTourWithId = { ...newTour, id: tours.length + 1 };
+        setTours([...tours, newTourWithId]);
+    };
+    
     const acceptTour = (tourId) => {
         console.log(`Accept tour with ID ${tourId}`);
         const updatedTours = tours.map(tour => {
@@ -37,7 +43,8 @@ function ReviewProduct() {
                 {tours.map(tour => (
                     <div key={tour.id} className='review-tour-card'>
                         <h2>{tour.name}</h2>
-                        <p>{tour.description}</p>
+                        <p>{tour.location}</p>
+                        <p>{tour.price}</p>
                         {!tour.accepted && !tour.refused && (
                             <div>
                                 <button onClick={() => acceptTour(tour.id)} className="accept-btn">Accept</button>
@@ -48,7 +55,7 @@ function ReviewProduct() {
                         {tour.refused && <p>Tour refused</p>}
                     </div>
                 ))}
-            </div>
+            </div>     
         </div>
     );
 }

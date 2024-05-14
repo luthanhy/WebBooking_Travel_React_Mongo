@@ -37,3 +37,62 @@
     box-shadow: 3px 3px 8px -3px #ddd;
     z-index: 999;
 }
+.modal-content {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="file"] {
+    width: calc(100% - 16px); /* Consider padding */
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.modal-body button {
+    width: 100%;
+    padding: 10px 20px;
+    margin-top: 10px; /* Add space between buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-body button[type="submit"] {
+    background-color: #28a745;
+}
+
+.modal-body button[type="submit"]:hover,
+.modal-body button[type="button"]:hover {
+    background-color: #218838; /* Darker shade of green */
+}
+
+.modal-body button[type="button"] {
+    background-color: #dc3545;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
