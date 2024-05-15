@@ -45,7 +45,7 @@ const Booking = ({tour,AgvRating}) => {
                     <input type="number" placeholder='Phone' id='phone'required onChange={handleChange}/>
                 </FormGroup>
                 <FormGroup >
-                    <input type="text" placeholder='Full Na me' id='book_at' required onChange={handleChange}/>
+                    <input type="text" placeholder='Email' id='book_at' required onChange={handleChange}/>
                 </FormGroup>
                 </div>
                 <FormGroup>
