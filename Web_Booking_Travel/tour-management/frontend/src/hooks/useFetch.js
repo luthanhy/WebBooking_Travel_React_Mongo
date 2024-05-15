@@ -15,6 +15,7 @@ import { useState ,useEffect } from "react";
                 }
                 const result = await res.json()
                 setData(result.data);
+                setLoading(false);
             } catch (err) {
                 setError(err);
                 setLoading(false);
