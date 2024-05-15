@@ -5,6 +5,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import tourRoute from './routes/tours.js'
 import userRoute from './routes/user.js'
+import reviewsRoute from './routes/reviews.js'
 import authRoute from './routes/auth.js'
 dotenv.config()
 
@@ -37,7 +38,7 @@ app.use(express.json());
 app.use(cors(corOption));
 app.use(cookieParser());
 
-
+app.use("/api/v1/reviews",reviewsRoute)
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/tours",tourRoute)
 app.use("/api/v1/user",userRoute)
