@@ -38,7 +38,7 @@ export const UpdateTour = async (req, res) => {
 export const GetSingleTour = async (req, res) => {
   const id = req.params.id;
   try {
-    const getSingleTour = await Tour.findById(id);
+    const getSingleTour = await Tour.findById(id).populate('reviews');
     res.status(200).json({success:true,message:`Find tour success ${getSingleTour.title}`,data:getSingleTour});
   } catch (err) {
     res.status(404).json({success:true,message:`Find tour failed `});
@@ -50,7 +50,7 @@ export const GetAllTour = async (req,res)=>{
     const page = parseInt(req.query.page);
     console.log(page)
     try{
-      const allTour = await Tour.find({}).skip(page*8).limit(8)
+      const allTour = await Tour.find({}).populate('reviews').skip(page*8).limit(8)
       res.status(200).json({success:true,count:allTour.length,message:"get all tour success",allTour});
     }catch(err){
       res.status(404).json({success:true,message:"find found"})

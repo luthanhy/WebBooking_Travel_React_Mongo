@@ -24,7 +24,6 @@ export const Login = async(req,res)=>{
     const email = req.body.email;
     try{
         const user = await User.findOne({email});
-        console.log(user)
         if(!user){
             res.status(401).json({success:false,message:"email not found"})
         }
@@ -33,7 +32,6 @@ export const Login = async(req,res)=>{
         }
         const checkCorrectPassword = await bcrypt.compare(req.body.password, user.password);
 
-        console.log("lol")
         if(!checkCorrectPassword){
             return res.status(200).json({success:true,message:"Incorrect Email or Password"})
         }
@@ -46,7 +44,7 @@ export const Login = async(req,res)=>{
         res.cookie('accessToken',token,{
             httpOnly:true,
             expires:token.expiresIn
-        }).status(200).json({success:true,message:"Login success",data:{...rest}});
+        }).status(200).json({success:true,message:"Login success",token,role,data:{...rest}});
     }catch(error){
         console.log(error)
         res.status(500).json({success:false,message:"Login failed"});
