@@ -3,6 +3,11 @@
   padding-left: 260px; /* Add padding for the sidebar */
   padding-right: 20px; /* Add right padding */
   padding-bottom: 20px; /* Add bottom padding */
+
+  display: flex; /* Enable flexbox for container layout */
+  flex-direction: column; /* Arrange items vertically */
+  height: 100vh; /* Maintain full viewport height */
+  box-sizing: border-box; /* Include padding and border in height calculation */
 }
 
 .customer-heading {
@@ -14,6 +19,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  flex: 1; /* Allow the list to occupy remaining space */
 }
 
 .customer-card {
@@ -23,6 +29,7 @@
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 300px;
+  height: 250px;
 }
 
 .customer-details {
@@ -35,6 +42,7 @@
   margin-right: 10px;
   font-size: 20px;
 }
+
 .customer-actions {
   position: absolute;
   top: 5px;
@@ -46,6 +54,7 @@
   margin-left: 5px; /* Đổi margin-right thành margin-left */
   cursor: pointer;
 }
+
 .customer-name {
   font-size: 18px;
   font-weight: bold;
@@ -69,6 +78,26 @@
 .customer-info-text {
   font-size: 14px;
 }
+
 .customer-bold-icon {
   font-weight: bold;
+}
+
+
+.customer-list {
+  flex: 1; /* Allow the list to occupy remaining space */
+}
+
+.customer-footer {
+  display: flex; /* Use flexbox for footer */
+  justify-content: center; /* Center pagination horizontally */
+  align-items: flex-end; /* Align to bottom within container */
+  padding: 20px;
+  
+}
+.pagination-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 15px;
 }
