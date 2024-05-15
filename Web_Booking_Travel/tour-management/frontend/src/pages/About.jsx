@@ -23,9 +23,6 @@ const About = () => {
                                             <p>Our commitment to excellence is reflected in every aspect of our operations. From meticulously vetting local operators to ensuring the highest standards of safety and sustainability, we leave no stone unturned in delivering exceptional experiences that exceed your expectations.</p>
 
                                             <p>Whether you're seeking adventure, cultural immersion, or simply a chance to escape the everyday, our team of experienced travel experts is dedicated to curating personalized itineraries that cater to your unique interests and preferences. We believe that every journey should be tailored to your desires, which is why we take the time to understand your travel style, budget, and aspirations.</p>
-
-                                          
-
                                             
                                         </div>
                                         <div className="col-md-6">

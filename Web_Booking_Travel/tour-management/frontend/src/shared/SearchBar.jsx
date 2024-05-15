@@ -27,7 +27,7 @@ const SearchBar = () => {
             // // const result = await res.json();
             // // Điều hướng tới trang kết quả tìm kiếm
             //   navigate(`/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`,{state:result.data});
-            navigate(`/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`);
+        
      }
     }
     return (

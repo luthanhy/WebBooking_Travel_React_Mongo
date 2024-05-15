@@ -35,6 +35,7 @@ const TourCard = ({tour}) => {
             <button className=' btn btn_booking'>
                 <Link to={`/tours/${id}`}>Book Now</Link>
             </button>
+            
         </CardBody>
     </div>
   )

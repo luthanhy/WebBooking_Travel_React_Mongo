@@ -4,7 +4,7 @@ import Dashboard from '../Admin/Dashboard.jsx'
 import Customer from '../Admin/Customer.jsx'
 import ReviewProduct from '../Admin/ReviewProduct.jsx'
 import PageError from '../pages/PageError.jsx'
-import ADTour from '../AdminComponent/ADTour.jsx'
+import ADTour from '../Admin/ADTour.jsx'
 
 
 const RoutersAdmin = () => {
