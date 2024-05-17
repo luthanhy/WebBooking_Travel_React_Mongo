@@ -2,10 +2,16 @@ import React ,{useState,useEffect} from 'react'
 import CommonSection from '../shared/CommonSection'
 import { Container,Row,Col } from 'reactstrap'
 import SearchBar from '../shared/SearchBar'
-import TourData from '../assets/data/tours'
 import TourCard from '../shared/TourCard'
 import '../styles/tours.css'
+import useFetch from '../hooks/useFetch'
+import { BASE_URL } from '../utils/config'
+
 const Tours = () => {
+
+  const {data:TourData,error,loading} = useFetch(`${BASE_URL}/tours/`)
+
+  console.log(TourData)
   const [CountPage,SetPageCount] = useState(0);
   const [Page,SetPage] = useState(0);
   
