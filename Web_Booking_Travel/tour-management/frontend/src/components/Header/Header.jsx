@@ -37,7 +37,7 @@ const Header = () => {
                 <Row>
                     <div className='nav__wrapper d-flex align-items-center justify-content-between'>
                         <div className='logo'>
-                            <a href='./home'>a
+                            <a href='./home'>
                                 <img src={logo} alt='' />
                             </a>
                         </div>
@@ -65,12 +65,12 @@ const Header = () => {
                             <div className='nav__btn'>
              
                                 <Button className='btn secondary__btn'>
-                                    <NavLink to='/login' className={location.pathname === '/login' ? "active_link" : ""}>
+                                    <NavLink to='/login'>
                                         Login
                                     </NavLink>
                                 </Button>
                                 <Button className='btn primary__btn'>
-                                    <NavLink to='/register' className={location.pathname === '/register' ? "active_link" : ""}>
+                                    <NavLink to='/register'>
                                         Register
                                     </NavLink>
                                 </Button>
