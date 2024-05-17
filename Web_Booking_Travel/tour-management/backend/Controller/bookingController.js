@@ -23,8 +23,8 @@ export const GetSingleBooking = async(req,res) =>{
     }
 }
 export const GetAllBooking = async(req,res) =>{
+    const getAllBooking = await Booking.find({});
     try {
-        const getAllBooking = await Booking.find();
 
         res.status(200).json({success:true,message:'Get All Booking Success',data:getAllBooking})
     } catch (error) {
