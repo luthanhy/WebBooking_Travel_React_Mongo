@@ -1,67 +1,109 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap';
-import '../styles/login.css';
-import registerImg from '../assets/images/login.png';
+import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import CommonSection from '../shared/CommonSection';
+import '../styles/login.css'; // Ensure you have corresponding styles
+import registerImg from '../assets/images/register.png'; // Placeholder for register image
 import userIcon from '../assets/images/user.png';
+import { BASE_URL } from '../utils/config';
 
 const Register = () => {
-  const [credentials, setCredentials] = useState({
-    userName: undefined,
-    email: undefined,
-    password: undefined,
-    accountType: 'user' // Thêm trường accountType với giá trị mặc định là 'user'
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    accountType: 'user', // Default account type
   });
 
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
   const handleChange = e => {
-    setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    setUserData(prev => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleClick = e => {
+  const handleRegister = async e => {
     e.preventDefault();
+    try {
+      const res = await axios.post(`${BASE_URL}/auth/register`, userData);
+      console.log('Registered successfully:', res.data);
+      navigate('/login'); // Navigate to login page after successful registration
+    } catch (err) {
+      setError(err.response.data.message);
+      console.error('Registration failed:', err.response.data.message);
+    }
   };
 
   return (
-    <Container>
-      <Row>
-        <Col lg='8' className="m-auto" >
-          <div className='login_container d-flex justify-content-between'>
-            <div className="login_img">
-              <img src={registerImg} alt="" />
-            </div>
-            <div className="login_form">
-              <div className="user">
-                <img src={userIcon} alt="" />
+    <>
+      <CommonSection title="Register" />
+      <section>
+        <Container>
+          <Row>
+            <Col lg="8" className="m-auto">
+              <div className="login_container d-flex justify-content-between">
+                <div className="login_img">
+                  <img src={registerImg} alt="Register" />
+                </div>
+                <div className="login_form">
+                  <div className="user">
+                    <img src={userIcon} alt="User" />
+                  </div>
+                  <h2>Register</h2>
+                  {error && <div className="alert alert-danger">{error}</div>}
+                  <Form onSubmit={handleRegister}>
+                    <FormGroup>
+                      <input
+                        type="text"
+                        placeholder="Username"
+                        required
+                        id="username"
+                        value={userData.username}
+                        onChange={handleChange}
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        required
+                        id="email"
+                        value={userData.email}
+                        onChange={handleChange}
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        required
+                        id="password"
+                        value={userData.password}
+                        onChange={handleChange}
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <select id="accountType" value={userData.accountType} onChange={handleChange}>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    </FormGroup>
+                    <button className="btn secondary_btn auth_btn" type="submit">
+                      Register
+                    </button>
+                  </Form>
+                  <p>
+                    Already have an account? <Link to="/login">Login</Link>
+                  </p>
+                </div>
               </div>
-              <h2>Register</h2>
-              <Form onSubmit={handleClick}>
-                <FormGroup>
-                  <input type="text" placeholder="Email" required id="email" onChange={handleChange} />
-                </FormGroup>
-                <FormGroup>
-                  <input type="text" placeholder="Phone" required id="phone" onChange={handleChange} />
-                </FormGroup>
-                <FormGroup>
-                  <input type="text" placeholder="Username" required id="user" onChange={handleChange} /> {/* Sửa id thành "userName" */}
-                </FormGroup>
-                <FormGroup>
-                  <input type="password" placeholder="Password" required id="password" onChange={handleChange} />
-                </FormGroup>
-                <FormGroup>
-                  <select className="accountType" onChange={handleChange}>
-                    <option value="user">User</option> {/* Thêm option cho user */}
-                    <option value="sale">Sale</option> {/* Thêm option cho saler */}
-                  </select>
-                </FormGroup>
-                <button className="btn secondary_btn auth_btn" type="submit" >Create Account</button>
-              </Form>
-              <p>Already have an account?<Link to='/login'>Login</Link></p>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
-  )
-}
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </>
+  );
+};
 
 export default Register;

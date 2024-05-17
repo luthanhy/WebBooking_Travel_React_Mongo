@@ -44,7 +44,6 @@ app.use("/api/v1/reviews",reviewsRoute)
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/tours",tourRoute)
 app.use("/api/v1/user",userRoute)
-
 app.listen(port,()=>{
     connect();
     console.log('server listen port : ',port)

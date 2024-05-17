@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Row, Button } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.png';
 import './Header.css';
+
 const nav_link = [
     {
         path: '/home',
@@ -20,13 +21,23 @@ const nav_link = [
 ];
 
 const Header = () => {
+    const location = useLocation();
+    const [username, setUsername] = useState(""); // State to store username
+    const isLoggedIn = username !== ""; // Check if user is logged in
+
+    // Function to handle logout
+    const handleLogout = () => {
+        // Perform logout actions, e.g., clear local storage, reset state, etc.
+        setUsername("");
+    };
+
     return (
         <header className='header'>
             <Container>
                 <Row>
                     <div className='nav__wrapper d-flex align-items-center justify-content-between'>
                         <div className='logo'>
-                            <a href='./home'>
+                            <a href='./home'>a
                                 <img src={logo} alt='' />
                             </a>
                         </div>
@@ -35,7 +46,7 @@ const Header = () => {
                             <ul className='menu d-flex align-items-center gap-5'>
                                 {nav_link.map((item, index) => (
                                     <li className='nav_item' key={index}>
-                                        <NavLink to={item.path} className={navClass=>navClass.isActive?"active_link":""}>
+                                        <NavLink to={item.path} className={location.pathname === item.path ? "active_link" : ""}>
                                             {item.display}
                                         </NavLink>
                                     </li>
@@ -45,25 +56,26 @@ const Header = () => {
 
                         <div className='nav__right d-flex align-items-center gap-4'>
                             <div className='upload__btn'>
-                            <Button className='btn primary__btn'>
-                                <NavLink to = '/uploadTour'>
-                                        UploadContent
-                                </NavLink>
-                            </Button>
+                                <Button className='btn primary__btn'>
+                                    <NavLink to = '/uploadTour'>
+                                        UploadTour
+                                    </NavLink>
+                                </Button>
                             </div>
-
                             <div className='nav__btn'>
+             
                                 <Button className='btn secondary__btn'>
-                                    <NavLink to='/login' className={navClass=>navClass.isActive?"active_link":""}>
+                                    <NavLink to='/login' className={location.pathname === '/login' ? "active_link" : ""}>
                                         Login
                                     </NavLink>
                                 </Button>
                                 <Button className='btn primary__btn'>
-                                    <NavLink to='/register' className={navClass=>navClass.isActive?"active_link":""}>
+                                    <NavLink to='/register' className={location.pathname === '/register' ? "active_link" : ""}>
                                         Register
                                     </NavLink>
                                 </Button>
                             </div>
+     
                             <span className='mobile_menu'>
                                 <i className='ri-menu-line'></i>
                             </span>
@@ -71,8 +83,6 @@ const Header = () => {
                     </div>
                 </Row>
             </Container>
-
-          
         </header>
     );
 };

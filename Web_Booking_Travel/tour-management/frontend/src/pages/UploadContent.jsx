@@ -62,7 +62,7 @@ const UploadContent = () => {
                 className="form-control"
               />
             </FormGroup>
-            <Button className="btn primary-btn mt-4" onClick={handleSubmit}>Submit</Button>
+            <Button className="btn primary__btn" onClick={handleSubmit}>Submit</Button>
           </Form>
         </Col>
       </Row>

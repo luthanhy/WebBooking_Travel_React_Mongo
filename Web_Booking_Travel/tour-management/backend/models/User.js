@@ -16,12 +16,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    photo: {
+    accountType: {
       type: String,
-      default:"/frontend/src/assets/images/user.png"
+      enum: ["user", "admin"],
+      default: "user",
     },
-
     role: {
       type: String,
       default: "user",
