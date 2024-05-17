@@ -1,27 +1,28 @@
-import React, { useState } from 'react'
-import TourData from '../assets/data/tours'
-import { Col, Button, Input } from 'reactstrap'
-import AdminTourCard from '../AdminComponent/AdminTourCard'
+import React, { useState } from 'react';
+import TourData from '../assets/data/tours';
+import { Col, Button, Input } from 'reactstrap';
+import AdminTourCard from '../AdminComponent/AdminTourCard';
 import '../styles/tourAdmin.css';
 import AddTour from '../AdminComponent/AddTour';
+import SelectLimit from '../shared/selectLimit';
+import Pagination from '../shared/pagination';
 
 const ADTour = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTours, setFilteredTours] = useState(TourData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const [page, setPage] = useState(1);  // Start from page 1
+  const [limit, setLimit] = useState(8);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+
   const handleAdd = () => {
     toggleModal();
   };
 
   const handleUpdate = (tourId) => {
-    // Mở modal hoặc form để sửa thông tin tour
-    // Sau khi nhận được thông tin tour sửa đổi, cập nhật trong danh sách tours
     const updatedTours = filteredTours.map((tour) => {
       if (tour.id === tourId) {
-        // Cập nhật thông tin tour
         return { ...tour, title: 'Updated Tour', city: 'Updated City', price: 200 };
       }
       return tour;
@@ -30,13 +31,13 @@ const ADTour = () => {
   };
 
   const handleDelete = (tourId) => {
-    // Xác nhận xóa tour
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
       const updatedTours = filteredTours.filter((tour) => tour.id !== tourId);
       setFilteredTours(updatedTours);
-    };
-  }
+    }
+  };
+
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
@@ -47,12 +48,31 @@ const ADTour = () => {
     );
     setFilteredTours(filtered);
   };
+
   const addTour = (newTour) => {
     setFilteredTours([...filteredTours, { id: filteredTours.length + 1, ...newTour }]);
   };
+
+  const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
+  const totalPage = Math.ceil(filteredTours.length / limit);
+
+  const handlePageChange = (value) => {
+    if (value === "&laquo;") {
+      setPage(1);
+    } else if (value === "&lsaquo;" && page > 1) {
+      setPage(page - 1);
+    } else if (value === "&rsaquo;" && page < totalPage) {
+      setPage(page + 1);
+    } else if (value === "&raquo;") {
+      setPage(totalPage);
+    } else if (typeof value === 'number') {
+      setPage(value);
+    }
+  };
+
   return (
     <>
-    <div className="listTour-container">
+      <div className="listTour-container">
         <div className="row">
           <div className="d-flex justify-content-between mb-3">
             <div className="search-bar">
@@ -68,7 +88,7 @@ const ADTour = () => {
               Add Tour
             </Button>
           </div>
-          {filteredTours.map((tour) => (
+          {displayedTours.map((tour) => (
             <Col lg="3" className="mb-4" key={tour.id}>
               <AdminTourCard
                 tour={tour}
@@ -78,11 +98,17 @@ const ADTour = () => {
             </Col>
           ))}
         </div>
+        <div className="pagination-container">
+          <Pagination
+            total={totalPage}
+            current={page}
+            onChange={handlePageChange}
+          />
         </div>
-    
+      </div>
       <AddTour isOpen={isModalOpen} toggle={toggleModal} addTour={addTour} />
     </>
-  )
-}
+  );
+};
 
-export default ADTour
+export default ADTour;

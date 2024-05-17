@@ -4,41 +4,41 @@ import {
   TablePagination, TableSortLabel, Paper, TextField, IconButton
 } from '@mui/material';
 import { FavoriteBorder, Edit, Delete } from '@mui/icons-material';
-import '../styles/customer.css'; // Import CSS file
+import '../styles/tourPrice.css'; // Import CSS file
 
 const data = [
-  { id: 1, name: 'Tiger Nixon', position: 'System Architect', office: 'Edinburgh', age: 61 },
-  { id: 2, name: 'Tiger Nixon', position: 'Accountant', office: 'Tokyo', age: 63 },
-  { id: 3, name: 'Ashton Cox', position: 'Junior Technical Author', office: 'San Francisco', age: 66 },
-  { id: 4, name: 'Cedric Kelly', position: 'Senior Javascript Developer', office: 'Edinburgh', age: 22 },
-  { id: 5, name: 'Airi Satou', position: 'Accountant', office: 'Tokyo', age: 33 },
-  { id: 6, name: 'Brielle Williamson', position: 'Integration Specialist', office: 'New York', age: 61 },
-  { id: 7, name: 'Herrod Chandler', position: 'Sales Assistant', office: 'San Francisco', age: 59 },
-  { id: 8, name: 'Rhona Davidson', position: 'Integration Specialist', office: 'Tokyo', age: 55 },
-  { id: 9, name: 'Colleen Hurst', position: 'Javascript Developer', office: 'San Francisco', age: 39 },
+  { id: 1, tourName: 'Beach Paradise', destination: 'Hawaii', price: 1000, duration: 7 },
+  { id: 2, tourName: 'Mountain Adventure', destination: 'Colorado', price: 800, duration: 5 },
+  { id: 3, tourName: 'City Break', destination: 'New York', price: 600, duration: 3 },
+  { id: 4, tourName: 'Cultural Tour', destination: 'Kyoto', price: 1200, duration: 10 },
+  { id: 5, tourName: 'Desert Safari', destination: 'Dubai', price: 900, duration: 4 },
+  { id: 6, tourName: 'Historic Journey', destination: 'Rome', price: 1100, duration: 8 },
+  { id: 7, tourName: 'Tropical Escape', destination: 'Bali', price: 950, duration: 6 },
+  { id: 8, tourName: 'European Highlights', destination: 'Paris', price: 1300, duration: 12 },
+  { id: 9, tourName: 'Wildlife Expedition', destination: 'Kenya', price: 1500, duration: 14 },
   // Add more data as needed
 ];
 
-const Customer = () => {
+const TourPrice = () => {
   const [rows, setRows] = useState(data);
   const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('tourName');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [searchName, setSearchName] = useState('');
-  const [searchPosition, setSearchPosition] = useState('');
-  const [searchOffice, setSearchOffice] = useState('');
-  const [searchAge, setSearchAge] = useState('');
+  const [searchTourName, setSearchTourName] = useState('');
+  const [searchDestination, setSearchDestination] = useState('');
+  const [searchPrice, setSearchPrice] = useState('');
+  const [searchDuration, setSearchDuration] = useState('');
 
   useEffect(() => {
     const filteredRows = data.filter(row =>
-      row.name.toLowerCase().includes(searchName.toLowerCase()) &&
-      row.position.toLowerCase().includes(searchPosition.toLowerCase()) &&
-      row.office.toLowerCase().includes(searchOffice.toLowerCase()) &&
-      row.age.toString().includes(searchAge)
+      row.tourName.toLowerCase().includes(searchTourName.toLowerCase()) &&
+      row.destination.toLowerCase().includes(searchDestination.toLowerCase()) &&
+      row.price.toString().includes(searchPrice) &&
+      row.duration.toString().includes(searchDuration)
     );
     setRows(filteredRows);
-  }, [searchName, searchPosition, searchOffice, searchAge]);
+  }, [searchTourName, searchDestination, searchPrice, searchDuration]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -52,7 +52,7 @@ const Customer = () => {
       const valueA = a[orderBy];
       const valueB = b[orderBy];
 
-      if (orderBy === 'name' || orderBy === 'position' || orderBy === 'office') {
+      if (orderBy === 'tourName' || orderBy === 'destination') {
         return order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
       } else {
         return order === 'asc' ? valueA - valueB : valueB - valueA;
@@ -77,7 +77,7 @@ const Customer = () => {
           <Table>
             <TableHead>
               <TableRow>
-                {['Name', 'Position', 'Office', 'Age'].map((headCell) => (
+                {['Tour Name', 'Destination', 'Price', 'Duration'].map((headCell) => (
                   <TableCell
                     key={headCell}
                     className="customer-header-cell"
@@ -97,41 +97,41 @@ const Customer = () => {
               <TableRow>
                 <TableCell className="customer-header-cell">
                   <TextField
-                    label="Search Name"
+                    label="Search Tour Name"
                     variant="outlined"
                     fullWidth
-                    value={searchName}
-                    onChange={(e) => setSearchName(e.target.value)}
+                    value={searchTourName}
+                    onChange={(e) => setSearchTourName(e.target.value)}
                     className="customer-header-search"
                   />
                 </TableCell>
                 <TableCell className="customer-header-cell">
                   <TextField
-                    label="Search Position"
+                    label="Search Destination"
                     variant="outlined"
                     fullWidth
-                    value={searchPosition}
-                    onChange={(e) => setSearchPosition(e.target.value)}
+                    value={searchDestination}
+                    onChange={(e) => setSearchDestination(e.target.value)}
                     className="customer-header-search"
                   />
                 </TableCell>
                 <TableCell className="customer-header-cell">
                   <TextField
-                    label="Search Office"
+                    label="Search Price"
                     variant="outlined"
                     fullWidth
-                    value={searchOffice}
-                    onChange={(e) => setSearchOffice(e.target.value)}
+                    value={searchPrice}
+                    onChange={(e) => setSearchPrice(e.target.value)}
                     className="customer-header-search"
                   />
                 </TableCell>
                 <TableCell className="customer-header-cell">
                   <TextField
-                    label="Search Age"
+                    label="Search Duration"
                     variant="outlined"
                     fullWidth
-                    value={searchAge}
-                    onChange={(e) => setSearchAge(e.target.value)}
+                    value={searchDuration}
+                    onChange={(e) => setSearchDuration(e.target.value)}
                     className="customer-header-search"
                   />
                 </TableCell>
@@ -142,10 +142,10 @@ const Customer = () => {
               {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.position}</TableCell>
-                    <TableCell>{row.office}</TableCell>
-                    <TableCell>{row.age}</TableCell>
+                    <TableCell>{row.tourName}</TableCell>
+                    <TableCell>{row.destination}</TableCell>
+                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{row.duration}</TableCell>
                     <TableCell>
                       <IconButton className="customer-action-button">
                         <FavoriteBorder />
@@ -176,4 +176,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default TourPrice;

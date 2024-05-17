@@ -5,6 +5,7 @@ import Customer from '../Admin/Customer.jsx'
 import ReviewProduct from '../Admin/ReviewProduct.jsx'
 import PageError from '../pages/PageError.jsx'
 import ADTour from '../Admin/ADTour.jsx'
+import TourPrice from '../Admin/TourPrice.jsx'
 
 
 const RoutersAdmin = () => {
@@ -17,6 +18,7 @@ const RoutersAdmin = () => {
             <Route path='/admin/tours' element={<ADTour/>}/>
             <Route path='/admin/customer' element={<Customer />}/>
             <Route path='/admin/reviewproduct' element={<ReviewProduct />}/>
+            <Route path='/admin/tourmanagement' element={<TourPrice />}/>
         </Routes>
     </div>
   )

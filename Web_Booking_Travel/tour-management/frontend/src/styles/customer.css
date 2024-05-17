@@ -1,7 +1,7 @@
 .customer-container {
   padding-top: 100px; /* Add padding to the top to create space for the header */
-  padding-left: 260px; /* Add padding for the sidebar */
-  padding-right: 20px; /* Add right padding */
+  padding-left: 228px; /* Add padding for the sidebar */
+  padding-right: 35px; /* Add right padding */
   padding-bottom: 20px; /* Add bottom padding */
 
   display: flex; /* Enable flexbox for container layout */
@@ -46,12 +46,12 @@
 .customer-actions {
   position: absolute;
   top: 5px;
-  right: 5px; /* Đổi left thành right */
+  right: 5px; 
   display: flex;
 }
 
 .customer-action {
-  margin-left: 5px; /* Đổi margin-right thành margin-left */
+  margin-left: 5px; 
   cursor: pointer;
 }
 
@@ -88,7 +88,7 @@
   flex: 1; /* Allow the list to occupy remaining space */
 }
 
-.customer-footer {
+.tour-footer {
   display: flex; /* Use flexbox for footer */
   justify-content: center; /* Center pagination horizontally */
   align-items: flex-end; /* Align to bottom within container */

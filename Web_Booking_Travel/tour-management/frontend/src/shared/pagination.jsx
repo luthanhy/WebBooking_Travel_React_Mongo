@@ -1,33 +1,34 @@
-import React from "react";
-import { returnPaginationRange } from "../utils/appUtils";
+import React from 'react';
 
-function pagination(props) {
-    let array = returnPaginationRange(props.totalPage, props.page, props.limit, props.siblings);
-    return (
-        <ul className="pagination pagination-md justify-content-end">
-            <li className="page-item"><span onClick={()=> props.onPageChange("&laquo;")} className="page-link">&laquo;</span></li>
-            <li className="page-item"><span onClick={()=> props.onPageChange("&lsaquo;")} className="page-link">&lsaquo;</span></li>
+const Pagination = ({ total, current, onChange }) => {
+  const pages = [];
+  for (let i = 1; i <= total; i++) {
+    pages.push(i);
+  }
 
-            {array.map(value => {
-                if (value === props.page) {
-                    return (
-                        <li key={value} className="page-item active">
-                            <span onClick={()=> props.onPageChange(value)} className="page-link">{value}</span>
-                            </li>
-                    )
-                } else {
-                    return (
-                        <li key={value} className="page-item">
-                            <span onClick={()=> props.onPageChange(value)}  className="page-link">{value}</span>
-                        </li>
-                    )
-                }
-            })}
+  return (
+    <nav className="pagination-container">
+      <ul className="pagination">
+        <li className={`page-item ${current === 1 ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => onChange(1)}>&laquo;</button>
+        </li>
+        <li className={`page-item ${current === 1 ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => onChange(current - 1)}>&lsaquo;</button>
+        </li>
+        {pages.map((page) => (
+          <li key={page} className={`page-item ${current === page ? 'active' : ''}`}>
+            <button className="page-link" onClick={() => onChange(page)}>{page}</button>
+          </li>
+        ))}
+        <li className={`page-item ${current === total ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => onChange(current + 1)}>&rsaquo;</button>
+        </li>
+        <li className={`page-item ${current === total ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => onChange(total)}>&raquo;</button>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
-            <li className="page-item"><span onClick={()=> props.onPageChange("&rsaquo;")} className="page-link">&rsaquo;</span></li>
-            <li className="page-item"><span onClick={()=> props.onPageChange("&raquo;")} className="page-link">&raquo;</span></li>
-        </ul>
-    );
-}
-
-export default pagination;
+export default Pagination;

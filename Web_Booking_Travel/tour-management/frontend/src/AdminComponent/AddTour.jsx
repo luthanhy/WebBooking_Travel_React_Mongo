@@ -1,63 +1,90 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
-import tours from '../assets/data/tours';
-
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const AddTour = ({ isOpen, toggle, addTour }) => {
-  const [tourData, setTourData] = useState(tours);
+  const [newTour, setNewTour] = useState({
+    title: '',
+    city: '',
+    price: '',
+    description: '',
+    image: ''
+  });
 
   const handleChange = (e) => {
-    setTourData({ ...tourData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setNewTour({ ...newTour, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTour(tourData);
+    addTour(newTour);
     toggle();
-    setTourData(tours);
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Add Tour</ModalHeader>
+      <ModalHeader toggle={toggle}>Add New Tour</ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="title">Title</Label>
-            <Input type="text" name="title" id="title" value={tourData.title} onChange={handleChange} />
+            <Input
+              type="text"
+              name="title"
+              id="title"
+              value={newTour.title}
+              onChange={handleChange}
+              required
+            />
           </FormGroup>
           <FormGroup>
             <Label for="city">City</Label>
-            <Input type="text" name="city" id="city" value={tourData.city} onChange={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <Label for="address">Address</Label>
-            <Input type="text" name="address" id="address" value={tourData.address} onChange={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <Label for="distance">Distance</Label>
-            <Input type="text" name="distance" id="distance" value={tourData.distance} onChange={handleChange} />
+            <Input
+              type="text"
+              name="city"
+              id="city"
+              value={newTour.city}
+              onChange={handleChange}
+              required
+            />
           </FormGroup>
           <FormGroup>
             <Label for="price">Price</Label>
-            <Input type="number" name="price" id="price" value={tourData.price} onChange={handleChange} />
+            <Input
+              type="number"
+              name="price"
+              id="price"
+              value={newTour.price}
+              onChange={handleChange}
+              required
+            />
           </FormGroup>
           <FormGroup>
-            <Label for="maxGroupSize">Max Group Size</Label>
-            <Input type="text" name="maxGroupSize" id="maxGroupSize" value={tourData.maxGroupSize} onChange={handleChange} />
+            <Label for="description">Description</Label>
+            <Input
+              type="textarea"
+              name="description"
+              id="description"
+              value={newTour.description}
+              onChange={handleChange}
+            />
           </FormGroup>
           <FormGroup>
-            <Label for="desc">Description</Label>
-            <Input type="text" name="desc" id="desc" value={tourData.desc} onChange={handleChange} />
+            <Label for="image">Image URL</Label>
+            <Input
+              type="text"
+              name="image"
+              id="image"
+              value={newTour.image}
+              onChange={handleChange}
+            />
           </FormGroup>
-          <FormGroup>
-            <Label for="photo">Photo URL</Label>
-            <Input type="text" name="photo" id="photo" value={tourData.photo} onChange={handleChange} />
-          </FormGroup>
-      
           <Button type="submit" color="primary">Add Tour</Button>
         </Form>
       </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" onClick={toggle}>Cancel</Button>
+      </ModalFooter>
     </Modal>
   );
 };
