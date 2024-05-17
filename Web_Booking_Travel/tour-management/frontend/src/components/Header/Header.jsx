@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import { RiUploadLine } from 'react-icons/ri';
-import Modal from 'react-modal';
+
 import logo from '../../assets/images/logo.png';
 import './Header.css';
 const nav_link = [
@@ -45,7 +44,13 @@ const Header = () => {
                         </div>
 
                         <div className='nav__right d-flex align-items-center gap-4'>
-                          
+                            <div className='upload__btn'>
+                            <Button className='btn primary__btn'>
+                                <NavLink to = '/uploadTour'>
+                                        UploadContent
+                                </NavLink>
+                            </Button>
+                            </div>
 
                             <div className='nav__btn'>
                                 <Button className='btn secondary__btn'>
@@ -58,13 +63,6 @@ const Header = () => {
                                         Register
                                     </NavLink>
                                 </Button>
-                            </div>
-                            <div className='upload__btn'>
-                            <Button className='btn primary__btn'>
-                                <NavLink to = '/uploadTour'>
-                                        UploadContent
-                                </NavLink>
-                            </Button>
                             </div>
                             <span className='mobile_menu'>
                                 <i className='ri-menu-line'></i>

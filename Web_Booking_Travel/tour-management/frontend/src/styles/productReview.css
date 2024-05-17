@@ -6,11 +6,11 @@
     min-height: calc(100vh - 100px);
 }
 .review-container h2 {
-    color: #333; /* Màu chữ cho tiêu đề */
+    color: #333; 
 }
 
 .review-container p {
-    color: #666; /* Màu chữ cho nội dung */
+    color: #666; 
 }
 
 .accept-btn, .refuse-btn {
@@ -37,17 +37,16 @@
     opacity: 0.8; 
 }
 .review-tour-card {
-    width: calc(33.33% - 20px); 
-    margin: 10px; 
-    background-color: #fff; 
-    border-radius: 5px; 
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
-    padding: 15px; 
-    box-sizing: border-box;
+    width: 100%; /* Chiếm hết chiều rộng của cột */
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    box-sizing: border-box; 
 }
 
 .review-tour-container {
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: space-between; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Chia thành 3 cột có kích thước bằng nhau */
+    grid-gap: 20px; /* Khoảng cách giữa các tour */
 }

@@ -17,11 +17,8 @@ const ADTour = () => {
   };
 
   const handleUpdate = (tourId) => {
-    // Mở modal hoặc form để sửa thông tin tour
-    // Sau khi nhận được thông tin tour sửa đổi, cập nhật trong danh sách tours
     const updatedTours = filteredTours.map((tour) => {
       if (tour.id === tourId) {
-        // Cập nhật thông tin tour
         return { ...tour, title: 'Updated Tour', city: 'Updated City', price: 200 };
       }
       return tour;
@@ -30,7 +27,6 @@ const ADTour = () => {
   };
 
   const handleDelete = (tourId) => {
-    // Xác nhận xóa tour
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
       const updatedTours = filteredTours.filter((tour) => tour.id !== tourId);
