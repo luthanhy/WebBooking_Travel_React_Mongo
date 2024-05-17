@@ -11,14 +11,10 @@ function Adminsiderbar({ openSidebarToggle }){
         },
         {
             path: '/admin/tours',
-            display: 'tour',
+            display: 'Tour',
             icon: BsFillArchiveFill
         },
-        {
-            path: '/admin/categories',
-            display: 'Categories',
-            icon: BsFillArchiveFill
-        },
+      
         {
             path: '/admin/customer',
             display: 'Customer',
@@ -27,6 +23,11 @@ function Adminsiderbar({ openSidebarToggle }){
         {
             path: '/admin/reviewproduct',
             display: 'Review Product',
+            icon: BsFillGrid3X3GapFill
+        },
+        {
+            path: '/admin/tourmanagement',
+            display: 'Tour Management',
             icon: BsFillGrid3X3GapFill
         }
     ];
