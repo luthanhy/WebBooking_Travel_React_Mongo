@@ -11,9 +11,9 @@ const ADTour = () => {
   const {data:featuredData,error,loading } = useFetch(`${BASE_URL}/tours/`);
   
 
-
+  
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTours, setFilteredTours] = useState([]);
+  const [filteredTours, setFilteredTours] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);  // Start from page 1
   const [limit, setLimit] = useState(8);
