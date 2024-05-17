@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import CalculateAvgRating from '../utils/avgRating'
 
 const AdminTourCard = ({ tour, handleUpdate, handleDelete }) => {
-  const { id, title, city, photo, price, featured, reviews } = tour
+  const { _id, title, city, photo, price, reviews } = tour
 
   const { totalRating, avgRating } = CalculateAvgRating(reviews)
 
@@ -31,7 +31,7 @@ const AdminTourCard = ({ tour, handleUpdate, handleDelete }) => {
           </span>
         </div>
         <h5 className='tour__title'>
-          <Link to={`/tours/${id}`}>{title}</Link>
+          <Link to={`/tours/${_id}`}>{title}</Link>
         </h5>
         <div className='card__button d-flex align-items-center justify-content-between mt-3'>
           <h5>
@@ -39,8 +39,8 @@ const AdminTourCard = ({ tour, handleUpdate, handleDelete }) => {
           </h5>
         </div>
         <div>
-          <button className='btn btn_edit' onClick={() => handleUpdate(tour.id)}>Update</button>
-          <button className='btn btn_delete' onClick={() => handleDelete(tour.id)}>Delete</button>
+          <button className='btn btn_edit' onClick={() => handleUpdate(tour._id)}>Update</button>
+          <button className='btn btn_delete' onClick={() => handleDelete(tour._id)}>Delete</button>
         </div>
       </CardBody>
     </div>

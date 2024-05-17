@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
-import TourData from '../assets/data/tours';
+import React, { useState ,useEffect} from 'react';
 import { Col, Button, Input } from 'reactstrap';
 import AdminTourCard from '../AdminComponent/AdminTourCard';
 import '../styles/tourAdmin.css';
 import AddTour from '../AdminComponent/AddTour';
-import SelectLimit from '../shared/selectLimit';
 import Pagination from '../shared/pagination';
+import { BASE_URL } from '../utils/config';
+import useFetch from '../hooks/useFetch';
 
 const ADTour = () => {
+  const {data:featuredData,error,loading } = useFetch(`${BASE_URL}/tours/`);
+  
+
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTours, setFilteredTours] = useState(TourData);
+  const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);  // Start from page 1
   const [limit, setLimit] = useState(8);
+  useEffect(() => {
+    if (featuredData) {
+      setFilteredTours(featuredData);
+    }
+  }, [featuredData]);
+  console.log(filteredTours);
 
+  console.log(featuredData)
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const handleAdd = () => {
@@ -22,7 +33,7 @@ const ADTour = () => {
 
   const handleUpdate = (tourId) => {
     const updatedTours = filteredTours.map((tour) => {
-      if (tour.id === tourId) {
+      if (tour._id === tourId) {
         return { ...tour, title: 'Updated Tour', city: 'Updated City', price: 200 };
       }
       return tour;
@@ -33,7 +44,7 @@ const ADTour = () => {
   const handleDelete = (tourId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
-      const updatedTours = filteredTours.filter((tour) => tour.id !== tourId);
+      const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
       setFilteredTours(updatedTours);
     }
   };
@@ -41,7 +52,7 @@ const ADTour = () => {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = TourData.filter(
+    const filtered = featuredData.filter(
       (tour) =>
         tour.title.toLowerCase().includes(term) ||
         tour.city.toLowerCase().includes(term)
@@ -50,10 +61,11 @@ const ADTour = () => {
   };
 
   const addTour = (newTour) => {
-    setFilteredTours([...filteredTours, { id: filteredTours.length + 1, ...newTour }]);
+    setFilteredTours([...filteredTours, { __id: filteredTours.length + 1, ...newTour }]);
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
+  console.log(filteredTours)
   const totalPage = Math.ceil(filteredTours.length / limit);
 
   const handlePageChange = (value) => {
@@ -89,7 +101,7 @@ const ADTour = () => {
             </Button>
           </div>
           {displayedTours.map((tour) => (
-            <Col lg="3" className="mb-4" key={tour.id}>
+            <Col lg="3" className="mb-4" key={tour._id}>
               <AdminTourCard
                 tour={tour}
                 handleUpdate={handleUpdate}
