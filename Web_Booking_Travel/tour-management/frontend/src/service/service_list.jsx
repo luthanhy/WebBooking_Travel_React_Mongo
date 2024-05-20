@@ -10,18 +10,18 @@ import customizationImg from '../assets/images/customization.png'
 const ServiceData =[
     {
         imgUrl: weatherImg,
-        title : 1,
-        desc : 1,
+        title : "Local walking tours ",
+        desc : "Many cities offer excellent guided walking tours that provide an in-depth look at the history, architecture, and culture of the area. ",
     },
     {
         imgUrl: guideImg,
-        title : 2,
-        desc : 2,
+        title : "Day trips and excursions ",
+        desc : "Day trips to nearby attractions, natural wonders, or neighboring towns/cities can be a convenient and immersive way to explore more of a region. ",
     },
     {
         imgUrl: customizationImg,
-        title : 3,
-        desc : 3,
+        title : "Multi-day group tours ",
+        desc : "For a more comprehensive experience, multi-day group tours can take you to multiple destinations within a country or region.",
     }
 ]
 const service_list = () => {

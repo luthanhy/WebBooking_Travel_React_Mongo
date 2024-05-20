@@ -12,7 +12,7 @@ const RoutersAdmin = () => {
   return (
 <div>
         <Routes>
-            <Route path='/'element = {<Navigate to = '/admin'/>}/>
+            <Route path='/admin'element = {<Navigate to = '/admin/dashboard'/>}/>
             <Route path='*'element = {<PageError/>}/>
             <Route path='/admin/dashboard' element={<Dashboard />}/>
             <Route path='/admin/tours' element={<ADTour/>}/>
