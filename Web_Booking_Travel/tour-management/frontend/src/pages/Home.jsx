@@ -84,8 +84,8 @@ const Home = () => <>
         <Col lg='6'>
           <div className='experience__content'>
             <Subtitle subtitle={"Experience"}></Subtitle>
-            <h2>With out all experience <br/> we will serve you </h2>
-            <p> luthanhy </p>
+            <h2>With out all experience <br/> we will serve you <br/> well beyond expectations </h2>
+            
           </div>
           <div className=' counter_wrapper d-flex align-items-center gap-5'>
             <div className='counter_box'>

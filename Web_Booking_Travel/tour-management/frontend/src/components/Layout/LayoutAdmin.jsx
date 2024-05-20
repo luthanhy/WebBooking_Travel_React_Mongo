@@ -3,15 +3,21 @@ import RoutersAdmin from '../../router/RoutersAdmin'
 import HeaderAdmin from '../Header/HeaderAdmin'
 import FooterAdmin from '../Footer/FooterAdmin'
 import Adminsiderbar from '../Siderbar/SidebarAdmin'
-const LayoutAdmin = () => {
+import "../Layout/LayoutAD.css"
+import Navbar from '../NavBar/navBar'
+const Layout = () => {
   return (
-    <>
-    <HeaderAdmin/>
-    <Adminsiderbar/>
-    <RoutersAdmin/>
-    <FooterAdmin/>
-    </>
-  )
-}
+    <div className="home">
 
-export default LayoutAdmin
+      <Adminsiderbar />
+      <div className="homeContainer">
+        <Navbar />
+        <RoutersAdmin />
+        <FooterAdmin />
+      </div>
+
+    </div>
+  )
+};
+
+export default Layout
