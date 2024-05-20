@@ -1,23 +1,43 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext , useEffect , useReducer } from "react";
 
-const AuthContext = createContext();
-
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  const login = (userData) => {
-    setUser(userData);
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => useContext(AuthContext);
+const initial_state  =  {
+  user: null,
+  loading : false,
+  error: null
+}
+export const AuthContext = createContext(initial_state)
+const AuthReducer = (state,action) => {
+  switch (action.type) {
+    case "LOGIN_START":
+        return{
+          user:null,
+          loading:false,
+          error:null
+        };
+    case "LOGIN_SUCCESS":
+        return{
+          user:action.payload,
+          loading:false,
+          error:null
+        }
+    case "LOGIN_FAILURE":
+        return{
+          user:null,
+          loading :false,
+          error:action.payload
+        }
+    case "REGISTER_SUCCESS":
+        return{
+          user:null,
+          loading :false,
+          error:action.payload
+    }
+    case "LOGOUT":
+      return{
+        user:null,
+        loading :false,
+        error:action.payload
+      }
+    default:
+  }
+}
