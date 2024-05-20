@@ -87,16 +87,6 @@ const Adminsiderbar = () => {
           </li>
         </ul>
       </div>
-      <div className="bottom">
-        <button
-          className="colorOption"
-          onClick={() => dispatch({ type: "LIGHT" })}
-        ></button>
-        <button
-          className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
-        ></button>
-      </div>
     </div>
   );
 };
