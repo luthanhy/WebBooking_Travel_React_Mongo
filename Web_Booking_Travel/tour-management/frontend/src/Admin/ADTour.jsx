@@ -77,7 +77,7 @@ const ADTour = () => {
 
   return (
     <>
-      <div className="listTour-container">
+     
         <div className="row">
           <div className="d-flex justify-content-between mb-3">
             <div className="search-bar">
@@ -110,7 +110,7 @@ const ADTour = () => {
             onChange={handlePageChange}
           />
         </div>
-      </div>
+      
       <AddTour isOpen={isModalOpen} toggle={toggleModal} addTour={addTour} />
     </>
   );
