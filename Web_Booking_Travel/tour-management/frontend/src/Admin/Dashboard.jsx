@@ -6,6 +6,8 @@ import
  { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } 
  from 'recharts';
 import '../styles/admin.css'
+import Widget from '../components/Widget/widget';
+
 function Dashboard() {
 
     const data = [
@@ -56,7 +58,7 @@ function Dashboard() {
 
   return (
     <main className='admin-main-container'>
-
+     
         <div className='admin-main-cards'>
             <div className='admin-card'>
                 <div className='admin-card-inner'>

@@ -18,7 +18,7 @@ const RoutersAdmin = () => {
             <Route path='/admin/tours' element={<ADTour/>}/>
             <Route path='/admin/customer' element={<Customer />}/>
             <Route path='/admin/reviewproduct' element={<ReviewProduct />}/>
-            <Route path='/admin/tourmanagement' element={<TourPrice />}/>
+            <Route path='/admin/tourmanagement' element={<ADTour />}/>
         </Routes>
     </div>
   )
