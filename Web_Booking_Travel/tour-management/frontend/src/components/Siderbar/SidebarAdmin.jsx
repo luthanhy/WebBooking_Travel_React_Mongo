@@ -40,7 +40,7 @@ const Adminsiderbar = () => {
               <span>Users</span>
             </li>
           </Link>
-          <Link to="/admin/tours" style={{ textDecoration: "none" }}>
+          <Link to="/admin/tourmanagement" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Products</span>
@@ -86,16 +86,6 @@ const Adminsiderbar = () => {
             <span>Logout</span>
           </li>
         </ul>
-      </div>
-      <div className="bottom">
-        <button
-          className="colorOption"
-          onClick={() => dispatch({ type: "LIGHT" })}
-        ></button>
-        <button
-          className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
-        ></button>
       </div>
     </div>
   );
