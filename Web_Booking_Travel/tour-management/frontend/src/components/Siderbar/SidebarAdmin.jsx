@@ -40,7 +40,7 @@ const Adminsiderbar = () => {
               <span>Users</span>
             </li>
           </Link>
-          <Link to="/admin/tourmanagement" style={{ textDecoration: "none" }}>
+          <Link to="/admin/tours" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Products</span>

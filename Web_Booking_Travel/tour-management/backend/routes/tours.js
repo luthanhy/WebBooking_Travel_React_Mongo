@@ -3,8 +3,8 @@ import { CreateNewTour , UpdateTour , GetSingleTour, DeleteTour , GetAllTour , G
 import { verifyAdmin } from '../utils/verifyToken.js'
 const route = express.Router()
 
-route.post('/',verifyAdmin,CreateNewTour)
 
+route.post('/',verifyAdmin,CreateNewTour)
 route.post('/:id',verifyAdmin,UpdateTour)
 
 route.get('/:id',GetSingleTour)

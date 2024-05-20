@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Button, Input } from 'reactstrap';
 import AdminTourCard from '../AdminComponent/AdminTourCard';
 import '../styles/tourAdmin.css';
@@ -8,23 +8,20 @@ import { BASE_URL } from '../utils/config';
 import useFetch from '../hooks/useFetch';
 
 const ADTour = () => {
-  const {data:featuredData,error,loading } = useFetch(`${BASE_URL}/tours/`);
-  
-
+  const { data: featuredData, error, loading } = useFetch(`${BASE_URL}/tours/`);
   
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTours, setFilteredTours] = useState();
+  const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [page, setPage] = useState(1);  // Start from page 1
+  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
+
   useEffect(() => {
     if (featuredData) {
       setFilteredTours(featuredData);
     }
   }, [featuredData]);
-  console.log(filteredTours);
 
-  console.log(featuredData)
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const handleAdd = () => {
@@ -32,12 +29,9 @@ const ADTour = () => {
   };
 
   const handleUpdate = (tourId) => {
-    const updatedTours = filteredTours.map((tour) => {
-      if (tour._id === tourId) {
-        return { ...tour, title: 'Updated Tour', city: 'Updated City', price: 200 };
-      }
-      return tour;
-    });
+    const updatedTours = filteredTours.map((tour) => 
+      tour._id === tourId ? { ...tour, title: 'Updated Tour', city: 'Updated City', price: 200 } : tour
+    );
     setFilteredTours(updatedTours);
   };
 
@@ -61,11 +55,10 @@ const ADTour = () => {
   };
 
   const addTour = (newTour) => {
-    setFilteredTours([...filteredTours, { __id: filteredTours.length + 1, ...newTour }]);
+    setFilteredTours([...filteredTours, { _id: filteredTours.length + 1, ...newTour }]);
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
-  console.log(filteredTours)
   const totalPage = Math.ceil(filteredTours.length / limit);
 
   const handlePageChange = (value) => {
@@ -106,7 +99,7 @@ const ADTour = () => {
                 tour={tour}
                 handleUpdate={handleUpdate}
                 handleDelete={handleDelete}
-              ></AdminTourCard>
+              />
             </Col>
           ))}
         </div>

@@ -17,7 +17,7 @@ const Tours = () => {
   
 
   useEffect(()=>{
-    const pages = Math.ceil(5/4)
+    const pages = Math.ceil(4/4)
     SetPageCount(pages)
   },[Page])
   return (
