@@ -4,7 +4,7 @@ import '../../styles/admin.css';
 
 function HeaderAdmin() {
     return (
-        
+
           <header></header>
 
     );

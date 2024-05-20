@@ -5,10 +5,10 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 
-const widget = ({ type }) => {
+const Widget = ({ type }) => {
   let data;
 
-  // Temporary values
+  //temporary
   const amount = 100;
   const diff = 20;
 
@@ -75,22 +75,6 @@ const widget = ({ type }) => {
       };
       break;
     default:
-      data = {
-        title: "UNKNOWN",
-        isMoney: false,
-        link: "N/A",
-        icon: (
-          <div
-            className="icon"
-            style={{
-              backgroundColor: "rgba(128, 128, 128, 0.2)",
-              color: "gray",
-            }}
-          >
-            ?
-          </div>
-        ),
-      };
       break;
   }
 
@@ -114,4 +98,4 @@ const widget = ({ type }) => {
   );
 };
 
-export default widget;
+export default Widget;
