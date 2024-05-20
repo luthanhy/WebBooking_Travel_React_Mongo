@@ -11,14 +11,76 @@
   font-size: 24px;
   margin-bottom: 20px;
 }
+.customer-container.dark {
+  background-color: #333;
+  color: #fff;
+}
 
+/* Styling Toolbar in dark mode */
+.customer-container.dark .MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar.css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar {
+  background-color: #222; /* Dark background for the toolbar */
+  color: #fff; /* White text color */
+}
+
+/* Additional styles for other components in dark mode */
+.customer-container.dark .MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium.css-1ex1afd-MuiTableCell-root {
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  border: 1px solid #444; /* Optional: light border to separate cells */
+}
+
+.customer-container.dark .MuiTableCell-root.MuiTableCell-head {
+  background-color: #222; /* Slightly different shade for header cells */
+  color: #fff;
+}
+
+.customer-container.dark .MuiTableCell-root .MuiTableSortLabel-root {
+  color: #fff; /* Ensure sort label is white */
+}
+
+.customer-container.dark .MuiOutlinedInput-root {
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+}
+
+.customer-container.dark .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: #fff; /* White border */
+}
+
+.customer-container.dark .MuiInputLabel-outlined {
+  color: #fff; /* White label */
+}
+
+.customer-container.dark .MuiInputBase-input {
+  color: #fff; /* White text inside input */
+}
+
+.customer-container.dark .customer-action-button {
+  color: #fff;
+}
 .customer-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   flex: 1; /* Allow the list to occupy remaining space */
 }
-
+.customer-container.dark .customer-header-cell{
+  background-color: #333;
+  color: white;
+}
+.customer-container.dark .customer-action-button{
+  background-color: #333;
+  color: white;
+}
+.customer-container.dark .customer-actions-cell{
+  background-color: #333;
+  color: white;
+}
+.customer-container.dark .customer-header-search
+{
+  background-color: #333;
+  color: white;
+}
 .customer-card {
   position: relative;
   background-color: #f5f5f5;
@@ -28,7 +90,10 @@
   width: 300px;
   height: 250px;
 }
-
+.customer-container.dark .customer-card{
+  background-color: #333;
+  color: white;
+}
 .customer-details {
   display: flex;
   align-items: center;
@@ -56,7 +121,6 @@
   font-size: 18px;
   font-weight: bold;
 }
-
 .customer-info {
   margin-top: 10px;
 }

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   TablePagination, TableSortLabel, Paper, TextField, IconButton
 } from '@mui/material';
 import { FavoriteBorder, Edit, Delete } from '@mui/icons-material';
 import '../styles/customer.css'; // Import CSS file
-
+import { DarkModeContext } from '../context/DarkModeContext';
 const data = [
   { id: 1, name: 'Tiger Nixon', position: 'System Architect', office: 'Edinburgh', age: 61 },
   { id: 2, name: 'Tiger Nixon', position: 'Accountant', office: 'Tokyo', age: 63 },
@@ -20,6 +20,7 @@ const data = [
 ];
 
 const Customer = () => {
+  const { state } = useContext(DarkModeContext);
   const [rows, setRows] = useState(data);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
@@ -71,7 +72,7 @@ const Customer = () => {
   };
 
   return (
-    <div className="customer-container">
+    <div className={`customer-container ${state.darkMode ? 'dark' : ''}`}>
       <Paper>
         <TableContainer>
           <Table>

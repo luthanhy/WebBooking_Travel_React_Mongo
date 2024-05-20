@@ -98,4 +98,15 @@ body {
     flex: 4;
     padding: 20px;
   }
+
+  .navbar.dark {
+    background-color: #333;
+    color: white;
+  }
+  
+  .navbar .icon {
+    color: inherit;
+  }
+  
+  /* Add more dark mode specific styles as needed */
   

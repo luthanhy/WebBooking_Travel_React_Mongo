@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { DarkModeContext } from '../context/DarkModeContext';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   TablePagination, TableSortLabel, Paper, TextField, IconButton
 } from '@mui/material';
 import { FavoriteBorder, Edit, Delete } from '@mui/icons-material';
 import '../styles/tourPrice.css'; // Import CSS file
-
 const data = [
   { id: 1, tourName: 'Beach Paradise', destination: 'Hawaii', price: 1000, duration: 7 },
   { id: 2, tourName: 'Mountain Adventure', destination: 'Colorado', price: 800, duration: 5 },
@@ -16,10 +16,10 @@ const data = [
   { id: 7, tourName: 'Tropical Escape', destination: 'Bali', price: 950, duration: 6 },
   { id: 8, tourName: 'European Highlights', destination: 'Paris', price: 1300, duration: 12 },
   { id: 9, tourName: 'Wildlife Expedition', destination: 'Kenya', price: 1500, duration: 14 },
-  // Add more data as needed
 ];
 
 const TourPrice = () => {
+  const { state } = useContext(DarkModeContext);
   const [rows, setRows] = useState(data);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('tourName');
@@ -71,7 +71,7 @@ const TourPrice = () => {
   };
 
   return (
-    <div className="customer-container">
+    <div className={`customer-container ${state.darkMode ? 'dark' : ''}`}>
       <Paper>
         <TableContainer>
           <Table>
