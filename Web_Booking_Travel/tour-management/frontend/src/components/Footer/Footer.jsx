@@ -41,7 +41,7 @@ const Footer = () => {
             <div className='logo'>
                 <img src={Logo} alt="" />
                 <p>
-                  luthanyhy4
+                
                 </p>
                 <div className="social_links d-flex align-items-center gap-4">
                   <span>
@@ -114,9 +114,7 @@ const Footer = () => {
               </ListGroupItem>
              </ListGroup>
           </Col>
-          <Col lg='12'className=' text-center pt-5'>
-            <p className='copyright'>Copyright{year}</p>
-          </Col>
+        
         </Row>
         </Container>
     </footer>
