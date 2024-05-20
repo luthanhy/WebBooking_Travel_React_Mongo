@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import CommonSection from '../shared/CommonSection';
 import '../styles/login.css'; // Ensure you have corresponding styles
 import registerImg from '../assets/images/register.png'; // Placeholder for register image
 import userIcon from '../assets/images/user.png';
 import { BASE_URL } from '../utils/config';
+import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
+  const [error] = useState('');
   const [userData, setUserData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    accountType: 'user', // Default account type
+    username: undefined, 
+    email: undefined,
+    password: undefined,
+    accountType: undefined, // Default account type
   });
-
-  const [error, setError] = useState('');
+  const {dispatch} = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -24,14 +24,37 @@ const Register = () => {
   };
 
   const handleRegister = async e => {
+    console.log("tdeptrai");
     e.preventDefault();
     try {
-      const res = await axios.post(`${BASE_URL}/auth/register`, userData);
-      console.log('Registered successfully:', res.data);
-      navigate('/login'); // Navigate to login page after successful registration
+      console.log(userData);
+      console.log("tdeptrai");
+      
+      const res = await fetch(`${BASE_URL}/auth/register`,{
+        method:"post",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+      // const res = await axios.post(`${BASE_URL}/auth/register/`, {
+      // method:'post',
+      // headers:{
+      //   'content-type': 'application/json'
+      // }
+      // });
+      
+      console.log("tdeptrai");
+      const result  = await res.json();
+
+      console.log("tdeptrai");
+      if(!res.ok) alert(result.message)
+      
+      dispatch({type:'REGISTER_SUCCESS'})
+      navigate('/login')
     } catch (err) {
-      setError(err.response.data.message);
-      console.error('Registration failed:', err.response.data.message);
+      console.log(err.message)
+      alert(err.message)
     }
   };
 

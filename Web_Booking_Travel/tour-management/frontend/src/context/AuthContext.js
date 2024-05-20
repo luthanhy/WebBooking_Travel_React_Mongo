@@ -1,7 +1,7 @@
 import { createContext , useEffect , useReducer } from "react";
 
 const initial_state  =  {
-  user: null,
+  user: localStorage.getItem('user') !== undefined ? JSON.parse(localStorage.getItem("user")) : undefined,
   loading : false,
   error: null
 }
@@ -30,14 +30,31 @@ const AuthReducer = (state,action) => {
         return{
           user:null,
           loading :false,
-          error:action.payload
+          error:null
     }
     case "LOGOUT":
       return{
         user:null,
         loading :false,
-        error:action.payload
+        error:null
       }
     default:
+      return state;
   }
+};
+export const AuthContextProvider  = ({children}) =>{
+  const [state,dispatch] = useReducer(AuthReducer,initial_state);
+  useEffect(() => {
+    localStorage.getItem('user',JSON.stringify(state.user))
+  },[state.user])
+  return <AuthContext.Provider value={
+    {
+      user:state.user,
+      loading:state.loading,
+      error:state.error,
+      dispatch
+    }
+  }>
+    {children}
+  </AuthContext.Provider>
 }
