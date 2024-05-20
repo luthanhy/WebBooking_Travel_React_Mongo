@@ -37,7 +37,6 @@ const Register = () => {
 
   return (
     <>
-      <CommonSection title="Register" />
       <section>
         <Container>
           <Row>
