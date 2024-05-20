@@ -5,18 +5,22 @@ import FooterAdmin from '../Footer/FooterAdmin'
 import Adminsiderbar from '../Siderbar/SidebarAdmin'
 import "../Layout/LayoutAD.css"
 import Navbar from '../NavBar/navBar'
+import { DarkModeProvider } from '../../context/DarkModeContext'
 const Layout = () => {
   return (
-    <div className="home">
+    <DarkModeProvider>
+      <div className="home">
 
-      <Adminsiderbar />
-      <div className="homeContainer">
-        <Navbar />
-        <RoutersAdmin />
-        <FooterAdmin />
+        <Adminsiderbar />
+        <div className="homeContainer">
+          <Navbar />
+          <RoutersAdmin />
+          <FooterAdmin />
+        </div>
+
       </div>
+    </DarkModeProvider>
 
-    </div>
   )
 };
 

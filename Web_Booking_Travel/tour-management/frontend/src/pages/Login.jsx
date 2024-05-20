@@ -36,7 +36,6 @@ const Login = () => {
 
   return (
     <>
-      <CommonSection title="Login" />
       <section>
         <Container>
           <Row>
@@ -84,7 +83,7 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+        </section>
     </>
   );
 };

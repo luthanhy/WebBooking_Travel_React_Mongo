@@ -10,10 +10,10 @@ import { DarkModeContext } from "../../context/DarkModeContext";
 import { useContext } from "react";
 
 const Navbar = () => {
-  const { dispatch } = useContext(DarkModeContext);
+  const { state, dispatch } = useContext(DarkModeContext);
 
   return (
-    <div className="navbar">
+    <div className={`navbar ${state.darkMode ? "dark" : ""}`}>
       <div className="wrapper">
         <div className="search">
           <input type="text" placeholder="Search..." />

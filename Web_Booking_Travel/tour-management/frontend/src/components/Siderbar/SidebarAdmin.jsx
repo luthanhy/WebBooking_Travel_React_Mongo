@@ -12,14 +12,14 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext.js";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import "../Siderbar/SideBarAdmin.css"
 
 const Adminsiderbar = () => {
-  const { dispatch } = useContext(DarkModeContext);
-  return (
+  const { state, dispatch } = useContext(DarkModeContext);
 
-    <div className="sidebar">
+  return (
+    <div className={`sidebar ${state.darkMode ? "dark" : ""}`}>
       <div className="top">
         <span className="logo">Admin</span>
       </div>
@@ -31,8 +31,8 @@ const Adminsiderbar = () => {
             <li>
               <DashboardIcon className="icon" />
               <span>Dashboard</span>
-
-            </li></Link>
+            </li>
+          </Link>
           <p className="title">LISTS</p>
           <Link to="/admin/customer" style={{ textDecoration: "none" }}>
             <li>
@@ -88,16 +88,17 @@ const Adminsiderbar = () => {
         </ul>
       </div>
       <div className="bottom">
-        <div
+        <button
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}
-        ></div>
-        <div
+        ></button>
+        <button
           className="colorOption"
           onClick={() => dispatch({ type: "DARK" })}
-        ></div>
+        ></button>
       </div>
     </div>
   );
 };
+
 export default Adminsiderbar;
