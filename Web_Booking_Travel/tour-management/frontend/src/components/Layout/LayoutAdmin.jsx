@@ -5,13 +5,7 @@ import FooterAdmin from '../Footer/FooterAdmin'
 import Adminsiderbar from '../Siderbar/SidebarAdmin'
 import "../Layout/LayoutAD.css"
 import Navbar from '../NavBar/navBar'
-<<<<<<< HEAD
 import { DarkModeProvider } from '../../context/DarkModeContext'
-=======
-import Widget from '../Widget/widget'
-
-
->>>>>>> origin/vuadmin2
 const Layout = () => {
   return (
     <DarkModeProvider>
@@ -24,21 +18,9 @@ const Layout = () => {
           <FooterAdmin />
         </div>
 
-<<<<<<< HEAD
       </div>
     </DarkModeProvider>
 
-=======
-    <Adminsiderbar />
-    <div className="homeContainer">
-      <Navbar />
-    
-      <RoutersAdmin />
-      <FooterAdmin />
-    </div>
-
-  </div>
->>>>>>> origin/vuadmin2
   )
 };
 
