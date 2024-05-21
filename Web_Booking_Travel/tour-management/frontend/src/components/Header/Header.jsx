@@ -66,17 +66,27 @@ const Header = () => {
                                 </Button>
                             </div>
                             <div className='nav__btn'>
-             
-                                <Button className='btn secondary__btn'>
-                                    <NavLink to='/login'>
-                                        Login
-                                    </NavLink>
-                                </Button>
-                                <Button className='btn primary__btn'>
-                                    <NavLink to='/register'>
-                                        Register
-                                    </NavLink>
-                                </Button>
+                            {
+                                    user?(
+                                        <>
+                                        <h5 className='mb-0'>{user.username}</h5>
+                                        <Button className="btn btn-dark"></Button>
+                                        </>
+                                    ):(
+                                            <>
+                                                <Button className='btn secondary__btn'>
+                                                    <NavLink to='/login'>
+                                                        Login
+                                                    </NavLink>
+                                                </Button>
+                                                <Button className='btn primary__btn'>
+                                                    <NavLink to='/register'>
+                                                        Register
+                                                    </NavLink>
+                                                </Button>
+                                            </>
+                                    )
+                                }
                             </div>
      
                             <span className='mobile_menu'>
