@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Row, Button } from 'reactstrap';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.png';
 import './Header.css';
+import { AuthContext } from '../../context/AuthContext';
 
 const nav_link = [
     {
@@ -22,13 +23,15 @@ const nav_link = [
 
 const Header = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const {user,dispatch} = useContext(AuthContext)
     const [username, setUsername] = useState(""); // State to store username
     const isLoggedIn = username !== ""; // Check if user is logged in
 
     // Function to handle logout
-    const handleLogout = () => {
-        // Perform logout actions, e.g., clear local storage, reset state, etc.
-        setUsername("");
+    const Logout = () => {
+        dispatch({type:'LOGOUT'});
+        navigate('/');
     };
 
     return (

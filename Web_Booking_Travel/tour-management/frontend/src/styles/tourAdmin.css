@@ -1,10 +1,11 @@
-.listTour-container {
-  padding-top: 94px;
-  padding-left: 232px;
-  padding-right: 40px;
-  padding-bottom: 20px;
-   
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  overflow-x: hidden; /* Ẩn thanh cuộn ngang */
 }
+
 .listTour-card{
     width: 100%;
   margin: 20px;

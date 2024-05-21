@@ -1,5 +1,8 @@
 .customer-container {
-
+    padding-top: 106px; /* Add padding to the top to create space for the header */
+    padding-left: 250px; /* Add padding for the sidebar */
+    padding-right: 22px; /* Add right padding */
+    padding-bottom: 22px; /* Add bottom padding */
   
     display: flex; /* Enable flexbox for container layout */
     flex-direction: column; /* Arrange items vertically */

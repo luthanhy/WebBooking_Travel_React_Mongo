@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap'; // Import necessary components
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import '../styles/login.css';
 import loginImg from '../assets/images/login.png';
 import userIcon from '../assets/images/user.png';
 import { BASE_URL } from '../utils/config';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -15,6 +16,7 @@ const Login = () => {
   });
 
   const [error, setError] = useState('');
+  const {dispatch} = useContext(AuthContext)
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -23,12 +25,26 @@ const Login = () => {
 
   const handleLogin = async e => {
     e.preventDefault();
+    dispatch({type:'LOGIN_START'})
     try {
-      const res = await axios.post(`${BASE_URL}/auth/login`, credentials);
-      console.log('Login successful:', res.data);
-      // Perform actions after successful login, such as storing token in local storage
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+      })
+
+      const result = res.json()
+      if(!res.ok){
+        alert(result.message)
+      }
+      dispatch({type:'LOGIN_SUCCESS',payload:result.data})
+      console.log(result)
       navigate('/'); // Redirect to homepage or dashboard
     } catch (err) {
+      dispatch({type:'LOGIN_FAILURE',payload:err.message})
       setError(err.response.data.message);
       console.error('Login failed:', err.response.data.message);
     }
