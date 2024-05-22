@@ -112,7 +112,7 @@ const Register = () => {
                       onChange={handleChange}
                     >
                       <option value="user">User</option>
-                      <option value="admin">Admin</option>
+                      <option value="admin">Sale</option>
                     </select>
                   </FormGroup>
                   <button className="btn secondary_btn auth_btn" type="submit" disabled={isLoading}>

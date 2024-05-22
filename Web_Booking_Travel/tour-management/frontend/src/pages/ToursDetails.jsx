@@ -6,12 +6,13 @@ import TourData from '../assets/data/tours'
 import CalculateAvgRationg from '../utils/avgRating'
 import Avatar_User from '../assets/images/avatar.jpg'
 import Booking from '../components/Booking/Booking'
+import useFetch from '../hooks/useFetch'
+import { BASE_URL } from '../utils/config'
 const ToursDetails = () => {
   //format date time
   const options = {day:'numeric',month:'long',year:'numeric'}
-
   const {id} = useParams()
-
+  // const {data,loading,error} =  useFetch(`${BASE_URL}/`)
   const tour  = TourData.find(tour => tour.id === id)
 
   const {photo,title,address,desc,price,reviews,city,distance,maxGroupSize} = tour
@@ -24,7 +25,6 @@ const ToursDetails = () => {
   const submitHandler = e =>{
      e.preventDefault();
     const reviewText = reviewMsgRef.current.value
-    
     alert(`${reviewText},${tourRating}`)
   }
   return (
