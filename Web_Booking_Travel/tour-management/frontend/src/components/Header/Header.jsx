@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react';
 import { Container, Row, Button } from 'reactstrap';
-import { NavLink, useLocation } from 'react-router-dom';
-
+import { NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import './Header.css';
+import { AuthContext } from '../../context/AuthContext';
 
 const nav_link = [
     {
@@ -23,67 +23,76 @@ const nav_link = [
 const Header = () => {
     const location = useLocation();
     const [username, setUsername] = useState(""); // State to store username
-    const isLoggedIn = username !== ""; // Check if user is logged in
-
+    const navigate = useNavigate();
+    const {user,dispatch} = useContext(AuthContext);
     // Function to handle logout
     const handleLogout = () => {
-        // Perform logout actions, e.g., clear local storage, reset state, etc.
-        setUsername("");
+        dispatch({type:'LOGOUT'})
+        navigate('/')
     };
 
     return (
-        <header className='header'>
-            <Container>
-                <Row>
-                    <div className='nav__wrapper d-flex align-items-center justify-content-between'>
-                        <div className='logo'>
-                            <a href='./home'>
-                                <img src={logo} alt='' />
-                            </a>
-                        </div>
+      <header className="header">
+        <Container>
+          <Row>
+            <div className="nav__wrapper d-flex align-items-center justify-content-between">
+              <div className="logo">
+                <a href="./home">
+                  <img src={logo} alt="" />
+                </a>
+              </div>
 
-                        <div className='navigation'>
-                            <ul className='menu d-flex align-items-center gap-5'>
-                                {nav_link.map((item, index) => (
-                                    <li className='nav_item' key={index}>
-                                        <NavLink to={item.path} className={location.pathname === item.path ? "active_link" : ""}>
-                                            {item.display}
-                                        </NavLink>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+              <div className="navigation">
+                <ul className="menu d-flex align-items-center gap-5">
+                  {nav_link.map((item, index) => (
+                    <li className="nav_item" key={index}>
+                      <NavLink
+                        to={item.path}
+                        className={
+                          location.pathname === item.path ? "active_link" : ""
+                        }
+                      >
+                        {item.display}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                        <div className='nav__right d-flex align-items-center gap-4'>
-                            <div className='upload__btn'>
-                                <Button className='btn primary__btn'>
-                                    <NavLink to = '/uploadTour'>
-                                        UploadTour
-                                    </NavLink>
-                                </Button>
-                            </div>
-                            <div className='nav__btn'>
-             
-                                <Button className='btn secondary__btn'>
-                                    <NavLink to='/login'>
-                                        Login
-                                    </NavLink>
-                                </Button>
-                                <Button className='btn primary__btn'>
-                                    <NavLink to='/register'>
-                                        Register
-                                    </NavLink>
-                                </Button>
-                            </div>
-     
-                            <span className='mobile_menu'>
-                                <i className='ri-menu-line'></i>
-                            </span>
-                        </div>
+              <div className="nav__right d-flex align-items-center gap-4">
+                <div className="upload__btn">
+                  <Button className="btn primary__btn">
+                    <NavLink to="/uploadTour">UploadTour</NavLink>
+                  </Button>
+                </div>
+                {user ? (
+                  <>
+                    <h5 className="mb-0">{user.username}</h5>
+                    <Button className="btn btn-dark" onClick={handleLogout}>
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <div className="nav__btn">
+                      <Button className="btn secondary__btn">
+                        <NavLink to="/login">Login</NavLink>
+                      </Button>
+                      <Button className="btn primary__btn">
+                        <NavLink to="/register">Register</NavLink>
+                      </Button>
                     </div>
-                </Row>
-            </Container>
-        </header>
+                  </>
+                )}
+
+                <span className="mobile_menu">
+                  <i className="ri-menu-line"></i>
+                </span>
+              </div>
+            </div>
+          </Row>
+        </Container>
+      </header>
     );
 };
 

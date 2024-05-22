@@ -2,9 +2,8 @@ import React,{useRef} from 'react'
 import '../styles/searchbar.css'
 import {useNavigate} from 'react-router-dom'
 import { Col, Form, FormGroup } from 'reactstrap'
+import { BASE_URL } from '../utils/config'
 //import tourData from '../assets/data/tours' có thể k xài
-
-//import {BASE_URL} from './../utils/conf'
 const SearchBar = () => {
     const locationRef = useRef('')
     const distanceRef = useRef(0)
@@ -19,8 +18,11 @@ const SearchBar = () => {
         if(location === '' || distance ==='' || maxGroupSize ===''){
             return alert("Fail searching")
         }else{
-            //Đoạn code để khi nào callAPI sẽ thực hiện quá trình search
-            // // const res = await fetch(`${BASE_URL}/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
+            const res = await fetch(`${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
+            console.log(`${BASE_URL}/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
+            const result = res.json()
+            console.log(result.data)
+
             // // if(res.ok){
             // //     alert('Something went wrong');
             // // }
