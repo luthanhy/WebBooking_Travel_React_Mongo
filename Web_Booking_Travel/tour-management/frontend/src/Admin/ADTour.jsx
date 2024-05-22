@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Button, Input } from 'reactstrap';
+import { Col, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label } from 'reactstrap';
 import AdminTourCard from '../AdminComponent/AdminTourCard';
 import '../styles/tourAdmin.css';
 import AddTour from '../AdminComponent/AddTour';
@@ -9,30 +9,66 @@ import useFetch from '../hooks/useFetch';
 
 const ADTour = () => {
   const { data: featuredData, error, loading } = useFetch(`${BASE_URL}/tours/`);
-  
+  const [tourCount, setTourCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
+  const [currentTour, setCurrentTour] = useState(null);
 
   useEffect(() => {
     if (featuredData) {
       setFilteredTours(featuredData);
+      setTourCount(featuredData.length);
     }
   }, [featuredData]);
 
+  useEffect(() => {
+    const filtered = featuredData?.filter(
+      (tour) =>
+        tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tour.city.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredTours(filtered);
+    setTourCount(filtered.length);
+  }, [searchTerm, featuredData]);
+
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen);
 
   const handleAdd = () => {
     toggleModal();
   };
 
-  const handleUpdate = (tourId) => {
-    const updatedTours = filteredTours.map((tour) => 
-      tour._id === tourId ? { ...tour, title: 'Updated Tour', city: 'Updated City', price: 200 } : tour
-    );
-    setFilteredTours(updatedTours);
+  const updateTour = async (tourId, updatedTour) => {
+    try {
+      const response = await fetch(`${BASE_URL}/tours/${tourId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTour),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update tour');
+      }
+
+      const result = await response.json();
+      const updatedTours = filteredTours.map((tour) =>
+        tour._id === tourId ? result : tour
+      );
+      setFilteredTours(updatedTours);
+    } catch (error) {
+      console.error('Error updating tour:', error);
+    }
+  };
+
+  const handleEdit = (tour) => {
+    setCurrentTour(tour);
+    toggleEditModal();
   };
 
   const handleDelete = (tourId) => {
@@ -40,22 +76,19 @@ const ADTour = () => {
     if (confirmed) {
       const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
       setFilteredTours(updatedTours);
+      setTourCount(updatedTours.length);
     }
   };
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = featuredData.filter(
-      (tour) =>
-        tour.title.toLowerCase().includes(term) ||
-        tour.city.toLowerCase().includes(term)
-    );
-    setFilteredTours(filtered);
   };
 
   const addTour = (newTour) => {
-    setFilteredTours([...filteredTours, { _id: filteredTours.length + 1, ...newTour }]);
+    const updatedTours = [...filteredTours, newTour];
+    setFilteredTours(updatedTours);
+    setTourCount(updatedTours.length);
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
@@ -75,11 +108,25 @@ const ADTour = () => {
     }
   };
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    updateTour(currentTour._id, currentTour);
+    toggleEditModal();
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentTour({ ...currentTour, [name]: value });
+  };
+
   return (
     <>
       <div className="listTour-container">
         <div className="row">
           <div className="d-flex justify-content-between mb-3">
+            {/* <div className="tour-count">
+              <h2>Total Tours: {tourCount}</h2>
+            </div> */}
             <div className="search-bar">
               <Input
                 type="text"
@@ -97,7 +144,7 @@ const ADTour = () => {
             <Col lg="3" className="mb-4" key={tour._id}>
               <AdminTourCard
                 tour={tour}
-                handleUpdate={handleUpdate}
+                handleEdit={handleEdit}
                 handleDelete={handleDelete}
               />
             </Col>
@@ -112,6 +159,72 @@ const ADTour = () => {
         </div>
       </div>
       <AddTour isOpen={isModalOpen} toggle={toggleModal} addTour={addTour} />
+      {currentTour && (
+        <Modal isOpen={isEditModalOpen} toggle={toggleEditModal}>
+          <ModalHeader toggle={toggleEditModal}>Edit Tour</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={handleUpdate}>
+              <FormGroup>
+                <Label for="title">Title</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  id="title"
+                  value={currentTour.title}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="city">City</Label>
+                <Input
+                  type="text"
+                  name="city"
+                  id="city"
+                  value={currentTour.city}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="price">Price</Label>
+                <Input
+                  type="number"
+                  name="price"
+                  id="price"
+                  value={currentTour.price}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="description">Description</Label>
+                <Input
+                  type="textarea"
+                  name="description"
+                  id="description"
+                  value={currentTour.description}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">Image URL</Label>
+                <Input
+                  type="text"
+                  name="image"
+                  id="image"
+                  value={currentTour.image}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <Button type="submit" color="primary">Update Tour</Button>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={toggleEditModal}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      )}
     </>
   );
 };

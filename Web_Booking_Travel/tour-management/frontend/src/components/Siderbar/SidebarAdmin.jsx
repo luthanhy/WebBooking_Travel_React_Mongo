@@ -3,23 +3,18 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
-import { DarkModeContext } from "../../context/DarkModeContext.js";
-import React, { useContext } from "react";
+// import { DarkModeContext } from "../../context/DarkModeContext.js";
+import { useContext } from "react";
 import "../Siderbar/SideBarAdmin.css"
 
 const Adminsiderbar = () => {
-  const { state, dispatch } = useContext(DarkModeContext);
-
+  // const { dispatch } = useContext(DarkModeContext);
   return (
-    <div className={`sidebar ${state.darkMode ? "dark" : ""}`}>
+
+    <div className="sidebar">
       <div className="top">
         <span className="logo">Admin</span>
       </div>
@@ -31,8 +26,8 @@ const Adminsiderbar = () => {
             <li>
               <DashboardIcon className="icon" />
               <span>Dashboard</span>
-            </li>
-          </Link>
+
+            </li></Link>
           <p className="title">LISTS</p>
           <Link to="/admin/customer" style={{ textDecoration: "none" }}>
             <li>
@@ -54,28 +49,7 @@ const Adminsiderbar = () => {
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
           </li>
-          <p className="title">USEFUL</p>
-          <li>
-            <InsertChartIcon className="icon" />
-            <span>Stats</span>
-          </li>
-          <li>
-            <NotificationsNoneIcon className="icon" />
-            <span>Notifications</span>
-          </li>
-          <p className="title">SERVICE</p>
-          <li>
-            <SettingsSystemDaydreamOutlinedIcon className="icon" />
-            <span>System Health</span>
-          </li>
-          <li>
-            <PsychologyOutlinedIcon className="icon" />
-            <span>Logs</span>
-          </li>
-          <li>
-            <SettingsApplicationsIcon className="icon" />
-            <span>Settings</span>
-          </li>
+          
           <p className="title">USER</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
@@ -88,17 +62,16 @@ const Adminsiderbar = () => {
         </ul>
       </div>
       <div className="bottom">
-        <button
+        <div
           className="colorOption"
-          onClick={() => dispatch({ type: "LIGHT" })}
-        ></button>
-        <button
+          // onClick={() => dispatch({ type: "LIGHT" })}
+        ></div>
+        <div
           className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
-        ></button>
+          // onClick={() => dispatch({ type: "DARK" })}
+        ></div>
       </div>
     </div>
   );
 };
-
 export default Adminsiderbar;

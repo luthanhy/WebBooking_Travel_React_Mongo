@@ -1,9 +1,10 @@
 
+/* 
 body {
   display: flex;
   min-height: 100vh;
   margin: 0;
-}
+} */
 
 .sidebar {
   flex: 0 0 250px; 
@@ -13,13 +14,6 @@ body {
   
 }
 
-.sidebar.dark {
-  background-color: #333; /* Dark mode background */
-  color: #fff; /* Dark mode text color */
-}
-.sidebar.dark .center ul li:hover {
-  background-color: #555; /* Dark mode hover */
-}
 
 .container {
   flex: 1;
@@ -66,7 +60,7 @@ body {
   background-color: #ece8ff;
 }
 .sidebar .center ul li .icon {
-  font-size: 18px;
+  font-size: 30px;
   color: #FF8C00;
 }
 .sidebar .center ul li span {
