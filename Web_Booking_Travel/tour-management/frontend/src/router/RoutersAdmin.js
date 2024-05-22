@@ -8,10 +8,9 @@ import ADTour from '../Admin/ADTour.jsx'
 import TourPrice from '../Admin/TourPrice.jsx'
 import { DarkModeProvider } from '../context/DarkModeContext.js'
 const RoutersAdmin = () => {
-  return (
+  return (  
 <div>
         <Routes>
-          <DarkModeProvider>
             <Route path='/admin'element = {<Navigate to = '/admin/dashboard'/>}/>
             <Route path='*'element = {<PageError/>}/>
             <Route path='/admin/dashboard' element={<Dashboard />}/>
@@ -19,7 +18,6 @@ const RoutersAdmin = () => {
             <Route path='/admin/customer' element={<Customer />}/>
             <Route path='/admin/reviewproduct' element={<ReviewProduct />}/>
             <Route path='/admin/tourmanagement' element={<TourPrice />}/>
-          </DarkModeProvider>
 
         </Routes>
     </div>
