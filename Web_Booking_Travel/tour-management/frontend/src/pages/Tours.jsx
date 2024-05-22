@@ -17,7 +17,8 @@ const Tours = () => {
   
 
   useEffect(()=>{
-    const pages = Math.ceil(5/4)
+    const pages = Math.ceil(4/4)
+    // TourData.find(coutPage => coutPage.)
     SetPageCount(pages)
   },[Page])
   return (
