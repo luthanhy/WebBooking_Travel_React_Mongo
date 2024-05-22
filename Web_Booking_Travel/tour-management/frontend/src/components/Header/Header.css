@@ -65,11 +65,15 @@
 .modal-body button {
     width: 100%;
     padding: 10px 20px;
-    margin-top: 10px; /* Add space between buttons */
-    border: none;
+    margin-top: 10px;
+    /*Addspacebetweenbuttons*/border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    -webkit-transition: background-color 0.3s ease;
+    -moz-transition: background-color 0.3s ease;
+    -ms-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
 }
 
 .modal-body button[type="submit"] {

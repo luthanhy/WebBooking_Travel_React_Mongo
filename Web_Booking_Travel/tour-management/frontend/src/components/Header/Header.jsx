@@ -1,4 +1,4 @@
-import React, { useState , useContext } from 'react';
+import React, { useState , useContext ,useRef ,useEffect } from 'react';
 import { Container, Row, Button } from 'reactstrap';
 import { NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
@@ -21,6 +21,20 @@ const nav_link = [
 ];
 
 const Header = () => {
+  const headerRef = useRef(null)
+  const stickyHeaderFunc = () =>{
+      window.addEventListener('scroll',()=>{
+          if(document.body.scrollTop>80 || document.documentElement.scrollTop >80){
+              headerRef.current.classList.add('sticky__header')
+          }else{
+              headerRef.current.classList.remove('sticky__header')
+          }
+      })
+  }
+  useEffect(()=>{
+      stickyHeaderFunc()
+      return window.removeEventListener('scroll',stickyHeaderFunc)
+  })
     const location = useLocation();
     const [username, setUsername] = useState(""); // State to store username
     const navigate = useNavigate();
@@ -32,7 +46,7 @@ const Header = () => {
     };
 
     return (
-      <header className="header">
+      <header className="header" ref={headerRef}>
         <Container>
           <Row>
             <div className="nav__wrapper d-flex align-items-center justify-content-between">
@@ -59,12 +73,8 @@ const Header = () => {
                 </ul>
               </div>
 
-              <div className="nav__right d-flex align-items-center gap-4">
-                <div className="upload__btn">
-                  <Button className="btn primary__btn">
-                    <NavLink to="/uploadTour">UploadTour</NavLink>
-                  </Button>
-                </div>
+              <div className="">
+                
                 {user ? (
                   <>
                     <h5 className="mb-0">{user.username}</h5>
