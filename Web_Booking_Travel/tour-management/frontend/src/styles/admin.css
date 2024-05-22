@@ -22,10 +22,6 @@
     width: 100%;
     text-align: center;
 }
-.admin-main-container.dark {
-  background-color: #333;
-  color: white;
-}
 #admin-sidebar {
   position: fixed;
   top: 80px; 

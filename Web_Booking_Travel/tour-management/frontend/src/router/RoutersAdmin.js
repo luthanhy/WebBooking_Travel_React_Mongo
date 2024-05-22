@@ -12,7 +12,7 @@ import DashBoard from '../Admin/Dashboard.jsx'
 
 >>>>>>> origin/vuadmin2
 const RoutersAdmin = () => {
-  return (
+  return (  
 <div>
         <Routes>
             <Route path='/admin'element = {<Navigate to = '/admin/dashboard'/>}/>

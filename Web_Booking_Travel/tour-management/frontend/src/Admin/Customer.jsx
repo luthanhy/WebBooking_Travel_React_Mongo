@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { FavoriteBorder, Edit, Delete } from '@mui/icons-material';
 import '../styles/customer.css'; // Import CSS file
-import { DarkModeContext } from '../context/DarkModeContext';
+// import { DarkModeContext } from '../context/DarkModeContext';
 const data = [
   { id: 1, name: 'Tiger Nixon', position: 'System Architect', office: 'Edinburgh', age: 61 },
   { id: 2, name: 'Tiger Nixon', position: 'Accountant', office: 'Tokyo', age: 63 },
@@ -20,7 +20,7 @@ const data = [
 ];
 
 const Customer = () => {
-  const { state } = useContext(DarkModeContext);
+  // const { state } = useContext(DarkModeContext);
   const [rows, setRows] = useState(data);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
@@ -72,7 +72,8 @@ const Customer = () => {
   };
 
   return (
-    <div className={`customer-container ${state.darkMode ? 'dark' : ''}`}>
+    // ${state.darkMode ? 'dark' : ''}
+    <div className={`customer-container`}> 
       <Paper>
         <TableContainer>
           <Table>
