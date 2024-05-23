@@ -71,7 +71,7 @@ const TourPrice = () => {
   };
 
   return (
-    <div className={`customer-container ${state.darkMode ? 'dark' : ''}`}>
+    <div className={`price-container ${state.darkMode ? 'dark' : ''}`}>
       <Paper>
         <TableContainer>
           <Table>
@@ -80,7 +80,7 @@ const TourPrice = () => {
                 {['Tour Name', 'Destination', 'Price', 'Duration'].map((headCell) => (
                   <TableCell
                     key={headCell}
-                    className="customer-header-cell"
+                    className="price-header-cell"
                     sortDirection={orderBy === headCell.toLowerCase() ? order : false}
                   >
                     <TableSortLabel
@@ -92,47 +92,47 @@ const TourPrice = () => {
                     </TableSortLabel>
                   </TableCell>
                 ))}
-                <TableCell className="customer-actions-cell">Actions</TableCell>
+                <TableCell className="price-actions-cell">Actions</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="customer-header-cell">
+                <TableCell className="price-header-cell">
                   <TextField
                     label="Search Tour Name"
                     variant="outlined"
                     fullWidth
                     value={searchTourName}
                     onChange={(e) => setSearchTourName(e.target.value)}
-                    className="customer-header-search"
+                    className="price-header-search"
                   />
                 </TableCell>
-                <TableCell className="customer-header-cell">
+                <TableCell className="price-header-cell">
                   <TextField
                     label="Search Destination"
                     variant="outlined"
                     fullWidth
                     value={searchDestination}
                     onChange={(e) => setSearchDestination(e.target.value)}
-                    className="customer-header-search"
+                    className="price-header-search"
                   />
                 </TableCell>
-                <TableCell className="customer-header-cell">
+                <TableCell className="price-header-cell">
                   <TextField
                     label="Search Price"
                     variant="outlined"
                     fullWidth
                     value={searchPrice}
                     onChange={(e) => setSearchPrice(e.target.value)}
-                    className="customer-header-search"
+                    className="price-header-search"
                   />
                 </TableCell>
-                <TableCell className="customer-header-cell">
+                <TableCell className="price-header-cell">
                   <TextField
                     label="Search Duration"
                     variant="outlined"
                     fullWidth
                     value={searchDuration}
                     onChange={(e) => setSearchDuration(e.target.value)}
-                    className="customer-header-search"
+                    className="price-header-search"
                   />
                 </TableCell>
                 <TableCell />
@@ -147,13 +147,13 @@ const TourPrice = () => {
                     <TableCell>{row.price}</TableCell>
                     <TableCell>{row.duration}</TableCell>
                     <TableCell>
-                      <IconButton className="customer-action-button">
+                      <IconButton className="price-action-button">
                         <FavoriteBorder />
                       </IconButton>
-                      <IconButton className="customer-action-button">
+                      <IconButton className="price-action-button">
                         <Edit />
                       </IconButton>
-                      <IconButton className="customer-action-button">
+                      <IconButton className="price-action-button">
                         <Delete />
                       </IconButton>
                     </TableCell>
@@ -169,7 +169,7 @@ const TourPrice = () => {
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-          className="customer-pagination"
+          className="price-pagination"
         />
       </Paper>
     </div>
