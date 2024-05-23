@@ -10,6 +10,7 @@ import About from '../pages/About.jsx';
 import PageError from '../pages/PageError.jsx';
 import UploadContent from '../pages/UploadContent.jsx';
 import ThankYou from '../pages/ThanksYou.jsx'
+import LoginAdmin from '../Admin/LoginAdmin.jsx';
 const Routers = () => {
   return (
     <div>
@@ -17,6 +18,7 @@ const Routers = () => {
         <Route path='/' element={<Navigate to='/home' />} />
         <Route path='*' element={<PageError />} />
         <Route path='/home' element={<Home />} />
+        <Route path='/admin' element={<LoginAdmin />} />
         <Route path='/tours' element={<Tours />} />
         <Route path='/tours/:id' element={<ToursDetails />} />
         <Route path='/login' element={<Login />} />

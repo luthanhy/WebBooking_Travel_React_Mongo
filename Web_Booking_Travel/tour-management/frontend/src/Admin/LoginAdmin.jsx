@@ -7,7 +7,9 @@ import userIcon from '../assets/images/user.png';
 import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
 
-const Login = () => {
+const LoginAdmin = ({IsLoginSuccess}) => {
+    
+    IsLoginSuccess = false;
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -27,6 +29,7 @@ const Login = () => {
     setError('');
 
     try {
+        console.log("luthanhy");
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
@@ -35,17 +38,18 @@ const Login = () => {
         // credentials : 'include',
         body: JSON.stringify(credentials),
       });
-
       const result = await res.json();
       console.log(result.data);
       if (!res.ok) {
         setError(result.message);
       } else {
-        if(result.data === undefined){
-        setError(result.message);
+        if(result.data === undefined || result.data.accountType === "user") {
+            setError("Account is not valid");
         }else{
           dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
           console.log(result.data);
+          IsLoginSuccess = true
+          console.log(IsLoginSuccess)
           navigate('/'); // Redirect to homepage or dashboard
         }
         }
@@ -109,4 +113,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginAdmin;
