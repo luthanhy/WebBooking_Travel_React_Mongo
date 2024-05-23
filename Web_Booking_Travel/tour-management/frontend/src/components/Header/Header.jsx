@@ -73,7 +73,7 @@ const Header = () => {
                 </ul>
               </div>
 
-              <div className="">
+              <div className=" d-flex align-items-center gap-4">
                 
                 {user ? (
                   <>
