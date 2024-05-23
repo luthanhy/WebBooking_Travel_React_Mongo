@@ -20,10 +20,18 @@ const AuthReducer = (state, action) => {
       return {
         user: action.payload,
         isLoggedIn: true,
-        isAdmin: action.payload.isAdmin,
+        isAdmin : false,
         loading: false,
         error: null
       };
+    case "LOGIN_SUCCESS_ADMIN":
+      return{
+        user: action.payload,
+        isLoggedIn: true,
+        isAdmin : true,
+        loading: false,
+        error: null
+      }
     case "LOGIN_FAILURE":
       return {
         user: null,
@@ -63,6 +71,8 @@ export const AuthContextProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user: state.user,
+        isAdmin: state.isAdmin,
+        isLoggedIn : state.isLoggedIn,
         loading: state.loading,
         error: state.error,
         dispatch

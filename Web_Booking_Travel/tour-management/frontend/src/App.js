@@ -6,22 +6,25 @@ import { ReviewProvider } from './context/ReviewContext';
 import { useIsLoggedIn, useIsAdmin } from './utils/auth';
 
 function App() {
-  const isLoggedIn = useIsLoggedIn();
+  // const isLoggedIn = useIsLoggedIn();
   const isAdmin = useIsAdmin();
-  const [isAdminUser, setIsAdminUser] = useState(false);
+  console.log(isAdmin);
+  // const [isAdminUser, setIsAdminUser] = useState(false);
 
-  useEffect(() => {
-    const checkUserRole = () => {
-      if (isLoggedIn) {
-        setIsAdminUser(isAdmin);
-      }
-    };
-    checkUserRole();
-  }, [isLoggedIn, isAdmin]);
-
+  // useEffect(() => {
+  //   const checkUserRole = () => {
+  //     if (!isLoggedIn) {
+  //       console.log("luthanhy");
+  //       setIsAdminUser(isAdmin);
+  //     }
+  //   };
+  //   checkUserRole();
+  // }, [isLoggedIn, isAdmin]);
+  // console.log(isAdminUser);
   return (
     <ReviewProvider>
-      {isAdminUser ? <LayoutAdmin /> : <Layout />}
+      { 
+      isAdmin ? <LayoutAdmin /> : <Layout />}
     </ReviewProvider>
   );
 }
