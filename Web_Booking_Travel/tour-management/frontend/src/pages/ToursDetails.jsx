@@ -1,13 +1,11 @@
-import React ,{useRef,useEffect, useState, useContext} from 'react'
+import React ,{useRef, useState} from 'react'
 import '../styles/tour_detail.css'
-import { Container,Row,Col,Form,FormGroup, ListGroup } from 'reactstrap'
+import { Container,Row,Col,Form, ListGroup } from 'reactstrap'
 import { useParams } from 'react-router-dom'
-import TourData from '../assets/data/tours'
 import CalculateAvgRationg from '../utils/avgRating'
 import Avatar_User from '../assets/images/avatar.jpg'
 import Booking from '../components/Booking/Booking'
 import useFetch from '../hooks/useFetch'
-import {AuthContext} from '../context/AuthContext'
 import { BASE_URL } from '../utils/config'
 const ToursDetails = () => {
   //format date time
@@ -17,7 +15,6 @@ const ToursDetails = () => {
   //http://localhost:4000/api/v1/tours/6640c7f8e607938c4968c73d
   const {data:DetailTour,loading,error} =  useFetch(`${BASE_URL}/tours/${id}`)
   console.log(`${BASE_URL}/tours/${id}`);
-  const {user} = useContext(AuthContext);
 // Check and log reviews count
 if (DetailTour && Array.isArray(DetailTour.reviews)) {
   console.log('Number of reviews:', DetailTour.reviews.length);
@@ -34,43 +31,11 @@ if (DetailTour && Array.isArray(DetailTour.reviews)) {
   const reviewMsgRef = useRef(null)
   const [tourRating,StateTourRating] = useState(null)
 
-  const submitHandler = async e => {
-    e.preventDefault();
-    const reviewText = reviewMsgRef.current.value;
-
-    try {
-        if (!user || user === undefined || user === null) {
-            alert("Please login to submit review");
-            return;
-        }
-
-        const reviewObj = {
-            username: user?.username,
-            reviewText,
-            rating: tourRating,
-        };
-
-        const res = await fetch(`${BASE_URL}/reviews/${id}`, {
-            method: 'post',
-            headers: {
-                'content-type': 'application/json',
-                //'Authorization': `Bearer ${user.token}` // Nếu bạn sử dụng JWT
-            },
-           // credentials: 'include',
-            body: JSON.stringify(reviewObj)
-        });
-
-        const result = await res.json();
-        if (!res.ok) {
-            alert(result.message);
-            return;
-        }
-
-        alert(result.message);
-    } catch (err) {
-        alert(err.message);
-    }
-};
+  const submitHandler = e =>{
+     e.preventDefault();
+    const reviewText = reviewMsgRef.current.value
+    alert(`${reviewText},${tourRating}`)
+  }
   return (
     <>
     {
@@ -130,18 +95,16 @@ if (DetailTour && Array.isArray(DetailTour.reviews)) {
                                 <div className='w-100'>
                                     <div className=' d-flex align-items-center justify-content-between '>
                                       <div className='info_review'>
-                                        <h5> {reviews.username}</h5>
+                                        <h5>Product Reviews</h5>
                                         <p>
                                           {new Date('05-08-2024').toLocaleDateString('en-US',options)}
                                         </p>
-                                      
+                                        <h6> review user</h6>
                                       </div>
                                       <span className='star_review d-flex align-content-end justify-content-end'>
-                                        {reviews.rating}
-                                       <i className=' ri-star-s-fill'></i>
+                                      5 <i className=' ri-star-s-fill'></i>
                                     </span>
                                     </div>
-                                    <h6>{reviews.reviewText}</h6>
                                 </div>
                               </div>
                           ))

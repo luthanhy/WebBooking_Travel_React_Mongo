@@ -32,7 +32,6 @@ const quick_link_second = [
   }
 ]
 const Footer = () => {
-  const year = new Date().getFullYear()
   return (
     <footer className='footer'>
         <Container>

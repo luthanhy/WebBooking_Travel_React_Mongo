@@ -1,0 +1,35 @@
+/* PageError.css */
+
+.page-error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  
+  .page-error h1 {
+    margin-top: 0;
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .page-error p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .page-error a {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .page-error a:hover {
+    text-decoration: underline;
+  }
+  
