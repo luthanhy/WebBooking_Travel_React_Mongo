@@ -4,7 +4,7 @@ import { Card,CardBody } from 'reactstrap'
 import {Link} from 'react-router-dom'
 import CalculateAvgRationg from '../utils/avgRating'
 const TourCard = ({tour}) => {
-    const {_id,title,city,photo,price,featured,reviews} = tour
+    const {_id,title,city,photo,price,reviews} = tour
 
      const{totalRating,avgRating} = CalculateAvgRationg(reviews)
   return (
