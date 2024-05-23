@@ -7,9 +7,7 @@ import userIcon from '../assets/images/user.png';
 import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
 
-const LoginAdmin = ({IsLoginSuccess}) => {
-    
-    IsLoginSuccess = false;
+const LoginAdmin = () => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -29,7 +27,6 @@ const LoginAdmin = ({IsLoginSuccess}) => {
     setError('');
 
     try {
-        console.log("luthanhy");
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
@@ -48,8 +45,6 @@ const LoginAdmin = ({IsLoginSuccess}) => {
         }else{
           dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
           console.log(result.data);
-          IsLoginSuccess = true
-          console.log(IsLoginSuccess)
           navigate('/'); // Redirect to homepage or dashboard
         }
         }
