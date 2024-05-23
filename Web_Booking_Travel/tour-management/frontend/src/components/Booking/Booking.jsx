@@ -4,7 +4,6 @@ import { ListGroup,ListGroupItem,FormGroup,Button,Form, Input} from 'reactstrap'
 import { useNavigate } from 'react-router-dom'
 
 const Booking = ({tour,AgvRating}) => {
-  const {price,reviews} = tour
   const [credentials,setCredentials] = useState({
     userId:'01',
     userEmail:'example@gmail.com',
@@ -14,7 +13,7 @@ const Booking = ({tour,AgvRating}) => {
     bookAt:''
   })
   const ServiceFee = 10;
-  const TotalAmount = Number(price) * Number(credentials.getSize) + ServiceFee;
+  const TotalAmount = Number(tour.price) * Number(credentials.getSize) + ServiceFee;
   const handleChange = e =>{
     setCredentials(prev=> ({...prev,[e.target.id]:e.target.value}))
   }
@@ -28,9 +27,9 @@ const Booking = ({tour,AgvRating}) => {
     <>
         <div className='booking'>
             <div className='booking_top d-flex align-items-center justify-content-between'> 
-                <h3>{price}$/per person</h3>
+                <h3>{tour.price}$/per person</h3>
                 <span >
-                    {AgvRating===0 ? null:AgvRating} {(reviews.length)}
+                    {AgvRating===0 ? null:AgvRating} {(tour&&Array.isArray(tour.reviews) ? tour.reviews.length : 0)}
                     <i className=' ri-star-fill'></i>
                 </span>
             </div>
@@ -56,7 +55,7 @@ const Booking = ({tour,AgvRating}) => {
         </div>
         <div className="booking_bottom">
             <ListGroup>
-                <ListGroupItem className=" border-0 px-0 d"><h5 className=' d-flex align-items-center gap-1'>${price}<i className=' ri-close-line'>1 person</i></h5> <span>${price}</span></ListGroupItem>
+                <ListGroupItem className=" border-0 px-0 d"><h5 className=' d-flex align-items-center gap-1'>${tour.price}<i className=' ri-close-line'>1 person</i></h5> <span>${tour.price}</span></ListGroupItem>
                 <ListGroupItem className=" border-0 px-0"><h5>Service Charge </h5> <span>${ServiceFee}</span></ListGroupItem>
                 <ListGroupItem className="total_Y border-0 px-0"><h5>Total</h5> <span>${TotalAmount}</span></ListGroupItem>
             </ListGroup>

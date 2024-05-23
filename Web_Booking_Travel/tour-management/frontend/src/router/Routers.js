@@ -9,7 +9,7 @@ import SearchResultList from '../pages/SearchResultList';
 import About from '../pages/About.jsx';
 import PageError from '../pages/PageError.jsx';
 import UploadContent from '../pages/UploadContent.jsx';
-
+import ThankYou from '../pages/ThanksYou.jsx'
 const Routers = () => {
   return (
     <div>
@@ -23,6 +23,7 @@ const Routers = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/tours/search' element={<SearchResultList />} />
         <Route path='/about' element={<About />} />
+        <Route path='/thank-you' element = {<ThankYou/>}/>
         <Route path='/uploadTour' element={<UploadContent />} />
       </Routes>
     </div>

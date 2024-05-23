@@ -12,12 +12,22 @@ const ToursDetails = () => {
   //format date time
   const options = {day:'numeric',month:'long',year:'numeric'}
   const {id} = useParams()
-  // const {data,loading,error} =  useFetch(`${BASE_URL}/`)
-  const tour  = TourData.find(tour => tour.id === id)
+  console.log("",id)
+  //http://localhost:4000/api/v1/tours/6640c7f8e607938c4968c73d
+  const {data:DetailTour,loading,error} =  useFetch(`${BASE_URL}/tours/${id}`)
+  console.log(`${BASE_URL}/tours/${id}`);
+// Check and log reviews count
+if (DetailTour && Array.isArray(DetailTour.reviews)) {
+  console.log('Number of reviews:', DetailTour.reviews.length);
+} else {
+  console.log('No reviews available or DetailTour is not loaded yet.');
+}
 
-  const {photo,title,address,desc,price,reviews,city,distance,maxGroupSize} = tour
+  console.log(DetailTour.reviews)
+  // const tour  = TourData.find(tour => tour.id === id)
+  // const {photo,title,address,desc,price,reviews,city,distance,maxGroupSize} = tour
   
-  const {avgRating,totalRating} = CalculateAvgRationg(reviews)
+  const {avgRating,totalRating} = CalculateAvgRationg(DetailTour.reviews)
 
   const reviewMsgRef = useRef(null)
   const [tourRating,StateTourRating] = useState(null)
@@ -29,34 +39,40 @@ const ToursDetails = () => {
   }
   return (
     <>
+    {
+      loading && <h4> Loading</h4>
+    }{
+      error && <h4> error</h4>
+    }{
+      !loading && !error &&
     <section>
       <Container>
         <Row>
           <Col lg='8'>
             <div className='tour_detail_content'>
-              <img src={photo} alt="" />
+              <img src={DetailTour.photo} alt="" />
 
             <div className='tour_info'>
-              <h2>{title}</h2>
+              <h2>{DetailTour.title}</h2>
               <div className=' d-flex align-items-center gap-5'> <span className='star_info d-flex align-items-center gap-1' style={{color:"var(--secondary-color)"}}>
                     <i className=' ri-star-fill'>
-                      </i>{avgRating === 0 ? null : avgRating}{totalRating === 0 ?("Not rated"):(<span>({reviews.length})</span>)}
+                      </i>{avgRating === 0 ? null : avgRating}{totalRating === 0 ?("Not rated"):(<span>({DetailTour && Array.isArray(DetailTour.reviews) ? DetailTour.reviews.length : 0 })</span>)}
               </span>
               <span>
-                <i className='ri-map-pin-user-fill'>{address}</i>
+                <i className='ri-map-pin-user-fill'>{DetailTour.address}</i>
               </span></div>
             <div className='tour_extra_detail'>
-              <span><i className='ri-map-pin-line'>{city}</i></span>
-              <span><i className='ri-money-dollar-circle-fill'>{price}/per person</i></span>
-              <span><i className=' ri-map-pin-time-line'>{distance} k/m</i></span>
-              <span><i className=' ri-group-line'>{maxGroupSize}</i></span>
+              <span><i className='ri-map-pin-line'>{DetailTour.city}</i></span>
+              <span><i className='ri-money-dollar-circle-fill'>{DetailTour.price}/per person</i></span>
+              <span><i className=' ri-map-pin-time-line'>{DetailTour.distance} k/m</i></span>
+              <span><i className=' ri-group-line'>{DetailTour.maxGroupSize}</i></span>
             </div>
             <h5>Description</h5>
-            <p>{desc}</p>
+            <p>{DetailTour.desc}</p>
             </div>
               {/* review feature */}
               <div className='review_tours mt-4'>
-                  <h4>Reviews ({reviews.length}) reviews</h4>
+                  <h4>Reviews ({DetailTour && Array.isArray(DetailTour.reviews) ? DetailTour.reviews.length : 0 }) reviews</h4>
                   <Form onSubmit={submitHandler}>
                     <div className=' rating_group d-flex align-items-center gap-3 mb-4'>
                         <span onClick={()=>StateTourRating(1)}>1<i className=" ri-star-fill"></i></span>
@@ -74,7 +90,7 @@ const ToursDetails = () => {
                   </Form>
                   <ListGroup className='user_reviews'>
                         {
-                          reviews?.map(reviews=>(
+                          DetailTour.reviews?.map(reviews=>(
                               <div className='review_items'>
                                 <img src={Avatar_User} alt="" />
                                 <div className='w-100'>
@@ -99,11 +115,12 @@ const ToursDetails = () => {
             </div>
           </Col>
           <Col lg='4'>
-            <Booking tour={tour} AgvRating={avgRating}></Booking>
+            <Booking tour={DetailTour} AgvRating={avgRating}></Booking>
           </Col>
         </Row>
       </Container>
     </section>
+    }
     </>
   )
 }
