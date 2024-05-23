@@ -1,6 +1,6 @@
-import React, { useState , useContext ,useRef ,useEffect } from 'react';
+import React, { useContext ,useRef ,useEffect } from 'react';
 import { Container, Row, Button } from 'reactstrap';
-import { NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import './Header.css';
 import { AuthContext } from '../../context/AuthContext';
@@ -36,7 +36,6 @@ const Header = () => {
       return window.removeEventListener('scroll',stickyHeaderFunc)
   })
     const location = useLocation();
-    const [username, setUsername] = useState(""); // State to store username
     const navigate = useNavigate();
     const {user,dispatch} = useContext(AuthContext);
     // Function to handle logout

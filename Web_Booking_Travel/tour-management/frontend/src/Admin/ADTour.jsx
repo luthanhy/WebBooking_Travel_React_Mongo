@@ -8,14 +8,14 @@ import { BASE_URL } from '../utils/config';
 import useFetch from '../hooks/useFetch';
 
 const ADTour = () => {
-  const { data: featuredData, error, loading } = useFetch(`${BASE_URL}/tours/`);
-  const [tourCount, setTourCount] = useState(0);
+  const { data: featuredData } = useFetch(`${BASE_URL}/tours/`);
+  const [ setTourCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit] = useState(8);
   const [currentTour, setCurrentTour] = useState(null);
 
   useEffect(() => {

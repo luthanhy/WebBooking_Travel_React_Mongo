@@ -9,7 +9,7 @@ import { BASE_URL } from '../utils/config'
 
 const Tours = () => {
 
-  const {data:TourData,error,loading} = useFetch(`${BASE_URL}/tours/`)
+  const {data:TourData} = useFetch(`${BASE_URL}/tours/`)
 
   console.log(TourData)
   const [CountPage,SetPageCount] = useState(0);
