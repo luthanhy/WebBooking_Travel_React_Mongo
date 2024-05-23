@@ -16,7 +16,6 @@ const data = [
   { id: 7, name: 'Herrod Chandler', position: 'Sales Assistant', office: 'San Francisco', age: 59 },
   { id: 8, name: 'Rhona Davidson', position: 'Integration Specialist', office: 'Tokyo', age: 55 },
   { id: 9, name: 'Colleen Hurst', position: 'Javascript Developer', office: 'San Francisco', age: 39 },
-  // Add more data as needed
 ];
 
 const Customer = () => {

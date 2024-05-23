@@ -9,10 +9,9 @@ function App() {
 
   useEffect(() => {
     const checkUserRole = async () => {
-      const loggedIn = await isLoggedIn(); // Kiểm tra xem người dùng đã đăng nhập chưa
+      const loggedIn = await isLoggedIn();
       if (loggedIn) {
-        const adminRole = await isAdmin(); // Kiểm tra xem người dùng có vai trò admin hay không
-        setIsAdminUser(adminRole);
+        const adminRole = await isAdmin(); 
       }
     };
     checkUserRole();
@@ -26,7 +25,6 @@ function App() {
 
   return (
     <ReviewProvider>
-       <Layout />
        {isAdminUser ? <LayoutAdmin /> : <Layout />}
     </ReviewProvider>
   );
