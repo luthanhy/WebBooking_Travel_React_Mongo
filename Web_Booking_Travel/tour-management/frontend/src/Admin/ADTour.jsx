@@ -9,7 +9,7 @@ import useFetch from '../hooks/useFetch';
 
 const ADTour = () => {
   const { data: featuredData } = useFetch(`${BASE_URL}/tours/`);
-  const [ setTourCount] = useState(0);
+  const [, setTourCount] = useState(0);  // Add tourCount state
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,22 +18,26 @@ const ADTour = () => {
   const [limit] = useState(8);
   const [currentTour, setCurrentTour] = useState(null);
 
+  // Fetch data and set initial state
   useEffect(() => {
     if (featuredData) {
       setFilteredTours(featuredData);
       setTourCount(featuredData.length);
     }
-  }, [featuredData]);
+  }, [featuredData]);  // Add featuredData as dependency
 
+  // Filter tours based on search term
   useEffect(() => {
-    const filtered = featuredData?.filter(
-      (tour) =>
-        tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tour.city.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredTours(filtered);
-    setTourCount(filtered.length);
-  }, [searchTerm, featuredData]);
+    if (featuredData) {
+      const filtered = featuredData.filter(
+        (tour) =>
+          tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          tour.city.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredTours(filtered);
+      setTourCount(filtered.length);
+    }
+  }, [searchTerm, featuredData]);  // Add searchTerm and featuredData as dependencies
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen);
