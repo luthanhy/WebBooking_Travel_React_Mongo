@@ -38,7 +38,6 @@ const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const {user,dispatch} = useContext(AuthContext);
-    // Function to handle logout
     const handleLogout = () => {
         dispatch({type:'LOGOUT'})
         navigate('/')
@@ -71,7 +70,11 @@ const Header = () => {
                   ))}
                 </ul>
               </div>
-
+              <div className="nav__btn">
+                <Button className="btn primary__btn">
+                  <NavLink to="/uploadTour">Upload Tour</NavLink>
+                </Button>
+              </div>
               <div className=" d-flex align-items-center gap-4">
                 
                 {user ? (
