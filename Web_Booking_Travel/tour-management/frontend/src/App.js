@@ -3,29 +3,25 @@ import React, { useState, useEffect } from 'react';
 import Layout from "./components/Layout/Layout";
 import LayoutAdmin from "./components/Layout/LayoutAdmin";
 import { ReviewProvider } from './context/ReviewContext';
-import {isLoggedIn, isAdmin } from './utils/auth.js';
+import { useIsLoggedIn, useIsAdmin } from './utils/auth';
+
 function App() {
+  const isLoggedIn = useIsLoggedIn();
+  const isAdmin = useIsAdmin();
   const [isAdminUser, setIsAdminUser] = useState(false);
 
   useEffect(() => {
-    const checkUserRole = async () => {
-      const loggedIn = await isLoggedIn();
-      if (loggedIn) {
-        const adminRole = await isAdmin(); 
+    const checkUserRole = () => {
+      if (isLoggedIn) {
+        setIsAdminUser(isAdmin);
       }
     };
     checkUserRole();
-  }, []);
-  // const [isAdminDomain, setIsAdminDomain] = useState(false);
-
-  // useEffect(() => {
-  //   const currentDomain = window.location.pathname;
-  //   setIsAdminDomain(currentDomain.includes('admin')); 
-  // }, []);
+  }, [isLoggedIn, isAdmin]);
 
   return (
     <ReviewProvider>
-       {isAdminUser ? <LayoutAdmin /> : <Layout />}
+      {isAdminUser ? <LayoutAdmin /> : <Layout />}
     </ReviewProvider>
   );
 }

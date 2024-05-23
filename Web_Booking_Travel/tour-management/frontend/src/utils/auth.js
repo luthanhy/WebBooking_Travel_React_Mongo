@@ -1,9 +1,19 @@
-import LoginAdmin from "../Admin/LoginAdmin";
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
-export const isLoggedIn = async () => {
-    const islogin = await LoginAdmin.IsLoginSuccess;
-    console.log(islogin);
+// Custom hook to get the auth context
+export const useAuth = () => {
+  return useContext(AuthContext);
 };
-export const isAdmin = async () => {
 
+// Custom hook to check if the user is logged in
+export const useIsLoggedIn = () => {
+  const { isLoggedIn } = useAuth();
+  return isLoggedIn;
+};
+
+// Custom hook to check if the user is an admin
+export const useIsAdmin = () => {
+  const { isAdmin } = useAuth();
+  return isAdmin;
 };

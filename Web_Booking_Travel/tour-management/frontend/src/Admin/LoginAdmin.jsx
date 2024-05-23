@@ -6,6 +6,7 @@ import loginImg from '../assets/images/login.png';
 import userIcon from '../assets/images/user.png';
 import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
+import { isAdmin } from '../utils/auth';
 
 const LoginAdmin = () => {
   const [credentials, setCredentials] = useState({
@@ -43,9 +44,9 @@ const LoginAdmin = () => {
         if(result.data === undefined || result.data.accountType === "user") {
             setError("Account is not valid");
         }else{
-          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data ,isAdmin: true});
           console.log(result.data);
-          navigate('/'); // Redirect to homepage or dashboard
+          navigate('/admin/home'); // Redirect to homepage or dashboard
         }
         }
     } catch (err) {

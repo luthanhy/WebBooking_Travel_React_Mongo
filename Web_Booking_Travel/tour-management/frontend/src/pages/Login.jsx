@@ -6,6 +6,7 @@ import loginImg from '../assets/images/login.png';
 import userIcon from '../assets/images/user.png';
 import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
+import { isAdmin } from '../utils/auth';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -35,7 +36,7 @@ const Login = () => {
         // credentials : 'include',
         body: JSON.stringify(credentials),
       });
-
+      
       const result = await res.json();
       console.log(result.data);
       if (!res.ok) {
@@ -44,7 +45,7 @@ const Login = () => {
         if(result.data === undefined){
         setError(result.message);
         }else{
-          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data,isAdmin : false});
           console.log(result.data);
           navigate('/'); // Redirect to homepage or dashboard
         }
