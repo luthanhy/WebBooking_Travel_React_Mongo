@@ -44,9 +44,10 @@ const LoginAdmin = () => {
         if(result.data === undefined || result.data.accountType === "user") {
             setError("Account is not valid");
         }else{
-          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data ,isAdmin: true});
+          dispatch({ type: 'LOGIN_SUCCESS_ADMIN', payload: result.data ,isAdmin: true,isLoggedIn: true});
           console.log(result.data);
-          navigate('/admin/home'); // Redirect to homepage or dashboard
+          console.log(dispatch.isAdmin)
+          navigate('/admin/dashboard'); // Redirect to homepage or dashboard
         }
         }
     } catch (err) {
