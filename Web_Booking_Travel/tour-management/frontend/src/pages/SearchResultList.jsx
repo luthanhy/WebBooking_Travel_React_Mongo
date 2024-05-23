@@ -17,7 +17,7 @@ const SearchResultList = () => {
             {data.length === 0 ? (
               <h4 className="text-context">No tour found</h4>
             ) : (
-              TourData?.map(tour => (
+              data?.map(tour => (
                 <Col lg="3" className="mb-4" key={tour.id}>
                   <TourCard tour={tour} />
                 </Col>
