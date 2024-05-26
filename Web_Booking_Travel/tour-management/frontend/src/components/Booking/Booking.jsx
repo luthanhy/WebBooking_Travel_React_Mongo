@@ -38,20 +38,20 @@ const Booking = ({tour,AgvRating}) => {
   const navigate = useNavigate();
   const handleClick = async(e) =>{
     e.preventDefault();
-    console.log("luthanhy" ,credentials);
     try {
-        console.log(`${BASE_URL}/booking/`)
-        const res = await fetch( `${BASE_URL}/booking/`,{
+        console.log(`${BASE_URL}/booking/`);
+        const res = await fetch(`${BASE_URL}/booking/`, {
             method: "POST",
             headers: {
-                'Content-Type': 'applation/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(credentials),
         });
-        const result = res.json();
-        console.log("luthanhy7",result.data);
+        const result = await res.json();
+        console.log("Response JSON:", result);
+        console.log("Data:", result.data);
     } catch (error) {
-        
+        console.error("Error occurred:", error);
     }
     console.log(credentials)
     navigate("/thank-you")
