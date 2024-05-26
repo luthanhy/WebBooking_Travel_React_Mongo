@@ -6,6 +6,7 @@ import AddTour from '../AdminComponent/AddTour';
 import Pagination from '../shared/pagination';
 import { BASE_URL } from '../utils/config';
 import useFetch from '../hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
 
 const ADTour = () => {
   const { data: featuredData } = useFetch(`${BASE_URL}/tours/`);
@@ -17,7 +18,7 @@ const ADTour = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(8);
   const [currentTour, setCurrentTour] = useState(null);
-
+  const navigate = useNavigate();
   // Fetch data and set initial state
   useEffect(() => {
     if (featuredData) {
@@ -89,10 +90,33 @@ const ADTour = () => {
     setSearchTerm(term);
   };
 
-  const addTour = (newTour) => {
+  const addTour = async(newTour) => {
     const updatedTours = [...filteredTours, newTour];
-    setFilteredTours(updatedTours);
-    setTourCount(updatedTours.length);
+    console.log("y1", updatedTours);
+    console.log("y1", filteredTours);
+    console.log("new Toue ", newTour)
+    try{
+        const res = await fetch(`${BASE_URL}/tours`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newTour)
+        })
+        if(!res.ok) {
+          console.log(" y");
+        }
+        const result = await res.json();
+        console.log("luthanht", result.data);
+    }catch(err){
+      console.log("", err);
+      navigate('/admin/');
+
+    }
+    //setFilteredTours(updatedTours);
+    //setTourCount(updatedTours.length);
+    console.log("luthanhy123", updatedTours)
+    navigate('/admin/');
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
@@ -167,7 +191,7 @@ const ADTour = () => {
         <Modal isOpen={isEditModalOpen} toggle={toggleEditModal}>
           <ModalHeader toggle={toggleEditModal}>Edit Tour</ModalHeader>
           <ModalBody>
-            <Form onSubmit={handleUpdate}>
+            <FormGroup onSubmit={handleUpdate}>
               <FormGroup>
                 <Label for="title">Title</Label>
                 <Input
@@ -191,6 +215,16 @@ const ADTour = () => {
                 />
               </FormGroup>
               <FormGroup>
+                <Label for="Distance">Distance</Label>
+                <Input
+                  type="text"
+                  name="distance"
+                  id="distance"
+                  value={currentTour.image}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <FormGroup>
                 <Label for="price">Price</Label>
                 <Input
                   type="number"
@@ -206,7 +240,7 @@ const ADTour = () => {
                 <Input
                   type="textarea"
                   name="description"
-                  id="description"
+                  id="desc"
                   value={currentTour.description}
                   onChange={handleChange}
                 />
@@ -216,11 +250,13 @@ const ADTour = () => {
                 <Input
                   type="text"
                   name="image"
-                  id="image"
+                  id="photo"
                   value={currentTour.image}
                   onChange={handleChange}
                 />
               </FormGroup>
+              </FormGroup>
+              <Form>
               <Button type="submit" color="primary">Update Tour</Button>
             </Form>
           </ModalBody>

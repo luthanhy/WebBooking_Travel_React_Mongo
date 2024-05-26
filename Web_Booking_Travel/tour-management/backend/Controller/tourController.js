@@ -11,6 +11,7 @@ export const CreateNewTour = async (req, res) => {
       data: saveTour,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ success: false, message: "Create tour fail" });
   }
 };

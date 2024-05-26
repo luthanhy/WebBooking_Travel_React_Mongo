@@ -4,14 +4,14 @@ import { verifyAdmin } from '../utils/verifyToken.js'
 const route = express.Router()
 
 
-route.post('/',verifyAdmin,CreateNewTour)
-route.post('/:id',verifyAdmin,UpdateTour)
+route.post('/',CreateNewTour)
+route.post('/:id',UpdateTour)
 
 route.get('/:id',GetSingleTour)
 
 route.get('/',GetAllTour)
 
-route.delete('/:id',verifyAdmin,DeleteTour)
+route.delete('/:id',DeleteTour)
 
 route.get('/search/getTourBySearch',GetTourBySearch)
 
