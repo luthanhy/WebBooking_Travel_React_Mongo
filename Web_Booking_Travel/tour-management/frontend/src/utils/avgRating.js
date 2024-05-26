@@ -13,3 +13,4 @@ const CalculateAvgRationg = reviews=>{
     }
 }
 export default CalculateAvgRationg
+    

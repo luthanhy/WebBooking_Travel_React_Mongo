@@ -15,8 +15,9 @@ const ADTour = () => {
   const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [error, setError] = useState('');
   const [page, setPage] = useState(1);
-  const [limit] = useState(8);
+  const [limit] = useState(9);
   const [currentTour, setCurrentTour] = useState(null);
   const navigate = useNavigate();
   // Fetch data and set initial state
@@ -39,7 +40,7 @@ const ADTour = () => {
       setTourCount(filtered.length);
     }
   }, [searchTerm, featuredData]);  // Add searchTerm and featuredData as dependencies
-
+  // console.log(featuredData.find(id));
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen);
 
@@ -79,6 +80,10 @@ const ADTour = () => {
   const handleDelete = (tourId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
+      console.log("",filteredTours._id);
+      console.log("",featuredData._id);  
+      console.log("",tourId._id);
+      console.log("",tourId.id);
       const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
       setFilteredTours(updatedTours);
       setTourCount(updatedTours.length);
@@ -92,9 +97,6 @@ const ADTour = () => {
 
   const addTour = async(newTour) => {
     const updatedTours = [...filteredTours, newTour];
-    console.log("y1", updatedTours);
-    console.log("y1", filteredTours);
-    console.log("new Toue ", newTour)
     try{
         const res = await fetch(`${BASE_URL}/tours`,{
           method: "POST",
@@ -104,19 +106,17 @@ const ADTour = () => {
           body: JSON.stringify(newTour)
         })
         if(!res.ok) {
-          console.log(" y");
+          setError("Error")
         }
         const result = await res.json();
         console.log("luthanht", result.data);
     }catch(err){
-      console.log("", err);
-      navigate('/admin/');
-
+      setError(err)
     }
     //setFilteredTours(updatedTours);
     //setTourCount(updatedTours.length);
     console.log("luthanhy123", updatedTours)
-    navigate('/admin/');
+    navigate('/admin/tours');
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
@@ -191,6 +191,7 @@ const ADTour = () => {
         <Modal isOpen={isEditModalOpen} toggle={toggleEditModal}>
           <ModalHeader toggle={toggleEditModal}>Edit Tour</ModalHeader>
           <ModalBody>
+          {error && <div className="alert alert-danger">{error}</div>}
             <FormGroup onSubmit={handleUpdate}>
               <FormGroup>
                 <Label for="title">Title</Label>

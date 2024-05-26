@@ -41,10 +41,12 @@ const Adminsiderbar = () => {
               <span>Products</span>
             </li>
           </Link>
+          <Link to="/admin/reviewproduct" style={{ textDecoration: "none" }}>
           <li>
             <CreditCardIcon className="icon" />
             <span>Orders</span>
           </li>
+          </Link>
           <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
