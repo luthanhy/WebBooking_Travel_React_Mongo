@@ -49,7 +49,7 @@ const Header = () => {
           <Row>
             <div className="nav__wrapper d-flex align-items-center justify-content-between">
               <div className="logo">
-                <a href="./home">
+                <a href="/home">
                   <img src={logo} alt="" />
                 </a>
               </div>

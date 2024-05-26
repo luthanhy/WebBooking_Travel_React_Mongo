@@ -8,8 +8,7 @@ import userRoute from './routes/user.js';
 import reviewsRoute from './routes/reviews.js';
 import authRoute from './routes/auth.js';
 import bookingRoute from './routes/booking.js';
-
-
+import reviewProductRoute from './routes/reviewproduct.js';
 
 dotenv.config();
 
@@ -49,7 +48,7 @@ app.use('/api/v1/reviews',reviewsRoute);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/user', userRoute);
-
+app.use('/api/v1/reviewproduct', reviewProductRoute);
 app.listen(port, () => {
     connect();
     console.log('Server listening on port:', port);

@@ -114,7 +114,7 @@ if (DetailTour && Array.isArray(DetailTour.reviews)) {
             </div>
           </Col>
           <Col lg='4'>
-            <Booking tour={DetailTour} AgvRating={avgRating}></Booking>
+            <Booking tour={DetailTour} AgvRating={avgRating.toFixed(1)}></Booking>
           </Col>
         </Row>
       </Container>

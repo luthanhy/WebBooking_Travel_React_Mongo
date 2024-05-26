@@ -4,7 +4,7 @@ import { verifyAdmin } from '../utils/verifyToken.js'
 const route = express.Router()
 
 
-route.post('/',verifyAdmin,CreateNewTour)
+route.post('/',CreateNewTour)
 route.post('/:id',verifyAdmin,UpdateTour)
 
 route.get('/:id',GetSingleTour)

@@ -1,73 +1,147 @@
-import React, { useState, useContext } from 'react';
-import { Container, Row, Col, Form, FormGroup, Button, Label } from 'reactstrap';
-import { ReviewContext } from '../context/ReviewContext';
-import '../styles/uploadcontent.css'; // Add this line to import CSS
+import React, { useState } from 'react';
+import {
+  TextField, Button, Paper, Container, Typography
+} from '@mui/material';
 
-const UploadContent = () => {
-  const [tour, setTour] = useState('');
-  const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('');
-  const { addReview } = useContext(ReviewContext);
+const UploadTour = () => {
+  const [form, setForm] = useState({
+    title: '',
+    city: '',
+    address: '',
+    distance: 0,
+    photo: '',
+    desc: '',
+    price: 0,
+    maxGroupSize: 0,
+  });
 
-  const handleSubmit = () => {
-    const newReview = {
-      id: Date.now(),
-      name: tour,
-      location: location,
-      price: price,
-      accepted: false,
-      refused: false,
-    };
-    addReview(newReview);
-    setTour('');
-    setLocation('');
-    setPrice('');
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:4000/api/v1/reviewproduct', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('Tour submitted for review.');
+        setForm({
+          title: '',
+          city: '',
+          address: '',
+          distance: 0,
+          photo: '',
+          desc: '',
+          price: 0,
+          maxGroupSize: 0,
+        });
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('Something went wrong.');
+    }
   };
 
   return (
-    <Container className="upload-content-container">
-      <Row>
-        <Col lg='12'>
-          <div className='d-flex align-items-center justify-content-center'>
-            <h1>User Upload Content</h1>
-          </div>
-          <Form className="upload-content-form text-center">
-            <FormGroup>
-              <Label className="info-upload">Tour:</Label>
-              <input 
-                type="text" 
-                placeholder='Tour Name' 
-                value={tour} 
-                onChange={(e) => setTour(e.target.value)} 
-                className="form-control"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label className="info-upload">Location:</Label>
-              <input 
-                type="text" 
-                placeholder='Location' 
-                value={location} 
-                onChange={(e) => setLocation(e.target.value)} 
-                className="form-control"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label className="info-upload">Price:</Label>
-              <input 
-                type="text" 
-                placeholder='Price' 
-                value={price} 
-                onChange={(e) => setPrice(e.target.value)} 
-                className="form-control"
-              />
-            </FormGroup>
-            <Button className="btn primary__btn" onClick={handleSubmit}>Submit</Button>
-          </Form>
-        </Col>
-      </Row>
+    <Container>
+      <Paper style={{ padding: '20px' }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Upload Tour
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            name="title"
+            label="Title"
+            value={form.title}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="city"
+            label="City"
+            value={form.city}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="address"
+            label="Address"
+            value={form.address}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="distance"
+            label="Distance"
+            type="number"
+            value={form.distance}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="photo"
+            label="Photo URL"
+            value={form.photo}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="desc"
+            label="Description"
+            value={form.desc}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="price"
+            label="Price"
+            type="number"
+            value={form.price}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            name="maxGroupSize"
+            label="Max Group Size"
+            type="number"
+            value={form.maxGroupSize}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <Button type="submit" color="primary" variant="contained" style={{ marginTop: '20px' }}>
+            Submit
+          </Button>
+        </form>
+      </Paper>
     </Container>
   );
 };
 
-export default UploadContent;
+export default UploadTour;

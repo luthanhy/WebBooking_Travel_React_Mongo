@@ -9,12 +9,13 @@ export const ReviewProvider = ({ children }) => {
     setReviews([...reviews, review]);
   };
 
-  const updateReview = (updatedReview) => {
-    setReviews(reviews.map(review => review.id === updatedReview.id ? updatedReview : review));
+  const value = {
+    reviews,
+    addReview,
   };
 
   return (
-    <ReviewContext.Provider value={{ reviews, addReview, updateReview }}>
+    <ReviewContext.Provider value={value}>
       {children}
     </ReviewContext.Provider>
   );
