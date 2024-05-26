@@ -3,11 +3,14 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, La
 
 const AddTour = ({ isOpen, toggle, addTour }) => {
   const [newTour, setNewTour] = useState({
-    title: '',
+   title: '',
     city: '',
+    address: '',
     price: '',
-    description: '',
-    image: ''
+    desc: '',
+    distance:'',
+    photo: '',
+    maxGroupSize:''
   });
 
   const handleChange = (e) => {
@@ -16,9 +19,10 @@ const AddTour = ({ isOpen, toggle, addTour }) => {
   };
 
   const handleSubmit = (e) => {
+    console.log(" ",newTour);
     e.preventDefault();
     addTour(newTour);
-    toggle();
+    // toggle();
   };
 
   return (
@@ -26,59 +30,92 @@ const AddTour = ({ isOpen, toggle, addTour }) => {
       <ModalHeader toggle={toggle}>Add New Tour</ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Label for="title">Title</Label>
-            <Input
-              type="text"
-              name="title"
-              id="title"
-              value={newTour.title}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="city">City</Label>
-            <Input
-              type="text"
-              name="city"
-              id="city"
-              value={newTour.city}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="price">Price</Label>
-            <Input
-              type="number"
-              name="price"
-              id="price"
-              value={newTour.price}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="description">Description</Label>
-            <Input
-              type="textarea"
-              name="description"
-              id="description"
-              value={newTour.description}
-              onChange={handleChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="image">Image URL</Label>
-            <Input
-              type="text"
-              name="image"
-              id="image"
-              value={newTour.image}
-              onChange={handleChange}
-            />
-          </FormGroup>
+         <FormGroup>
+                <Label for="title">Title</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  id="title"
+                  value={newTour.title}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="city">City</Label>
+                <Input
+                  type="text"
+                  name="city"
+                  id="city"
+                  value={newTour.city}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="city">Address</Label>
+                <Input
+                  type="text"
+                  name="address"
+                  id="address"
+                  value={newTour.address}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="description">Description</Label>
+                <Input
+                  type="textarea"
+                  name="desc"
+                  id="desc"
+                  value={newTour.desc}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="Distance">Distance</Label>
+                <Input
+                  type="number"
+                  name="distance"
+                  id="distance"
+                  value={newTour.distance}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="price">Price</Label>
+                <Input
+                  type="number"
+                  name="price"
+                  id="price"
+                  value={newTour.price}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">Image URL</Label>
+                <Input
+                  type="text"
+                  name="photo"
+                  id="photo"
+                  value={newTour.photo}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="maxGroupSize">Max Size Group</Label>
+                <Input
+                  type="number"
+                  name="maxGroupSize"
+                  id="maxGroupSize"
+                  value={newTour.maxGroupSize}
+                  onChange={handleChange}
+                  required
+                />
+              </FormGroup>
           <Button type="submit" color="primary">Add Tour</Button>
         </Form>
       </ModalBody>
