@@ -1,10 +1,6 @@
 .customer-container {
-
-
-  display: flex; /* Enable flexbox for container layout */
   flex-direction: column; /* Arrange items vertically */
-  height: 100vh; /* Maintain full viewport height */
-  box-sizing: border-box; /* Include padding and border in height calculation */
+  box-sizing: border-box; 
 }
 
 .customer-heading {

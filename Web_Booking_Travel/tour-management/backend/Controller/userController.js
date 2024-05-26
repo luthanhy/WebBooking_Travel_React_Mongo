@@ -50,7 +50,7 @@ export const GetAllUser = async (req,res)=>{
     const page = parseInt(req.query.page);
     console.log(page)
     try{
-      const allUser = await User.find({}).skip(page*8).limit(8)
+      const allUser = await User.find({})
       res.status(200).json({success:true,count:allUser.length,message:"get all User success",allUser});
     }catch(err){
       res.status(404).json({success:true,message:"find found"})

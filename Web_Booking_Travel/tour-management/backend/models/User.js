@@ -18,11 +18,12 @@ const userSchema = new mongoose.Schema(
     },
     accountType: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "sale"],
       default: "user",
     },
     role: {
       type: String,
+      enum: ['user', 'admin'],
       default: "user",
     },
   },

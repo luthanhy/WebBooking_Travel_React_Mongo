@@ -9,7 +9,6 @@ export const CreateReviewTour = async(req,res) => {
         console.log("Creating new review...");
         const saveReview = await newReview.save()
         await Tour.findByIdAndUpdate(id,{
-            
             $push:{reviews: saveReview._id}
         })
         console.log("Tour updated successfully");
