@@ -51,7 +51,8 @@ export const GetAllTour = async (req,res)=>{
     const page = parseInt(req.query.page);
     console.log(page)
     try{
-      const allTour = await Tour.find({}).populate('reviews').skip(page*8).limit(8)
+      //.populate('reviews').skip(page*8).limit(8)
+      const allTour = await Tour.find({})
       res.status(200).json({success:true,count:allTour.length,message:"get all tour success",data:allTour});
     }catch(err){
       res.status(404).json({success:true,message:"find found"})

@@ -17,7 +17,7 @@ const ADTour = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
-  const [limit] = useState(9);
+  const [limit] = useState(10);
   const [currentTour, setCurrentTour] = useState(null);
   const navigate = useNavigate();
   // Fetch data and set initial state
@@ -120,7 +120,9 @@ const ADTour = () => {
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
+  console.log("lty1", displayedTours);
   const totalPage = Math.ceil(filteredTours.length / limit);
+  console.log("lty2", totalPage);
 
   const handlePageChange = (value) => {
     if (value === "&laquo;") {
