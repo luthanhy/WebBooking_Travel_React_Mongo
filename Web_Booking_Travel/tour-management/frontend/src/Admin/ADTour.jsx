@@ -80,11 +80,12 @@ const ADTour = () => {
   const handleDelete = (tourId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
-      console.log("",filteredTours._id);
-      console.log("",featuredData._id);  
-      console.log("",tourId._id);
-      console.log("",tourId.id);
+
+      
+
       const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
+      console.log("ydeptrai",tourId);
+      
       setFilteredTours(updatedTours);
       setTourCount(updatedTours.length);
     }
@@ -122,7 +123,7 @@ const ADTour = () => {
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
   console.log("lty1", displayedTours);
   const totalPage = Math.ceil(filteredTours.length / limit);
-  console.log("lty2", totalPage);
+  console.log("lty2", totalPage );
 
   const handlePageChange = (value) => {
     if (value === "&laquo;") {
