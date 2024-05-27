@@ -1,6 +1,4 @@
 .customer-container {
-
-
   display: flex; /* Enable flexbox for container layout */
   flex-direction: column; /* Arrange items vertically */
   height: 100vh; /* Maintain full viewport height */

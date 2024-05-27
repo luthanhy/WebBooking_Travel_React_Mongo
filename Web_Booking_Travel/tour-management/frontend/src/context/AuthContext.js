@@ -1,28 +1,32 @@
 import { createContext, useEffect, useReducer } from "react";
 
-
 const userData = localStorage.getItem("user");
-const parsedUserData = userData ? JSON.parse(userData) : null;
+let parsedUserData;
 
+try {
+  parsedUserData = userData && userData !== "undefined" ? JSON.parse(userData) : null;
+} catch (error) {
+  console.error("Error parsing user data from localStorage", error);
+  parsedUserData = null;
+}
 
 const initial_state = {
-  user: userData !== "undefined" && userData !== null ? JSON.parse(userData) : undefined,
-  isLoggedIn:true,
+  user: parsedUserData,
+  isLoggedIn: parsedUserData !== null,
   loading: false,
-  error: null
+  error: null,
+  isAdmin: false,
 };
-if(parsedUserData!=null){
-  const accountType = parsedUserData.accountType
-  console.log("type account",accountType); // Output: "admin"
-  if(accountType === "admin"){
-      const currentDomain = window.location.pathname;
-      if(currentDomain.includes("admin")){
-      initial_state.isAdmin = true;
-      }else{
-        initial_state.isAdmin = false;
-      }
+
+if (parsedUserData) {
+  const accountType = parsedUserData.accountType;
+  console.log("type account", accountType); // Output: "admin"
+  if (accountType === "admin") {
+    const currentDomain = window.location.pathname;
+    initial_state.isAdmin = currentDomain.includes("admin");
   }
 }
+
 export const AuthContext = createContext(initial_state);
 
 const AuthReducer = (state, action) => {
@@ -31,38 +35,40 @@ const AuthReducer = (state, action) => {
       return {
         user: null,
         loading: true,
-        error: null
+        error: null,
+        isAdmin: false,
+        isLoggedIn: false,
       };
     case "LOGIN_SUCCESS":
       return {
         user: action.payload,
         isLoggedIn: true,
-        isAdmin : false,
+        isAdmin: false,
         loading: false,
-        error: null
+        error: null,
       };
     case "LOGIN_SUCCESS_ADMIN":
-      return{
+      return {
         user: action.payload,
         isLoggedIn: true,
-        isAdmin : true,
+        isAdmin: true,
         loading: false,
-        error: null
-      }
+        error: null,
+      };
     case "LOGIN_FAILURE":
       return {
         user: null,
         loading: false,
         isAdmin: false,
         isLoggedIn: false,
-        error: action.payload
+        error: action.payload,
       };
     case "REGISTER_SUCCESS":
       return {
         user: null,
         isAdmin: false,
         loading: false,
-        error: null
+        error: null,
       };
     case "LOGOUT":
       return {
@@ -70,7 +76,7 @@ const AuthReducer = (state, action) => {
         isLoggedIn: false,
         isAdmin: false,
         loading: false,
-        error: null
+        error: null,
       };
     default:
       return state;
@@ -81,7 +87,11 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initial_state);
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
+    if (state.user) {
+      localStorage.setItem("user", JSON.stringify(state.user));
+    } else {
+      localStorage.removeItem("user");
+    }
   }, [state.user]);
 
   return (
@@ -90,10 +100,10 @@ export const AuthContextProvider = ({ children }) => {
         user: state.user,
         admin: state.admin,
         isAdmin: state.isAdmin,
-        isLoggedIn : state.isLoggedIn,
+        isLoggedIn: state.isLoggedIn,
         loading: state.loading,
         error: state.error,
-        dispatch
+        dispatch,
       }}
     >
       {children}

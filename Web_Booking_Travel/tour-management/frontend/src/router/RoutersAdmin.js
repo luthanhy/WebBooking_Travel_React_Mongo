@@ -6,6 +6,8 @@ import PageError from '../pages/PageError.jsx'
 import ADTour from '../Admin/ADTour.jsx'
 import TourPrice from '../Admin/TourPrice.jsx'
 import Dashboard from '../Admin/Dashboard.jsx'
+import Order from '../Admin/OrderBooking.jsx'
+
 const RoutersAdmin = () => {
   return (  
 <div>
@@ -18,7 +20,7 @@ const RoutersAdmin = () => {
             <Route path='/admin/customer' element={<Customer />}/>
             <Route path='/admin/reviewproduct' element={<ReviewProduct />}/>
             <Route path='/admin/tourmanagement' element={<TourPrice />}/>
-
+            <Route path='/admin/orderbooking' element={<Order />}/>  
         </Routes>
     </div>
   )
