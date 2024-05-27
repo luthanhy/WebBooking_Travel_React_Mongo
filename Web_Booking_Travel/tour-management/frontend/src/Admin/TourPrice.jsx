@@ -19,7 +19,7 @@ const data = [
 ];
 
 const TourPrice = () => {
-  const { state } = useContext(DarkModeContext);
+  // const { state } = useContext(DarkModeContext);
   const [rows, setRows] = useState(data);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('tourName');
@@ -71,7 +71,7 @@ const TourPrice = () => {
   };
 
   return (
-    <div className={`price-container ${state.darkMode ? 'dark' : ''}`}>
+    <div className={`price-container`}>
       <Paper>
         <TableContainer>
           <Table>

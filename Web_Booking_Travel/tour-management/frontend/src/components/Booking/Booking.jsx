@@ -22,9 +22,10 @@ const Booking = ({tour,AgvRating}) => {
   })
   console.log("",tour.title)
   credentials.tourName = tour.title;
-   if(useIsLoggedIn){
-        console.log("",parsedUserData)
-        credentials.userId = parsedUserData._id;
+  console.log("yluthanh",useIsLoggedIn) 
+  if(useIsLoggedIn){
+        console.log("luthanhy",parsedUserData)
+        // credentials.userId = parsedUserData._id;
     }
    
 //   credentials.userId = ;

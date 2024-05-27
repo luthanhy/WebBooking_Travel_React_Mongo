@@ -9,7 +9,10 @@ export const useAuth = () => {
 // Custom hook to check if the user is logged in
 export const useIsLoggedIn = () => {
   const { isLoggedIn } = useAuth();
-  console.log("islogin",isLoggedIn);  
+  console.log("islogin",isLoggedIn); 
+  if(isLoggedIn === undefined) {
+     isLoggedIn = false;
+  }
   return isLoggedIn;
 };
 
