@@ -2,24 +2,58 @@ import React, { useState } from 'react'
 import '../Booking/booking.css'
 import { ListGroup,ListGroupItem,FormGroup,Button,Form} from 'reactstrap'
 import { useNavigate } from 'react-router-dom'
-
+import { BASE_URL } from '../../utils/config.js'
+import { useIsLoggedIn, useIsAdmin } from '../../utils/auth.js';
 const Booking = ({tour,AgvRating}) => {
+
+    // const {data:DataBooking ,error ,}
+
+    const userData = localStorage.getItem("user");
+    const parsedUserData = userData ? JSON.parse(userData) : null;
+    
   const [credentials,setCredentials] = useState({
     userId:'01',
     userEmail:'example@gmail.com',
     fullName:'',
-    phone:'',
-    getSize:1,
-    bookAt:''
+    tourName:'',
+    phoneNumber:'',
+    guestSize:1,
+    BookAt:''
   })
+  console.log("",tour.title)
+  credentials.tourName = tour.title;
+  console.log("yluthanh",useIsLoggedIn) 
+  if(useIsLoggedIn){
+        console.log("luthanhy",parsedUserData)
+        // credentials.userId = parsedUserData._id;
+    }
+   
+//   credentials.userId = ;
   const ServiceFee = 10;
-  const TotalAmount = Number(tour.price) * Number(credentials.getSize) + ServiceFee;
-  const handleChange = e =>{
+  const TotalAmount = Number(tour.price) * Number(credentials.guestSize) + ServiceFee;
+  const handleChange = async(e) =>{
     setCredentials(prev=> ({...prev,[e.target.id]:e.target.value}))
+  
+  
   }
   const navigate = useNavigate();
-  const handleClick = e =>{
+  const handleClick = async(e) =>{
     e.preventDefault();
+    try {
+        console.log(`${BASE_URL}/booking/`);
+        const res = await fetch(`${BASE_URL}/booking/`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+        });
+        const result = await res.json();
+        console.log("Response JSON:", result);
+        console.log("Data:", result.data);
+    } catch (error) {
+        console.error("Error occurred:", error);
+    }
     console.log(credentials)
     navigate("/thank-you")
     }
@@ -38,18 +72,18 @@ const Booking = ({tour,AgvRating}) => {
             <Form className = 'booking_info_form' onSubmit={handleClick}>
                 <div className='booking_info1'>
                 <FormGroup >
-                    <input type="text" placeholder='Full Name' id='full_name'required onChange={handleChange}/>
+                    <input type="text" placeholder='Full Name' id='fullName'required onChange={handleChange}/>
                 </FormGroup>
                 <FormGroup >
-                    <input type="number" placeholder='Phone' id='phone'required onChange={handleChange}/>
+                    <input type="number" placeholder='Phone' id='phoneNumber'required onChange={handleChange}/>
                 </FormGroup>
                 <FormGroup >
-                    <input type="text" placeholder='Email' id='book_at' required onChange={handleChange}/>
+                    <input type="text" placeholder='Email' id='userEmail' required onChange={handleChange}/>
                 </FormGroup>
                 </div>
                 <FormGroup>
-                    <input type="date" placeholder='' id='bookAt' required onChange={handleChange}/>
-                    <input type="number" placeholder='Guest' id='getSize' required onChange={handleChange}/>
+                    <input type="date" placeholder='' id='BookAt' required onChange={handleChange}/>
+                    <input type="number" placeholder='Guest' id='guestSize' required onChange={handleChange}/>
                 </FormGroup>
             </Form>
         </div>

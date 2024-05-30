@@ -6,6 +6,7 @@ import AddTour from '../AdminComponent/AddTour';
 import Pagination from '../shared/pagination';
 import { BASE_URL } from '../utils/config';
 import useFetch from '../hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
 
 const ADTour = () => {
   const { data: featuredData } = useFetch(`${BASE_URL}/tours/`);
@@ -14,10 +15,11 @@ const ADTour = () => {
   const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [error, setError] = useState('');
   const [page, setPage] = useState(1);
-  const [limit] = useState(8);
+  const [limit] = useState(10);
   const [currentTour, setCurrentTour] = useState(null);
-
+  const navigate = useNavigate();
   // Fetch data and set initial state
   useEffect(() => {
     if (featuredData) {
@@ -38,7 +40,7 @@ const ADTour = () => {
       setTourCount(filtered.length);
     }
   }, [searchTerm, featuredData]);  // Add searchTerm and featuredData as dependencies
-
+  // console.log(featuredData.find(id));
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen);
 
@@ -78,7 +80,12 @@ const ADTour = () => {
   const handleDelete = (tourId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
+
+      
+
       const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
+      
+      
       setFilteredTours(updatedTours);
       setTourCount(updatedTours.length);
     }
@@ -89,14 +96,34 @@ const ADTour = () => {
     setSearchTerm(term);
   };
 
-  const addTour = (newTour) => {
+  const addTour = async(newTour) => {
     const updatedTours = [...filteredTours, newTour];
-    setFilteredTours(updatedTours);
-    setTourCount(updatedTours.length);
+    try{
+        const res = await fetch(`${BASE_URL}/tours`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newTour)
+        })
+        if(!res.ok) {
+          setError("Error")
+        }
+        const result = await res.json();
+        console.log("luthanht", result.data);
+    }catch(err){
+      setError(err)
+    }
+    //setFilteredTours(updatedTours);
+    //setTourCount(updatedTours.length);
+    console.log("luthanhy123", updatedTours)
+    navigate('/admin/tours');
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
+  console.log("lty1", displayedTours);
   const totalPage = Math.ceil(filteredTours.length / limit);
+  console.log("lty2", totalPage );
 
   const handlePageChange = (value) => {
     if (value === "&laquo;") {
@@ -167,7 +194,8 @@ const ADTour = () => {
         <Modal isOpen={isEditModalOpen} toggle={toggleEditModal}>
           <ModalHeader toggle={toggleEditModal}>Edit Tour</ModalHeader>
           <ModalBody>
-            <Form onSubmit={handleUpdate}>
+          {error && <div className="alert alert-danger">{error}</div>}
+            <FormGroup onSubmit={handleUpdate}>
               <FormGroup>
                 <Label for="title">Title</Label>
                 <Input
@@ -191,6 +219,16 @@ const ADTour = () => {
                 />
               </FormGroup>
               <FormGroup>
+                <Label for="Distance">Distance</Label>
+                <Input
+                  type="text"
+                  name="distance"
+                  id="distance"
+                  value={currentTour.image}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <FormGroup>
                 <Label for="price">Price</Label>
                 <Input
                   type="number"
@@ -206,7 +244,7 @@ const ADTour = () => {
                 <Input
                   type="textarea"
                   name="description"
-                  id="description"
+                  id="desc"
                   value={currentTour.description}
                   onChange={handleChange}
                 />
@@ -216,11 +254,13 @@ const ADTour = () => {
                 <Input
                   type="text"
                   name="image"
-                  id="image"
+                  id="photo"
                   value={currentTour.image}
                   onChange={handleChange}
                 />
               </FormGroup>
+              </FormGroup>
+              <Form>
               <Button type="submit" color="primary">Update Tour</Button>
             </Form>
           </ModalBody>
