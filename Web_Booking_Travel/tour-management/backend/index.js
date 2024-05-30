@@ -9,6 +9,7 @@ import reviewsRoute from './routes/reviews.js';
 import authRoute from './routes/auth.js';
 import bookingRoute from './routes/booking.js';
 import reviewProductRoute from './routes/reviewproduct.js';
+import paymentMethod from './routes/paymentMethod.js';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cors(corsOptions)); // Use the correct CORS options here
 app.use(cookieParser());
 
@@ -48,7 +50,9 @@ app.use('/api/v1/reviews',reviewsRoute);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/user', userRoute);
+app.use('', paymentMethod);
 app.use('/api/v1/reviewproduct', reviewProductRoute);
+
 app.listen(port, () => {
     connect();
     console.log('Server listening on port:', port);

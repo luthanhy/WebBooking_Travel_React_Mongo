@@ -1,31 +1,19 @@
 import express from 'express'
-import cors from 'cors';
 import crypto from 'crypto'
+import dotenv from 'dotenv';
+
+const route = express.Router();
+
+// ACCESSKEY = "F8BBA842ECF85";
+// SECRETKEY = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+dotenv.config();
+var accessKey = process.env.ACCESSKEY || "";
+var secretkey = process.env.SECRETKEY || "";
 
 
-
-const app = express();
-
-const port = process.env.PORT || 5000;
-
-const corsOptions = {
-    origin: 'http://localhost:5000', 
-    credentials: true, 
-};
-
-
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cors(corsOptions)); // Use the correct CORS options here
-app.get("/", (req, res) => {
-    res.send("luthanhy");
-});
-app.listen(port, () => {
-    console.log("api success");
-})
-var accessKey = "F8BBA842ECF85";
-var secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
-app.post("/payment",async(req, res) => {
+// var accessKey = process.env.ACCESSKEY || "";
+// var secretkey = process.env.SECRETKEY || "";
+route.post("/payment",async(req, res) => {
     var partnerCode = "MOMO";
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
@@ -90,7 +78,7 @@ app.post("/payment",async(req, res) => {
         console.log(error.message);
     }
 });
-app.post("/callback",async(req, res) => {
+route.post("/callback",async(req, res) => {
     try{
     console.log("callback");
     console.log(req.body);
@@ -101,7 +89,7 @@ app.post("/callback",async(req, res) => {
         res.status(400).json({message: "callback failed" ,data:req.body});
     }
 })
-app.post("/InitiateTransaction",async(req, res) => {
+route.post("/InitiateTransaction",async(req, res) => {
     const {orderId} = req.body;
     const newSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`
     const signature = crypto
@@ -130,7 +118,7 @@ app.post("/InitiateTransaction",async(req, res) => {
         res.status(400).json({message:error.message});
     }
 })
-app.post("/refund",async(req, res) => {
+route.post("/refund",async(req, res) => {
     try{
 
     }catch(error){
@@ -138,3 +126,4 @@ app.post("/refund",async(req, res) => {
     }
 })
 
+export default route
