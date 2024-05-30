@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Container, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TableSortLabel, IconButton, Menu, MenuItem } from '@mui/material';
+import { Container, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TableSortLabel, IconButton, Menu, MenuItem, Snackbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { BASE_URL } from '../utils/config';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MuiAlert from '@mui/material/Alert';
 
 const useFetch = (url) => {
   const [data, setData] = useState([]);
@@ -41,6 +42,7 @@ const OrderBooking = () => {
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     setFilteredOrders(orders);
@@ -102,7 +104,7 @@ const OrderBooking = () => {
 
   const handleDeleteOrder = async (orderId) => {
     try {
-      const response = await fetch(`${BASE_URL}/booking/deleteOrder`, {
+      const response = await fetch(`${BASE_URL}/booking/deleteSingleBooking`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -113,6 +115,7 @@ const OrderBooking = () => {
         throw new Error('Failed to delete order');
       }
       setFilteredOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
+      setSnackbarOpen(true);
     } catch (error) {
       console.error('Error deleting order:', error);
     }
@@ -126,6 +129,10 @@ const OrderBooking = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     setSelectedOrder(null);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -282,6 +289,11 @@ const OrderBooking = () => {
         </TableContainer>
       )}
       {!loading && !error && filteredOrders.length === 0 && <div>No orders found.</div>}
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <MuiAlert onClose={handleSnackbarClose} severity="success" elevation={6} variant="filled">
+          Order deleted successfully!
+        </MuiAlert>
+      </Snackbar>
     </Container>
   );
 };
