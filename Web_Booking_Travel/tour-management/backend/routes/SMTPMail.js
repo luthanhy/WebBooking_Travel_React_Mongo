@@ -9,7 +9,7 @@ console.log("email",emailAdmin);
 console.log("pass",emailPass);
 
 
-const emails = 'luthanhy1@gmail.com'
+const emails = 'nervergone111@gmail.com'
 
 console.log(emails);
 let transporter = NodeMailer.createTransport({
@@ -25,15 +25,11 @@ let transporter = NodeMailer.createTransport({
         info  = transporter.sendMail({
             from: "YOU",
             to:emails,
-            subject:"TEST",
+            subject:"Day lo lam do an cuoi ki di m",
             html: `<h1>TEST</h1><p>Bomaytest</p>`,
     });
- 
     } catch (error) {
         console.log("",error);
     }
     
-    console.log(info.messageId);
-    console.log(info.accepted); // Array of emails that were successful
-    console.log(info.rejected); // Array of unsuccessful emails
 
