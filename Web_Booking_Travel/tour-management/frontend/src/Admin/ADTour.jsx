@@ -84,7 +84,7 @@ const ADTour = () => {
       
 
       const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
-      console.log("ydeptrai",tourId);
+      
       
       setFilteredTours(updatedTours);
       setTourCount(updatedTours.length);
