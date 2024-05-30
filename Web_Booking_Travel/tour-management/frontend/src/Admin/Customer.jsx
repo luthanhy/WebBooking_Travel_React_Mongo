@@ -1,66 +1,127 @@
 import React, { useState, useEffect } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  TablePagination, TableSortLabel, Paper, TextField, IconButton
+  TablePagination, Paper, IconButton, Modal, TextField, Button
 } from '@mui/material';
-import { FavoriteBorder, Edit, Delete } from '@mui/icons-material';
-import '../styles/customer.css'; // Import CSS file
-// import { DarkModeContext } from '../context/DarkModeContext';
-const data = [
-  { id: 1, name: 'Tiger Nixon', position: 'System Architect', office: 'Edinburgh', age: 61 },
-  { id: 2, name: 'Tiger Nixon', position: 'Accountant', office: 'Tokyo', age: 63 },
-  { id: 3, name: 'Ashton Cox', position: 'Junior Technical Author', office: 'San Francisco', age: 66 },
-  { id: 4, name: 'Cedric Kelly', position: 'Senior Javascript Developer', office: 'Edinburgh', age: 22 },
-  { id: 5, name: 'Airi Satou', position: 'Accountant', office: 'Tokyo', age: 33 },
-  { id: 6, name: 'Brielle Williamson', position: 'Integration Specialist', office: 'New York', age: 61 },
-  { id: 7, name: 'Herrod Chandler', position: 'Sales Assistant', office: 'San Francisco', age: 59 },
-  { id: 8, name: 'Rhona Davidson', position: 'Integration Specialist', office: 'Tokyo', age: 55 },
-  { id: 9, name: 'Colleen Hurst', position: 'Javascript Developer', office: 'San Francisco', age: 39 },
-  // Add more data as needed
-];
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Customer = () => {
-  // const { state } = useContext(DarkModeContext);
-  const [rows, setRows] = useState(data);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [searchName, setSearchName] = useState('');
-  const [searchPosition, setSearchPosition] = useState('');
-  const [searchOffice, setSearchOffice] = useState('');
-  const [searchAge, setSearchAge] = useState('');
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [currentEditUser, setCurrentEditUser] = useState(null);
+  const [editForm, setEditForm] = useState({
+    username: '',
+    email: '',
+    accountType: '',
+    role: ''
+  });
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState(null); // State để lưu id của user cần xóa
 
   useEffect(() => {
-    const filteredRows = data.filter(row =>
-      row.name.toLowerCase().includes(searchName.toLowerCase()) &&
-      row.position.toLowerCase().includes(searchPosition.toLowerCase()) &&
-      row.office.toLowerCase().includes(searchOffice.toLowerCase()) &&
-      row.age.toString().includes(searchAge)
-    );
-    setRows(filteredRows);
-  }, [searchName, searchPosition, searchOffice, searchAge]);
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/v1/user', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setUsers(data.allUser);
+        } else {
+          setError(data.message);
+        }
+      } catch (error) {
+        setError('Something went wrong');
+      }
+    };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
+    fetchUsers();
+  }, []);
+
+  const handleEdit = (user) => {
+    setCurrentEditUser(user);
+    setEditForm({
+      username: user.username,
+      email: user.email,
+      accountType: user.accountType,
+      role: user.role
+    });
+    setEditModalOpen(true);
   };
 
-  useEffect(() => {
-    console.log('Sorting data...');
-    const sortedRows = [...rows].sort((a, b) => {
-      const valueA = a[orderBy];
-      const valueB = b[orderBy];
-
-      if (orderBy === 'name' || orderBy === 'position' || orderBy === 'office') {
-        return order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+  const handleEditSubmit = async () => {
+    if (!currentEditUser) {
+      setError('Current user is not valid');
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:4000/api/v1/user/${currentEditUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editForm)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setUsers(users.map(user => (user._id === currentEditUser._id ? data.data : user)));
+        setEditModalOpen(false);
+        setCurrentEditUser(null);
       } else {
-        return order === 'asc' ? valueA - valueB : valueB - valueA;
+        setError(data.message);
       }
+    } catch (error) {
+      setError('Something went wrong');
+    }
+  };
+
+  const handleDelete = async (userId) => {
+    setDeleteUserId(userId); 
+    setConfirmDeleteOpen(true); 
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/v1/user/${deleteUserId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        setUsers(users.filter(user => user._id !== deleteUserId)); 
+        setConfirmDeleteOpen(false); 
+      } else {
+        const data = await response.json();
+        setError(data.message);
+      }
+    } catch (error) {
+      setError('Something went wrong');
+    }
+  };
+
+  const handleEditFormChange = (e) => {
+    setEditForm({
+      ...editForm,
+      [e.target.name]: e.target.value
     });
-    setRows(sortedRows);
-  }, [order, orderBy]);
+  };
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -71,111 +132,133 @@ const Customer = () => {
     setPage(0);
   };
 
+  const sortedUsers = users.sort((a, b) => {
+    if (orderBy === 'name') {
+      return (a.username < b.username ? -1 : 1) * (order === 'asc' ? 1 : -1);
+    }
+    return 0;
+  });
+
+  const paginatedUsers = sortedUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
   return (
-    // ${state.darkMode ? 'dark' : ''}
-    <div className={`customer-container`}> 
+    <div className="customer-container">
       <Paper>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {['Name', 'Position', 'Office', 'Age'].map((headCell) => (
-                  <TableCell
-                    key={headCell}
-                    className="customer-header-cell"
-                    sortDirection={orderBy === headCell.toLowerCase() ? order : false}
-                  >
-                    <TableSortLabel
-                      active={orderBy === headCell.toLowerCase()}
-                      direction={orderBy === headCell.toLowerCase() ? order : 'asc'}
-                      onClick={(event) => handleRequestSort(event, headCell.toLowerCase())}
-                    >
-                      {headCell}
-                    </TableSortLabel>
-                  </TableCell>
-                ))}
-                <TableCell className="customer-actions-cell">Actions</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="customer-header-cell">
-                  <TextField
-                    label="Search Name"
-                    variant="outlined"
-                    fullWidth
-                    value={searchName}
-                    onChange={(e) => setSearchName(e.target.value)}
-                    className="customer-header-search"
-                  />
-                </TableCell>
-                <TableCell className="customer-header-cell">
-                  <TextField
-                    label="Search Position"
-                    variant="outlined"
-                    fullWidth
-                    value={searchPosition}
-                    onChange={(e) => setSearchPosition(e.target.value)}
-                    className="customer-header-search"
-                  />
-                </TableCell>
-                <TableCell className="customer-header-cell">
-                  <TextField
-                    label="Search Office"
-                    variant="outlined"
-                    fullWidth
-                    value={searchOffice}
-                    onChange={(e) => setSearchOffice(e.target.value)}
-                    className="customer-header-search"
-                  />
-                </TableCell>
-                <TableCell className="customer-header-cell">
-                  <TextField
-                    label="Search Age"
-                    variant="outlined"
-                    fullWidth
-                    value={searchAge}
-                    onChange={(e) => setSearchAge(e.target.value)}
-                    className="customer-header-search"
-                  />
-                </TableCell>
-                <TableCell />
+                <TableCell>Username</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Password</TableCell>
+                <TableCell>Account Type</TableCell>
+                <TableCell>Role</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.position}</TableCell>
-                    <TableCell>{row.office}</TableCell>
-                    <TableCell>{row.age}</TableCell>
-                    <TableCell>
-                      <IconButton className="customer-action-button">
-                        <FavoriteBorder />
-                      </IconButton>
-                      <IconButton className="customer-action-button">
-                        <Edit />
-                      </IconButton>
-                      <IconButton className="customer-action-button">
-                        <Delete />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {paginatedUsers.map(user => (
+                <TableRow key={user._id}>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.password}</TableCell>
+                  <TableCell>{user.accountType}</TableCell>
+                  <TableCell>{user.role}</TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => handleEdit(user)}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(user._id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           component="div"
-          count={rows.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-          className="customer-pagination"
         />
       </Paper>
+
+      <Modal
+        open={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+      >
+        <div className="edit-modal" style={modalStyle}>
+          <h2>Edit User</h2>
+          <TextField
+            name="username"
+            label="Username"
+            value={editForm.username}
+            onChange={handleEditFormChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            name="email"
+            label="Email"
+            value={editForm.email}
+            onChange={handleEditFormChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            name="accountType"
+            label="Account Type"
+            value={editForm.accountType}
+            onChange={handleEditFormChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            name="role"
+            label="Role"
+            value={editForm.role}
+            onChange={handleEditFormChange}
+            fullWidth
+            margin="normal"
+          />
+          <Button onClick={handleEditSubmit} color="primary" variant="contained" style={{ marginTop: '20px' }}>
+            Save
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+      >
+        <div className="confirm-delete-modal" style={modalStyle}>
+          <h2>Confirm Delete</h2>
+          <p>Are you sure you want to delete this user?</p>
+          <Button onClick={() => setConfirmDeleteOpen(false)} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="primary">
+            Confirm
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
+};
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  backgroundColor: 'white',
+  padding: '20px',
+  boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
 };
 
 export default Customer;

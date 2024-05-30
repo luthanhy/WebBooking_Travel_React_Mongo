@@ -2,6 +2,7 @@ import { createContext, useEffect, useReducer } from "react";
 
 
 const userData = localStorage.getItem("user");
+console.log(userData);
 const parsedUserData = userData ? JSON.parse(userData) : null;
 
 
