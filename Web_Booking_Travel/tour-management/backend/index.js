@@ -9,8 +9,8 @@ import reviewsRoute from './routes/reviews.js';
 import authRoute from './routes/auth.js';
 import bookingRoute from './routes/booking.js';
 import reviewProductRoute from './routes/reviewproduct.js';
-import paymentMethod from './routes/paymentMethod.js';
-
+import paymentMethodMOMO from './routes/paymentMethodMOMO.js';
+import paymentMethodPayPal from './routes/paymentMethodPayPal.js'
 dotenv.config();
 
 const app = express();
@@ -50,7 +50,8 @@ app.use('/api/v1/reviews',reviewsRoute);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/user', userRoute);
-app.use('', paymentMethod);
+app.use("", paymentMethodPayPal);
+app.use('', paymentMethodMOMO);
 app.use('/api/v1/reviewproduct', reviewProductRoute);
 
 app.listen(port, () => {

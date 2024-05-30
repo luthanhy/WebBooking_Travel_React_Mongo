@@ -13,7 +13,7 @@ var secretkey = process.env.SECRETKEY || "";
 
 // var accessKey = process.env.ACCESSKEY || "";
 // var secretkey = process.env.SECRETKEY || "";
-route.post("/payment",async(req, res) => {
+route.post("/paymentmmo",async(req, res) => {
     var partnerCode = "MOMO";
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
