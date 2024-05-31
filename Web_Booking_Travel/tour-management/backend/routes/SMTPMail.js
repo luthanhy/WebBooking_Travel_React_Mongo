@@ -1,15 +1,15 @@
 import NodeMailer from "nodemailer";
 import dotenv from "dotenv";
- 
+
 dotenv.config();
-var emailAdmin  = "technologyengineer7@gmail.com";
-var emailPass =  "zmwqmqovbzycsowd";
+var emailAdmin  ="technologyengineer7@gmail.com";
+var emailPass ="zmwqmqovbzycsowd";
 let info;
 console.log("email",emailAdmin);
 console.log("pass",emailPass);
 
 
-const emails = 'nervergone111@gmail.com'
+const emails = 'nduccanh2003@gmail.com'
 
 console.log(emails);
 let transporter = NodeMailer.createTransport({

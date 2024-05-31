@@ -55,7 +55,8 @@ const Booking = ({tour,AgvRating}) => {
         console.error("Error occurred:", error);
     }
     console.log(credentials)
-    navigate("/thank-you")
+    navigate("/choseMethodPayment")
+    // navigate("/thank-you")
     }
   return (
     <>
