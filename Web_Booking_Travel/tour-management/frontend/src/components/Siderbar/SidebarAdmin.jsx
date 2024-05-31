@@ -13,7 +13,6 @@ import "../Siderbar/SideBarAdmin.css"
 const Adminsiderbar = () => {
   // const { dispatch } = useContext(DarkModeContext);
   return (
-
     <div className="sidebar">
       <div className="top">
         <span className="logo">Admin</span>
@@ -26,8 +25,8 @@ const Adminsiderbar = () => {
             <li>
               <DashboardIcon className="icon" />
               <span>Dashboard</span>
-
-            </li></Link>
+            </li>
+          </Link>
           <p className="title">LISTS</p>
           <Link to="/admin/customer" style={{ textDecoration: "none" }}>
             <li>
@@ -41,17 +40,18 @@ const Adminsiderbar = () => {
               <span>Products</span>
             </li>
           </Link>
-          <Link to="/admin/reviewproduct" style={{ textDecoration: "none" }}>
-          <li>
-            <CreditCardIcon className="icon" />
-            <span>Orders</span>
-          </li>
+          <Link to="/admin/orderBooking" style={{ textDecoration: "none" }}>
+            <li>
+              <CreditCardIcon className="icon" />
+              <span>Orders</span>
+            </li>
           </Link>
-          <li>
-            <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
-          </li>
-          
+          <Link to="/admin/reviewproduct" style={{ textDecoration: "none" }}>
+            <li>
+              <LocalShippingIcon className="icon" />
+              <span>Delivery</span>
+            </li>
+          </Link>
           <p className="title">USER</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
