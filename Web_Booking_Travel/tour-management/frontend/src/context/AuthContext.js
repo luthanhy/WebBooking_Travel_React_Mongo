@@ -1,8 +1,9 @@
 import { createContext, useEffect, useReducer } from "react";
 
-
+var parsedUserData = {};
 const userData = localStorage.getItem("user");
-const parsedUserData = userData ? JSON.parse(userData) : null;
+
+parsedUserData = userData ? JSON.parse(userData) : null;
 
 
 const initial_state = {
@@ -22,6 +23,9 @@ if(parsedUserData!=null){
         initial_state.isAdmin = false;
       }
   }
+}else{
+  initial_state.isLoggedIn = false;
+  initial_state.isAdmin = false;
 }
 export const AuthContext = createContext(initial_state);
 
