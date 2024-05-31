@@ -3,8 +3,11 @@ import { createContext, useEffect, useReducer } from "react";
 var parsedUserData = {};
 const userData = localStorage.getItem("user");
 
-parsedUserData = userData ? JSON.parse(userData) : null;
-
+try{
+  parsedUserData = userData ? JSON.parse(userData) : null;
+}catch{
+  parsedUserData = null;
+}
 
 const initial_state = {
   user: userData !== "undefined" && userData !== null ? JSON.parse(userData) : undefined,
