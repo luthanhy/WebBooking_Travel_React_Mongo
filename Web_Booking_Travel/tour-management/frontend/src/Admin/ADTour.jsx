@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label } from 'reactstrap';
+import {
+  Col, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label
+} from 'reactstrap';
 import AdminTourCard from '../AdminComponent/AdminTourCard';
 import '../styles/tourAdmin.css';
 import AddTour from '../AdminComponent/AddTour';
@@ -10,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ADTour = () => {
   const { data: featuredData } = useFetch(`${BASE_URL}/tours/`);
-  const [, setTourCount] = useState(0);  // Add tourCount state
+  const [, setTourCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTours, setFilteredTours] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,17 +21,16 @@ const ADTour = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [currentTour, setCurrentTour] = useState(null);
+  const [notification, setNotification] = useState('');
   const navigate = useNavigate();
 
-  // Fetch data and set initial state
   useEffect(() => {
     if (featuredData) {
       setFilteredTours(featuredData);
       setTourCount(featuredData.length);
     }
-  }, [featuredData]);  // Add featuredData as dependency
+  }, [featuredData]);
 
-  // Filter tours based on search term
   useEffect(() => {
     if (featuredData) {
       const filtered = featuredData.filter(
@@ -40,7 +41,7 @@ const ADTour = () => {
       setFilteredTours(filtered);
       setTourCount(filtered.length);
     }
-  }, [searchTerm, featuredData]);  // Add searchTerm and featuredData as dependencies
+  }, [searchTerm, featuredData]);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen);
@@ -70,6 +71,7 @@ const ADTour = () => {
       setFilteredTours(updatedTours);
     } catch (error) {
       console.error('Error updating tour:', error);
+      setError('Error updating tour');
     }
   };
 
@@ -95,6 +97,7 @@ const ADTour = () => {
         setTourCount(updatedTours.length);
       } catch (error) {
         console.error('Error deleting tour:', error);
+        setError('Error deleting tour');
       }
     }
   };
@@ -104,26 +107,33 @@ const ADTour = () => {
     setSearchTerm(term);
   };
 
-  const addTour = async(newTour) => {
-    const updatedTours = [...filteredTours, newTour];
-    try{
-        const res = await fetch(`${BASE_URL}/tours`,{
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newTour)
-        })
-        if(!res.ok) {
-          setError("Error")
-        }
-        const result = await res.json();
-        console.log("luthanht", result.data);
-    }catch(err){
-      setError(err)
+  const addTour = async (newTour) => {
+    try {
+      const response = await fetch(`${BASE_URL}/tours`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTour),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add tour');
+      }
+
+      const result = await response.json();
+      setFilteredTours([...filteredTours, result]);
+      setTourCount(filteredTours.length + 1);
+      setNotification('Tour added successfully!');
+      setTimeout(() => {
+        setNotification('');
+        toggleModal();
+        window.location.reload(); // Reload the page
+      }, 100);
+    } catch (error) {
+      console.error('Error adding tour:', error);
+      setError('Error adding tour');
     }
-    console.log("luthanhy123", updatedTours)
-    navigate('/admin/tours');
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
@@ -191,11 +201,12 @@ const ADTour = () => {
         </div>
       </div>
       <AddTour isOpen={isModalOpen} toggle={toggleModal} addTour={addTour} />
+      {notification && <div className="alert alert-success">{notification}</div>}
       {currentTour && (
         <Modal isOpen={isEditModalOpen} toggle={toggleEditModal}>
           <ModalHeader toggle={toggleEditModal}>Edit Tour</ModalHeader>
           <ModalBody>
-          {error && <div className="alert alert-danger">{error}</div>}
+            {error && <div className="alert alert-danger">{error}</div>}
             <Form onSubmit={handleUpdate}>
               <FormGroup>
                 <Label for="title">Title</Label>
@@ -220,7 +231,7 @@ const ADTour = () => {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="Distance">Distance</Label>
+                <Label for="distance">Distance</Label>
                 <Input
                   type="text"
                   name="distance"
@@ -245,7 +256,7 @@ const ADTour = () => {
                 <Input
                   type="textarea"
                   name="description"
-                  id="desc"
+                  id="description"
                   value={currentTour.description}
                   onChange={handleChange}
                 />
@@ -255,7 +266,7 @@ const ADTour = () => {
                 <Input
                   type="text"
                   name="image"
-                  id="photo"
+                  id="image"
                   value={currentTour.image}
                   onChange={handleChange}
                 />
