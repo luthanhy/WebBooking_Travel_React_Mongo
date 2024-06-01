@@ -1,52 +1,50 @@
-.review-container{
-    grid-area: main;
-    overflow-y: auto;
-    padding: 80px 20px 0 280px; /* Đã xóa padding-bottom */
-    background-color: #ffffff;
-    min-height: calc(100vh - 100px);
-}
-.review-container h2 {
-    color: #333; 
-}
-
-.review-container p {
-    color: #666; 
-}
-
-.accept-btn, .refuse-btn {
-    padding: 10px 20px; 
-    margin-top: 10px; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-}
-
-.accept-btn {
-    background-color: #4caf50; 
-    color: #fff; 
-    margin-right: 10px;
-}
-
-.refuse-btn {
-    background-color: #f44336; 
-    color: #fff; 
-    margin-left: 10px;
-}
-
-.accept-btn:hover, .refuse-btn:hover {
-    opacity: 0.8; 
-}
-.review-tour-card {
-    width: 100%; /* Chiếm hết chiều rộng của cột */
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    box-sizing: border-box; 
-}
-
-.review-tour-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Chia thành 3 cột có kích thước bằng nhau */
-    grid-gap: 20px; /* Khoảng cách giữa các tour */
-}
+.review-product-container {
+    padding: 20px;
+  }
+  
+  .tour-card {
+    position: relative;
+    max-width: 345px;
+    margin: 0 auto;
+  }
+  
+  .tour-card .MuiCardMedia-root {
+    height: 200px;
+  }
+  
+  .tour-card .MuiCardContent-root {
+    padding-bottom: 16px;
+  }
+  
+  .tour-card .MuiCardActions-root {
+    justify-content: space-between;
+  }
+  
+  .tour-card .featured-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: orange;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+  
+  .tour-card .price {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .tour-card .rating {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  
+  .tour-card .rating .star-icon {
+    color: gold;
+    margin-right: 4px;
+  }
+  

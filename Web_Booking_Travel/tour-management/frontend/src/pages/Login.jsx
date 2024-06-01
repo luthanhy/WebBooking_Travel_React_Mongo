@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleOAuthProvider, GoogleLogin} from '@react-oauth/google';
 import '../styles/login.css';
 import loginImg from '../assets/images/login.png';
 import userIcon from '../assets/images/user.png';
@@ -32,29 +33,54 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        // credentials : 'include',
         body: JSON.stringify(credentials),
       });
-      
+
       const result = await res.json();
-      console.log(result.data);
       if (!res.ok) {
         setError(result.message);
       } else {
-        if(result.data === undefined || result.data.accountType === "admin"){
-        setError("Account is not valid");
-        }else{
-          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data,isAdmin : false ,isLoggedIn : true});
-          console.log(result.data);
+        if (result.data === undefined || result.data.accountType === 'admin') {
+          setError('Account is not valid');
+        } else {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data, isAdmin: false, isLoggedIn: true });
           navigate('/'); // Redirect to homepage or dashboard
         }
-        }
+      }
     } catch (err) {
       setError('Login failed. Please try again.');
       dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (response) => {
+    const { credential } = response;
+    try {
+      const res = await fetch('localhost:3000/auth/google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tokenId: credential }),
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        setError(result.message);
+      } else {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: result.data, isAdmin: false, isLoggedIn: true });
+        navigate('/'); // Redirect to homepage or dashboard
+      }
+    } catch (err) {
+      setError('Google login failed. Please try again.');
+      dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
+    }
+  };
+
+  const handleGoogleFailure = (response) => {
+    setError('Google login failed. Please try again.');
   };
 
   return (
@@ -97,6 +123,14 @@ const Login = () => {
                     {isLoading ? 'Logging in...' : 'Login'}
                   </button>
                 </Form>
+                <div className="google-login">
+                  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                    <GoogleLogin
+                      onSuccess={handleGoogleSuccess}
+                      onError={handleGoogleFailure}
+                    />
+                  </GoogleOAuthProvider>
+                </div>
                 <p>
                   Don't have an account? <Link to="/register">Register</Link>
                 </p>

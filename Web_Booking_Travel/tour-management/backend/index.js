@@ -9,7 +9,6 @@ import reviewsRoute from './routes/reviews.js';
 import authRoute from './routes/auth.js';
 import bookingRoute from './routes/booking.js';
 import reviewProductRoute from './routes/reviewproduct.js';
-
 dotenv.config();
 
 const app = express();
