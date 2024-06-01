@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TableSortLabel, IconButton, Menu, MenuItem, Snackbar } from '@mui/material';
+import {
+  Container, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box,
+  TableSortLabel, IconButton, Menu, MenuItem, Snackbar, TablePagination
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { BASE_URL } from '../utils/config';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -43,6 +46,8 @@ const OrderBooking = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     setFilteredOrders(orders);
@@ -135,6 +140,15 @@ const OrderBooking = () => {
     setSnackbarOpen(false);
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -193,100 +207,111 @@ const OrderBooking = () => {
       {loading && <div>Loading...</div>}
       {error && <div>Error loading bookings: {error.message}</div>}
       {!loading && !error && Array.isArray(filteredOrders) && filteredOrders.length > 0 && (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortConfig.key === 'index'}
-                    direction={sortConfig.direction}
-                    onClick={() => handleSort('index')}
-                  >
-                    STT
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortConfig.key === 'tourName'}
-                    direction={sortConfig.direction}
-                    onClick={() => handleSort('tourName')}
-                  >
-                    Tour Name
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortConfig.key === 'fullName'}
-                    direction={sortConfig.direction}
-                    onClick={() => handleSort('fullName')}
-                  >
-                    Customer Info
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortConfig.key === 'guestSize'}
-                    direction={sortConfig.direction}
-                    onClick={() => handleSort('guestSize')}
-                  >
-                    Guest Size
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortConfig.key === 'BookAt'}
-                    direction={sortConfig.direction}
-                    onClick={() => handleSort('BookAt')}
-                  >
-                    Booking Date
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredOrders.map((order, index) => (
-                <TableRow key={order._id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{order.tourName}</TableCell>
+        <>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
                   <TableCell>
-                    {order.fullName}<br />
-                    {order.userEmail}<br />
-                    {order.phoneNumber}
+                    <TableSortLabel
+                      active={sortConfig.key === 'index'}
+                      direction={sortConfig.direction}
+                      onClick={() => handleSort('index')}
+                    >
+                      STT
+                    </TableSortLabel>
                   </TableCell>
-                  <TableCell>{order.guestSize}</TableCell>
-                  <TableCell>{new Date(order.BookAt).toLocaleDateString()}</TableCell>
-                  <TableCell>{order.isPaid ? 'Paid' : 'Unpaid'}</TableCell>
                   <TableCell>
-                    <IconButton
-                      aria-label="more"
-                      aria-controls="long-menu"
-                      aria-haspopup="true"
-                      onClick={(event) => handleMenuClick(event, order)}
+                    <TableSortLabel
+                      active={sortConfig.key === 'tourName'}
+                      direction={sortConfig.direction}
+                      onClick={() => handleSort('tourName')}
                     >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl && selectedOrder?._id === order._id)}
-                      onClose={handleMenuClose}
-                    >
-                      <MenuItem onClick={() => { handleApprovePayment(order._id); handleMenuClose(); }}>
-                        Approve Payment
-                      </MenuItem>
-                      <MenuItem onClick={() => { handleDeleteOrder(order._id); handleMenuClose(); }}>
-                        Delete Order
-                      </MenuItem>
-                    </Menu>
+                      Tour Name
+                    </TableSortLabel>
                   </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortConfig.key === 'fullName'}
+                      direction={sortConfig.direction}
+                      onClick={() => handleSort('fullName')}
+                    >
+                      Customer Info
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortConfig.key === 'guestSize'}
+                      direction={sortConfig.direction}
+                      onClick={() => handleSort('guestSize')}
+                    >
+                      Guest Size
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortConfig.key === 'BookAt'}
+                      direction={sortConfig.direction}
+                      onClick={() => handleSort('BookAt')}
+                    >
+                      Booking Date
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Actions</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {filteredOrders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((order, index) => (
+                  <TableRow key={order._id}>
+                    <TableCell>{page * rowsPerPage + index + 1}</TableCell>
+                    <TableCell>{order.tourName}</TableCell>
+                    <TableCell>
+                      {order.fullName}<br />
+                      {order.userEmail}<br />
+                      {order.phoneNumber}
+                    </TableCell>
+                    <TableCell>{order.guestSize}</TableCell>
+                    <TableCell>{new Date(order.BookAt).toLocaleDateString()}</TableCell>
+                    <TableCell>{order.isPaid ? 'Paid' : 'Unpaid'}</TableCell>
+                    <TableCell>
+                      <IconButton
+                        aria-label="more"
+                        aria-controls="long-menu"
+                        aria-haspopup="true"
+                        onClick={(event) => handleMenuClick(event, order)}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                      <Menu
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl && selectedOrder?._id === order._id)}
+                        onClose={handleMenuClose}
+                      >
+                        <MenuItem onClick={() => { handleApprovePayment(order._id); handleMenuClose(); }}>
+                          Approve Payment
+                        </MenuItem>
+                        <MenuItem onClick={() => { handleDeleteOrder(order._id); handleMenuClose(); }}>
+                          Delete Order
+                        </MenuItem>
+                      </Menu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 50]}
+            component="div"
+            count={filteredOrders.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>
       )}
       {!loading && !error && filteredOrders.length === 0 && <div>No orders found.</div>}
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
