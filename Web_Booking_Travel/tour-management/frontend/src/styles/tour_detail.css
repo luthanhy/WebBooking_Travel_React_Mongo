@@ -49,13 +49,22 @@
     -o-border-radius: 0.5rem;
     border:0.1rem solid rgb(229, 231, 235);
 }
-.rating_group span{
-    color: var(--secondary-color);
+.rating_group span {
+    color: #333;
     display: flex;
     align-items: center;
     font-size: 1.1rem;
     padding: 0.7rem;
+    cursor: pointer;
 }
+.rating_group span.selected {
+    color: var(--secondary-color); 
+}
+.rating_group span:hover {
+    color: var(--secondary-color); 
+}
+
+
 .review_input {
     display: flex;
     align-items: center;
@@ -64,7 +73,7 @@
     padding: 0.7rem;
     border-radius: 2rem;
     border: 1px solid var(--secondary-color);
-    cursor: pointer;
+  
     -webkit-border-radius: 2rem;
     -moz-border-radius: 2rem;
     -ms-border-radius: 2rem;

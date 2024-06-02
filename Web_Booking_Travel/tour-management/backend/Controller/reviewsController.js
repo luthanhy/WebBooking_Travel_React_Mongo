@@ -1,6 +1,7 @@
 import Tour  from '../models/Tour.js'
 import Review from '../models/Review.js'
 
+
 export const CreateReviewTour = async(req,res) => {
     const id  = req.params.id;
     const newReview = new Review({...req.body})
@@ -17,6 +18,35 @@ export const CreateReviewTour = async(req,res) => {
         res.status(500).json({success:false,message:"Failed Submit"})
     }
 }
-export const GetReviewTour = async(req,res) => {
-    const TourId  = req.params.TourId;
+
+export const DeleteReviewTour = async (req, res) => {
+    const reviewId = req.params.id; 
+    const tourId = req.params.tourId;  
+
+    try {
+        // Xóa review từ collection 'Review' và lấy review đã xóa
+        const deletedReview = await Review.findOneAndDelete({ _id: reviewId });
+
+        if (!deletedReview) {
+            return res.status(404).json({ success: false, message: `Review not found` });
+        }
+
+        // Cập nhật Tour để loại bỏ reviewId khỏi mảng reviews
+        await Tour.findByIdAndUpdate(tourId, {
+            $pull: { reviews: reviewId }
+        });
+
+        res.status(200).json({ success: true, message: `Review deleted successfully` });
+    } catch (error) {
+        res.status(500).json({ success: false, message: `Failed to delete review` });
+    }
+}
+export const GetReviewTour = async (req, res) => {
+    const reviewID = req.params.id;
+    try {
+      const tour = await Tour.findById(reviewID).populate('reviews');
+      res.status(200).json({ success: true, data: tour.reviews });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Failed to fetch reviews' });
+    }
 }
