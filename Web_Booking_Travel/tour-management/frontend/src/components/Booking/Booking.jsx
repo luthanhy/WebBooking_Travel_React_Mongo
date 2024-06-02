@@ -26,7 +26,7 @@ const Booking = ({ tour, AgvRating }) => {
     BookAt: ''
   });
 
-  const today = new Date().toISOString().split('T')[0];
+  const  today = new Date().toISOString().split('T')[0];
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 3);
   const maxDateString = maxDate.toISOString().split('T')[0];
@@ -53,7 +53,7 @@ const Booking = ({ tour, AgvRating }) => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    // Ensure phoneNumber and guestSize are positive before submission
+
     if (Number(credentials.phoneNumber) <= 0 || Number(credentials.guestSize) <= 0) {
       alert("Phone number and guest size must be positive numbers.");
       return;
@@ -61,7 +61,7 @@ const Booking = ({ tour, AgvRating }) => {
 
     const bookAtDate = new Date(credentials.BookAt);
 
-    // Ensure the booking date is within the next 3 months and within the current year
+
     if (bookAtDate < new Date(today) || bookAtDate > new Date(maxDateString)) {
       alert("The booking date must be within the next 3 months and within the current year.");
       return;

@@ -11,6 +11,7 @@ import bookingRoute from './routes/booking.js';
 import reviewProductRoute from './routes/reviewproduct.js';
 import paymentMethodMOMO from './routes/paymentMethodMOMO.js';
 import paymentMethodPayPal from './routes/paymentMethodPayPal.js'
+import sendMail from "./routes/SMTPAPIMail.js";
 dotenv.config();
 
 const app = express();
@@ -53,7 +54,7 @@ app.use('/api/v1/user', userRoute);
 app.use("", paymentMethodPayPal);
 app.use('', paymentMethodMOMO);
 app.use('/api/v1/reviewproduct', reviewProductRoute);
-
+app.use('',sendMail);
 app.listen(port, () => {
     connect();
     console.log('Server listening on port:', port);
