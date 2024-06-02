@@ -56,10 +56,9 @@ const ChoseMethodPayment = () => {
     console.log('Payment Details:', paymentDetails);
     alert('Payment Successful!');
   };
-
-  const GetMethod = async (e) => {
+  const GetMethod = async (res) => {
     try {
-      const res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
+       res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,8 +127,8 @@ const ChoseMethodPayment = () => {
               </Typography>
               <Row>
                 <Col lg='12' className='d-flex align-items-center'>
-                  <Button variant="contained" color="secondary" onClick={GetMethod}>
-                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>Momo</Link>
+                <Button variant="contained" color="secondary" onClick={GetMethod}>
+                   Momo
                   </Button>
                 </Col>
               </Row>
