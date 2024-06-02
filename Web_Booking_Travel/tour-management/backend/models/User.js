@@ -12,6 +12,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    cccd:{
+      type:Number,
+      require:true,
+      unique:true,
+    },
+    phoneNumber:{
+      type:Number,
+      require:true,
+      unique:true,
+    },
     password: {
       type: String,
       required: true,
