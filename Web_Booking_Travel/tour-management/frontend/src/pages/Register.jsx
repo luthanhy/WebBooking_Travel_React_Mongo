@@ -11,7 +11,10 @@ const Register = () => {
   const [userData, setUserData] = useState({
     username: '',
     email: '',
+    cccd:'',
+    phoneNumber:'',
     password: '',
+    
     accountType: 'user', // Default account type
   });
   const [error, setError] = useState('');
@@ -97,6 +100,26 @@ const Register = () => {
                   </FormGroup>
                   <FormGroup>
                     <input
+                      type="cccd"
+                      placeholder="CCCD"
+                      required
+                      id="cccd"
+                      value={userData.cccd}
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <input
+                      type="phoneNumber"
+                      placeholder="Phone Number"
+                      required
+                      id="phoneNumber"
+                      value={userData.phoneNumber}
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <input
                       type="password"
                       placeholder="Password"
                       required
@@ -112,7 +135,7 @@ const Register = () => {
                       onChange={handleChange}
                     >
                       <option value="user">User</option>
-                      <option value="admin">Sale</option>
+                      <option value="admin">Sales</option>
                     </select>
                   </FormGroup>
                   <button className="btn secondary_btn auth_btn" type="submit" disabled={isLoading}>

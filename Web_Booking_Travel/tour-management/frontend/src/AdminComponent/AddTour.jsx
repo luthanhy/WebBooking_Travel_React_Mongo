@@ -79,7 +79,9 @@ const AddTour = ({ isOpen, toggle, addTour }) => {
                   type="number"
                   name="distance"
                   id="distance"
+                
                   value={newTour.distance}
+                  min = "1"
                   onChange={handleChange}
                   required
                 />
@@ -91,6 +93,7 @@ const AddTour = ({ isOpen, toggle, addTour }) => {
                   name="price"
                   id="price"
                   value={newTour.price}
+                  min = "1"
                   onChange={handleChange}
                   required
                 />
@@ -112,6 +115,7 @@ const AddTour = ({ isOpen, toggle, addTour }) => {
                   name="maxGroupSize"
                   id="maxGroupSize"
                   value={newTour.maxGroupSize}
+                  min = "1"
                   onChange={handleChange}
                   required
                 />

@@ -13,6 +13,7 @@ import ThankYou from '../pages/ThanksYou.jsx'
 import LoginAdmin from '../Admin/LoginAdmin.jsx';
 import VerifyLoginSale from '../shared/VerifyLoginSale.jsx';
 import ChoseMethodPayment from '../pages/ChoseMethodPayment.jsx';
+
 const Routers = () => {
   return (
     <div>
@@ -26,9 +27,9 @@ const Routers = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/verifyAccount'element = {<VerifyLoginSale/>}></Route>
-        <Route path = '/choseMethodPayment' element = {<ChoseMethodPayment/>}></Route>
         <Route path='/tours/search' element={<SearchResultList />} />
         <Route path='/about' element={<About />} />
+        <Route path='/choseMethodPayment' element={<ChoseMethodPayment />} />
         <Route path='/thank-you' element = {<ThankYou/>}/>
         <Route path='/uploadTour' element={<UploadContent />} />
       </Routes>
