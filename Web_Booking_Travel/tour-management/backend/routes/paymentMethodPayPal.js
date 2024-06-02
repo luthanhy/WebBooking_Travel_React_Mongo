@@ -6,11 +6,12 @@ const Client_ID = "AU6xMKViZm-yeoqtKJ06jYuMmX_8U9mwxTNNowtovv52W1aA2MP1BJHH7gjqw
 const secretkey = "EAyuWLg2X7ZpctAULTGQE2NYZcsawd8J1lyMGL90Uvuo2XT3jL-mAUCxnIyx_9PHQZNfBta7_-F98GhA";
 const URL_POST = "https://api-m.sandbox.paypal.com/v1/oauth2/token";
 var token;
-route.post("/createAuth", async(req, res) => {
+
+async function createAuth(){
     const authHeader = Buffer.from(`${Client_ID}:${secretkey}`).toString('base64');
     const body = querystring.stringify({ grant_type: 'client_credentials' });
     try{
-        req = await fetch(URL_POST,{
+        const req = await fetch(URL_POST,{
             method: "POST",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded",
@@ -18,16 +19,32 @@ route.post("/createAuth", async(req, res) => {
             },
             body: body
         });
-        console.log("luthanhy");
         const result = await req.json();
-        // token = result.ass;
-        token = result.access_token
-        res.status(200).json({message:"Create Token Success ",data:result});
+         var resultToken = result.access_token;
+         console.log("" ,resultToken);
+         return resultToken;
     }catch(error){
-        res.status(0).json({message:"create ID Author failed ",data:error.message});
+        console.log("",error);
     }
-})
+}
+async function checkPaymentSuccess(IdOrder,token){
+    try{
+        req = await fetch(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${IdOrder}/capture`,{
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        const result = await req.json();
+        console.log ("" ,result);
+        res.status(200).json({message:"Payment PayPal Success", data:result});  
+    }catch(error){
+        res.status(400).json({message:"CapturePayment failed",data:error.message})
+    }
+}
 route.post("/paymentPayPal", async(req, res)=>{
+    token =  await createAuth()
     try{
         req = await fetch("https://api-m.sandbox.paypal.com/v2/checkout/orders",{
             method: "POST",
@@ -65,7 +82,7 @@ route.post("/paymentPayPal", async(req, res)=>{
                 ],
     
                 application_context: {
-                    return_url:'http://localhost:4000/completePayment',
+                    return_url:'http://localhost:3000/thank-you',
                     cancel_url:'http://localhost:3000/cancel-order',
                     shipping_preference: 'NO_SHIPPING',
                     user_action: 'PAY_NOW',
@@ -76,7 +93,10 @@ route.post("/paymentPayPal", async(req, res)=>{
             })
         const result = await req.json();
         console.log("" ,result);
+        console.log("" ,result.id);
         res.status(200).json({message:"create payment success",data:result});
+        // await checkPaymentSuccess(result.id,token);
+        
     }catch(error){
         res.status(400).json({message:"Create Payment failed" ,data:error.message});
     }

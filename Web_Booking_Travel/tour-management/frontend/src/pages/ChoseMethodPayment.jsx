@@ -29,7 +29,9 @@ const ChoseMethodPayment = () => {
     partnerCode: "",
     payUrl: "",
   });
-
+  const [data] = useState({
+    links:[]
+  });
   useEffect(() => {
     if (location.state) {
       setTotalAmount(location.state.totalAmount);
@@ -75,7 +77,27 @@ const ChoseMethodPayment = () => {
       console.error("Error occurred:", error);
     }
   }
-
+  const GetMethodPaypal = async (res) => {
+    try {
+       res = await fetch(`${URL_DOMAIN}/paymentPayPal`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) {
+        console.log("error");
+      } else {
+        const result = await res.json();
+        console.log("", result.data.links[1].href)
+        const link = result.data.links[1].href;
+       window.location.href = link;
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  }
   if (!totalAmount || !tourName) {
     return null;
   }
@@ -134,8 +156,7 @@ const ChoseMethodPayment = () => {
               </Row>
               
                 <Col lg='12' className='d-flex align-items-center'>
-                  <Button variant="contained" color="secondary" onClick={GetMethod}>
-                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
+                  <Button variant="contained" color="secondary" onClick={GetMethodPaypal}>PayPal
                   </Button>
                 </Col>
               
