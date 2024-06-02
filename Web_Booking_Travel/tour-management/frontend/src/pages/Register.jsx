@@ -11,12 +11,12 @@ const Register = () => {
   const [userData, setUserData] = useState({
     username: '',
     email: '',
-    cccd:'',
-    phoneNumber:'',
+    cccd: '',
+    phoneNumber: '',
     password: '',
-    
     accountType: 'user', // Default account type
   });
+
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useContext(AuthContext);
@@ -98,26 +98,28 @@ const Register = () => {
                       onChange={handleChange}
                     />
                   </FormGroup>
-                  <FormGroup>
-                    <input
-                      type="cccd"
-                      placeholder="CCCD"
-                      required
-                      id="cccd"
-                      value={userData.cccd}
-                      onChange={handleChange}
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <input
-                      type="phoneNumber"
-                      placeholder="Phone Number"
-                      required
-                      id="phoneNumber"
-                      value={userData.phoneNumber}
-                      onChange={handleChange}
-                    />
-                  </FormGroup>
+                  {userData.accountType === 'sales' && (
+                    <>
+                      <FormGroup>
+                        <input
+                          type="text"
+                          placeholder="CCCD"
+                          id="cccd"
+                          value={userData.cccd}
+                          onChange={handleChange}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <input
+                          type="text"
+                          placeholder="Phone Number"
+                          id="phoneNumber"
+                          value={userData.phoneNumber}
+                          onChange={handleChange}
+                        />
+                      </FormGroup>
+                    </>
+                  )}
                   <FormGroup>
                     <input
                       type="password"
@@ -135,7 +137,7 @@ const Register = () => {
                       onChange={handleChange}
                     >
                       <option value="user">User</option>
-                      <option value="admin">Sales</option>
+                      <option value="sales">Sales</option>
                     </select>
                   </FormGroup>
                   <button className="btn secondary_btn auth_btn" type="submit" disabled={isLoading}>
