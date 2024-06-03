@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Container, TextField, Button, Box, Typography, Grid, Paper, makeStyles } from '@mui/material';
-import { Col, Row } from 'reactstrap';
+import { Container, Button, Box, Typography, Grid, Paper, Card, CardContent, CardActions } from '@mui/material';
 import { URL_DOMAIN } from '../utils/config';
-import '../styles/chosePayment.css';
+
 
 const ChoseMethodPayment = () => {
   const location = useLocation();
@@ -14,7 +13,6 @@ const ChoseMethodPayment = () => {
     expiryDate: '',
     cvv: '',
   });
-
 
   const [totalAmount, setTotalAmount] = useState(null);
   const [tourName, setTourName] = useState(null);
@@ -82,66 +80,61 @@ const ChoseMethodPayment = () => {
   }
 
   return (
-    
-    <Container maxWidth="lg" className="chose-method-payment-container">
+    <Container maxWidth="lg" sx={{ padding: 4, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
       <Grid container spacing={4}>
         {/* Left Side: Booking Information */}
-        <Grid item xs={12} md={6} className="custom-padding-top">
-          <Paper elevation={3} className="chose-method-payment-paper">
-            <Typography variant="h4" gutterBottom>
-              Booking Information
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Total Amount: ${totalAmount}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Tour: {tourName}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Full Name: {buyerInfo.fullName}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Phone Number: {buyerInfo.phoneNumber}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Email: {buyerInfo.userEmail}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Guest Size: {buyerInfo.guestSize}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Book At: {buyerInfo.BookAt}
-            </Typography>
-          </Paper>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h4" gutterBottom>
+                Booking Information
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Total Amount:</strong> ${totalAmount}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Tour:</strong> {tourName}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Full Name:</strong> {buyerInfo.fullName}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Phone Number:</strong> {buyerInfo.phoneNumber}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Email:</strong> {buyerInfo.userEmail}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Guest Size:</strong> {buyerInfo.guestSize}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Book At:</strong> {buyerInfo.BookAt}
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
 
         {/* Right Side: Choose Payment Method */}
-        <Grid item xs={12} md={6} className="custom-padding-top">
-          <Paper elevation={3} className="chose-method-payment-paper">
-            <Typography variant="h4" gutterBottom>
-              Choose Payment Method
-            </Typography>
-           
-            <Box mt={4}>
-              <Typography variant="h5" gutterBottom>
-                Alternative Payment Methods
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h4" gutterBottom>
+                Choose Payment Method
               </Typography>
-              <Row>
-                <Col lg='12' className='d-flex align-items-center'>
-                  <Button variant="contained" color="secondary" onClick={GetMethod}>
+              <Box mt={4}>
+                <CardActions>
+                  <Button variant="contained" color="secondary" onClick={GetMethod} sx={{ marginBottom: 2, width: '100%' }}>
                     <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>Momo</Link>
                   </Button>
-                </Col>
-              </Row>
-              
-                <Col lg='12' className='d-flex align-items-center'>
-                  <Button variant="contained" color="secondary" onClick={GetMethod}>
+                </CardActions>
+                <CardActions>
+                  <Button variant="contained" color="secondary" onClick={GetMethod} sx={{ marginBottom: 2, width: '100%' }}>
                     <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
                   </Button>
-                </Col>
-              
-            </Box>
-          </Paper>
+                </CardActions>
+              </Box>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </Container>
