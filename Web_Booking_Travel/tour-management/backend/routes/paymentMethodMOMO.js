@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 
 const route = express.Router();
 
-// ACCESSKEY = "F8BBA842ECF85";
-// SECRETKEY = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 dotenv.config();
 var accessKey = process.env.ACCESSKEY || "";
 var secretkey = process.env.SECRETKEY || "";
@@ -19,7 +17,7 @@ route.post("/paymentmmo",async(req, res) => {
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "http://localhost:3000/thank-you";
-    var ipnUrl = "https://17cc-101-99-32-135.ngrok-free.app/callback";
+    var ipnUrl = "https://94b3-183-80-39-204.ngrok-free.app/callback";
     var amount = "1000";
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
@@ -101,7 +99,7 @@ route.post("/InitiateTransaction",async(req, res) => {
         requestId: orderId,
         orderId,
         signature,
-        lang:'vi'
+        lang:'en'
     })
     try{
         req = await fetch("https:test-payment.momo.vn/v2/gateway/api/query",{
