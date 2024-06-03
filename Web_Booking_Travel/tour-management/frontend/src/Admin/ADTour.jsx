@@ -81,8 +81,6 @@ const ADTour = () => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
 
-      
-
       const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
       
       
