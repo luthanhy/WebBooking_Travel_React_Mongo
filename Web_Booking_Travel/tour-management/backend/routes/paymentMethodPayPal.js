@@ -45,6 +45,7 @@ async function checkPaymentSuccess(IdOrder,token){
 }
 route.post("/paymentPayPal", async(req, res)=>{
     token =  await createAuth()
+    console.log ("" ,token);
     try{
         req = await fetch("https://api-m.sandbox.paypal.com/v2/checkout/orders",{
             method: "POST",
@@ -63,18 +64,18 @@ route.post("/paymentPayPal", async(req, res)=>{
                                 quantity: 1,
                                 unit_amount: {
                                     currency_code: 'USD',
-                                    value: '100.00'
+                                    value: '10.00'
                                 }
                             }
                         ],
     
                         amount: {
                             currency_code: 'USD',
-                            value: '100.00',
+                            value: '10.00',
                             breakdown: {
                                 item_total: {
                                     currency_code: 'USD',
-                                    value: '100.00'
+                                    value: '10.00'
                                 }
                             }
                         }
@@ -82,8 +83,8 @@ route.post("/paymentPayPal", async(req, res)=>{
                 ],
     
                 application_context: {
-                    return_url:'http://localhost:3000/thank-you',
-                    cancel_url:'http://localhost:3000/cancel-order',
+                    return_url:'http://localhost:4000/completePayment',
+                    cancel_url:'http://localhost:3000/',
                     shipping_preference: 'NO_SHIPPING',
                     user_action: 'PAY_NOW',
                     brand_name: 'manfra.io'
@@ -111,9 +112,11 @@ route.get("/completePayment",async(req,res)=>{
                 'Authorization': 'Bearer ' + token
             }
         });
-        const result = await req.json();
-        console.log ("" ,result);
-        res.status(200).json({message:"Payment PayPal Success", data:result});  
+        console.log("" ,req);
+        if(!req.ok){
+            req.redirect('http://localhost:3000');
+        }
+        res.redirect('http://localhost:3000/thank-you');
     }catch(error){
         res.status(400).json({message:"CapturePayment failed",data:error.message})
     }
