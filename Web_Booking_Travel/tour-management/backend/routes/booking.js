@@ -8,7 +8,7 @@ route.post('/',CreateBooking);
 
 // todo tao lay tui may dung doi thu tu hai man nay
 
-route.delete('/deleteSingleBooking',DeleteSingleBooking);
+route.delete('/:id',DeleteSingleBooking);
 route.get('/getAllBooking',GetAllBooking)
 route.get('/:id',GetSingleBooking);
 

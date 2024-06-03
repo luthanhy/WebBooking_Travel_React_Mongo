@@ -48,6 +48,7 @@ const OrderBooking = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [deleteUserId, setDeleteUserId] = useState(null);
 
   useEffect(() => {
     setFilteredOrders(orders);
@@ -109,12 +110,11 @@ const OrderBooking = () => {
 
   const handleDeleteOrder = async (orderId) => {
     try {
-      const response = await fetch(`${BASE_URL}/booking/deleteSingleBooking`, {
+      const response = await fetch(`${BASE_URL}/booking/${orderId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ orderId }),
       });
       if (!response.ok) {
         throw new Error('Failed to delete order');
@@ -125,7 +125,6 @@ const OrderBooking = () => {
       console.error('Error deleting order:', error);
     }
   };
-
   const handleMenuClick = (event, order) => {
     setAnchorEl(event.currentTarget);
     setSelectedOrder(order);
