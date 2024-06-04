@@ -19,7 +19,7 @@ const ADTour = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(8);
   const [currentTour, setCurrentTour] = useState(null);
   const [notification, setNotification] = useState('');
   const navigate = useNavigate();
