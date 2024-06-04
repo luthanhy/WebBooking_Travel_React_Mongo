@@ -6,12 +6,13 @@ const route = express.Router();
 dotenv.config();
 
 var emailAdmin  = process.env.EMAIL_ADMIN || "";
-var emailDeliver = process.env.EMAIL_PASS || "";
+var emailPass = process.env.EMAIL_PASS || "";
 
 
-var emailDeliver ="luthanhy1@gmail.com";
+// var emailDeliver ="luthanhy1@gmail.com";
 
 route.get("/sendMail",async(res,req)=>{
+    const emailDeliver = req.body.email;
     req = SMTPSendMail(emailAdmin,emailPass,emailDeliver);
 });
 

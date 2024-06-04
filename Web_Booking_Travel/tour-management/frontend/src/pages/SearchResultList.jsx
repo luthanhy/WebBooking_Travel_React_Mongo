@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import CommonSection from '../shared/CommonSection';
 import { Container, Row, Col } from 'reactstrap';
 import TourCard from '../shared/TourCard';
-import TourData from '../assets/data/tours'
 import { useLocation } from 'react-router-dom';
 
 const SearchResultList = () => {
