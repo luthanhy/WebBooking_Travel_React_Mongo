@@ -29,6 +29,10 @@ const bookingSchema = new mongoose.Schema(
         BookAt:{
             type:Date,
             required:true
+        },
+        Status_Transaction:{
+            type:Boolean,
+            default:""
         }
     }
 )
