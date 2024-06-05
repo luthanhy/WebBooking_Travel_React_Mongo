@@ -119,9 +119,7 @@ const ADTour = () => {
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
-  console.log("lty1", displayedTours);
   const totalPage = Math.ceil(filteredTours.length / limit);
-  console.log("lty2", totalPage );
 
   const handlePageChange = (value) => {
     if (value === "&laquo;") {
