@@ -1,7 +1,6 @@
 import ReviewProduct from '../models/reviewproduct.js';
 import Tour from '../models/Tour.js';
 
-// Tạo một tour mới để xét duyệt
 export const createReviewProduct = async (req, res) => {
   try {
     const newReviewProduct = new ReviewProduct(req.body); 
@@ -12,7 +11,6 @@ export const createReviewProduct = async (req, res) => {
   }
 };
 
-// Lấy tất cả các review product
 export const getAllReviewProducts = async (req, res) => {
   try {
     const reviewProducts = await ReviewProduct.find();
@@ -22,7 +20,6 @@ export const getAllReviewProducts = async (req, res) => {
   }
 };
 
-// Xóa một review product
 export const deleteReviewProduct = async (req, res) => {
   try {
     await ReviewProduct.findByIdAndDelete(req.params.id);
@@ -32,7 +29,6 @@ export const deleteReviewProduct = async (req, res) => {
   }
 };
 
-// Chấp nhận một review product và thêm vào tours
 export const approveReviewProduct = async (req, res) => {
   try {
     const newTour = new Tour(req.body);

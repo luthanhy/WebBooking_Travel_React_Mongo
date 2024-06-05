@@ -4,7 +4,7 @@ import { Card, CardBody } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import CalculateAvgRating from '../utils/avgRating'
 
-const AdminTourCard = ({ tour, handleUpdate, handleDelete }) => {
+const AdminTourCard = ({ tour, handleEdit, handleDelete }) => {
   const { _id, title, city, photo, price, reviews } = tour
 
   const { totalRating, avgRating } = CalculateAvgRating(reviews)
@@ -39,7 +39,7 @@ const AdminTourCard = ({ tour, handleUpdate, handleDelete }) => {
           </h5>
         </div>
         <div>
-          <button className='btn btn_edit' onClick={() => handleUpdate(tour._id)}>Update</button>
+          <button className='btn btn_edit' onClick={() => handleEdit(tour._id)}>Update</button>
           <button className='btn btn_delete' onClick={() => handleDelete(tour._id)}>Delete</button>
         </div>
       </CardBody>
