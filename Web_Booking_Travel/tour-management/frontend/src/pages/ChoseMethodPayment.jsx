@@ -27,7 +27,9 @@ const ChoseMethodPayment = () => {
     partnerCode: "",
     payUrl: "",
   });
-
+  const [data] = useState({
+    links:[]
+  });
   useEffect(() => {
     if (location.state) {
       setTotalAmount(location.state.totalAmount);
@@ -54,7 +56,27 @@ const ChoseMethodPayment = () => {
     console.log('Payment Details:', paymentDetails);
     alert('Payment Successful!');
   };
-
+  const GetMethodPaypal = async (res) => {
+    try {
+       res = await fetch(`${URL_DOMAIN}/paymentPayPal`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) {
+        console.log("error");
+      } else {
+        const result = await res.json();
+        console.log("", result.data.links[1].href)
+        const link = result.data.links[1].href;
+       window.location.href = link;
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  }
   const GetMethod = async (e) => {
     try {
       const res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
@@ -128,7 +150,7 @@ const ChoseMethodPayment = () => {
                   </Button>
                 </CardActions>
                 <CardActions>
-                  <Button variant="contained" color="secondary" onClick={GetMethod} sx={{ marginBottom: 2, width: '100%' }}>
+                  <Button variant="contained" color="secondary" onClick={GetMethodPaypal} sx={{ marginBottom: 2, width: '100%' }}>
                     <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
                   </Button>
                 </CardActions>
