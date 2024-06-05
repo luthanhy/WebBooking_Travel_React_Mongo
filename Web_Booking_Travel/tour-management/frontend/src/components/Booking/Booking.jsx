@@ -6,7 +6,6 @@ import { BASE_URL } from '../../utils/config.js';
 import { useIsLoggedIn } from '../../utils/auth.js';
 
 const Booking = ({ tour, AgvRating }) => {
-  const [error, setError] = useState('') ;
   const userData = localStorage.getItem("user");
   let parsedUserData = null;
   if (userData) {
@@ -52,19 +51,19 @@ const Booking = ({ tour, AgvRating }) => {
     e.preventDefault();
 
     if (Number(credentials.phoneNumber) <= 0 || Number(credentials.guestSize) <= 0) {
-      setError("Phone number and guest size must be positive numbers.");
+      alert("Phone number and guest size must be positive numbers.");
       return;
     }
 
     const bookAtDate = new Date(credentials.BookAt);
 
     if (bookAtDate < new Date(today) || bookAtDate > new Date(maxDateString)) {
-      setError("The booking date must be within the next 3 months and within the current year.");
+      alert("The booking date must be within the next 3 months and within the current year.");
       return;
     }
 
     if (bookAtDate.getFullYear() !== new Date().getFullYear()) {
-      setError("The booking date must be within the current year.");
+      alert("The booking date must be within the current year.");
       return;
     }
 
@@ -99,7 +98,6 @@ const Booking = ({ tour, AgvRating }) => {
         </span>
       </div>
       <h3 style={{ paddingTop: '1.5rem', paddingBottom: '1rem' }}>Information</h3>
-      {error && <div className="alert alert-danger">{error}</div>}
       <div className='booking_form'>
         <Form className='booking_info_form' onSubmit={handleClick}>
           <div className='booking_info1'>

@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef} from 'react'
 import '../styles/searchbar.css'
 import {useNavigate} from 'react-router-dom'
 import { Col, Form, FormGroup } from 'reactstrap'
@@ -9,7 +9,7 @@ const SearchBar = () => {
     const distanceRef = useRef(0)
     const maxGroupSizeRef = useRef(0)
     const navigate = useNavigate()
-    const [error, setError] = useState('');
+    
     const SearchHandle = async() => {
 
         const location = locationRef.current.value
@@ -17,12 +17,12 @@ const SearchBar = () => {
         const maxGroupSize = maxGroupSizeRef.current.value
 
         if(location === '' || distance ==='' || maxGroupSize ===''){
-            return setError("Fail searching location , distance , max people in not empty")
+            return alert("Fail searching")
         }else{
             const res = await fetch(`${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
             const result = await res.json()
             if(!res.ok){
-                setError("!Something went wrong")
+                alert("!Something went wrong")
             }
             console.log(`${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`)
             console.log(result.data)
@@ -32,7 +32,6 @@ const SearchBar = () => {
     }
     return (
     <Col lg="12">
-    {error && <div className="alert alert-danger">{error}</div>}
         <div className="search_bar">
             <Form className=" d-flex align-items-center gap-4">
                 <FormGroup className=" d-flex gap-3 form__group form__group_fast">

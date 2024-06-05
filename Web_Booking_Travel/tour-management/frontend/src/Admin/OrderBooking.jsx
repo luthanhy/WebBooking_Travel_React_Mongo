@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box,
-  TableSortLabel, IconButton, Menu, MenuItem, Snackbar, TablePagination
+  TableSortLabel, IconButton, Menu, MenuItem, Snackbar, TablePagination, FormControl, InputLabel, Select
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { BASE_URL } from '../utils/config';
@@ -36,11 +36,12 @@ const useFetch = (url) => {
 };
 
 const OrderBooking = () => {
-  const { data: orders, loading, error } = useFetch(`${BASE_URL}/booking/getAllBooking`);
+  const { data: orders, loading, error } = useFetch(`${BASE_URL}/booking/`);
   const [tourName, setTourName] = useState('');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [status, setStatus] = useState('');
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
   const [anchorEl, setAnchorEl] = useState(null);
@@ -54,6 +55,10 @@ const OrderBooking = () => {
     setFilteredOrders(orders);
   }, [orders]);
 
+  useEffect(() => {
+    handleSearch();
+  }, [status]);
+
   const handleSearch = () => {
     const lowercasedTourName = tourName.toLowerCase();
     const lowercasedFullName = fullName.toLowerCase();
@@ -64,7 +69,8 @@ const OrderBooking = () => {
       order.tourName.toLowerCase().includes(lowercasedTourName) &&
       order.fullName.toLowerCase().includes(lowercasedFullName) &&
       order.userEmail.toLowerCase().includes(lowercasedEmail) &&
-      String(order.phoneNumber).toLowerCase().includes(lowercasedPhone)
+      String(order.phoneNumber).toLowerCase().includes(lowercasedPhone) &&
+      (status === '' || String(order.Status_Transaction) === status)
     );
     setFilteredOrders(filtered);
   };
@@ -101,7 +107,7 @@ const OrderBooking = () => {
         throw new Error('Failed to approve payment');
       }
       setFilteredOrders(prevOrders => prevOrders.map(order => 
-        order._id === orderId ? { ...order, isPaid: true } : order
+        order._id === orderId ? { ...order, Status_Transaction: true } : order
       ));
     } catch (error) {
       console.error('Error approving payment:', error);
@@ -125,6 +131,7 @@ const OrderBooking = () => {
       console.error('Error deleting order:', error);
     }
   };
+
   const handleMenuClick = (event, order) => {
     setAnchorEl(event.currentTarget);
     setSelectedOrder(order);
@@ -191,6 +198,19 @@ const OrderBooking = () => {
             onChange={(e) => setPhone(e.target.value)}
             style={{ flex: '1 0 45%' }}
           />
+          <FormControl fullWidth margin="normal" style={{ width: '150px', marginRight: '16px' }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              variant="outlined"
+              label="Status"
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="true">Đã thanh toán</MenuItem>
+              <MenuItem value="false">Chưa thanh toán</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
         <Button
           variant="contained"
@@ -272,7 +292,7 @@ const OrderBooking = () => {
                     </TableCell>
                     <TableCell>{order.guestSize}</TableCell>
                     <TableCell>{new Date(order.BookAt).toLocaleDateString()}</TableCell>
-                    <TableCell>{order.isPaid ? 'Paid' : 'Unpaid'}</TableCell>
+                    <TableCell style={{ color: order.Status_Transaction ? 'green' : 'red' }}>{order.Status_Transaction ? 'Đã thanh toán' : 'Chưa thanh toán'}</TableCell>
                     <TableCell>
                       <IconButton
                         aria-label="more"
