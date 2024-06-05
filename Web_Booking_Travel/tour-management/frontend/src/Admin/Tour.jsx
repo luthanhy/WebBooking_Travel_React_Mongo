@@ -3,7 +3,7 @@ import TourCard from '../components/FeaturedTour';
 import "../styles/product.css";
 const Tour = () => {
     const [tours, setProducts] = useState([
-        // Your product data
+        
     ]);
     const handleAddTour = (newTour) => {
         setProducts((prevProducts) => [...prevProducts, newTour]);

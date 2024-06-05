@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import passport from 'passport';
 import tourRoute from './routes/tours.js';
 import userRoute from './routes/user.js';
 import reviewsRoute from './routes/reviews.js';
@@ -10,10 +12,10 @@ import authRoute from './routes/auth.js';
 import bookingRoute from './routes/booking.js';
 import reviewProductRoute from './routes/reviewproduct.js';
 import paymentMethodMOMO from './routes/paymentMethodMOMO.js';
-import paymentMethodPayPal from './routes/paymentMethodPayPal.js'
-import sendMail from "./routes/SMTPAPIMail.js";
+import paymentMethodPayPal from './routes/paymentMethodPayPal.js';
+import sendMail from './routes/SMTPAPIMail.js';
+// import './config/passport.js';
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 8000;
 
@@ -22,7 +24,6 @@ const corsOptions = {
     credentials: true, 
 };
 
-// Connect to MongoDB
 mongoose.set('strictQuery', false);
 const connect = async () => {
     try {
@@ -37,24 +38,27 @@ const connect = async () => {
     }
 };
 
-app.get('/', (req, res) => {
-    res.send('API is working');
-});
-
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cors(corsOptions)); // Use the correct CORS options here
+app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions)); 
 app.use(cookieParser());
-
+app.use(session({
+    secret: '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',
+    resave: false,
+    saveUninitialized: false,
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
 app.use('/api/v1/booking', bookingRoute);
-app.use('/api/v1/reviews',reviewsRoute);
+app.use('/api/v1/reviews', reviewsRoute);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/user', userRoute);
 app.use('', paymentMethodPayPal);
 app.use('', paymentMethodMOMO);
 app.use('/api/v1/reviewproduct', reviewProductRoute);
-app.use('',sendMail);
+app.use('', sendMail);
+
 app.listen(port, () => {
     connect();
     console.log('Server listening on port:', port);

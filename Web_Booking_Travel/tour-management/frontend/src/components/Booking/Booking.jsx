@@ -77,7 +77,7 @@ const Booking = ({ tour, AgvRating }) => {
       });
 
       const result = await res.json();
-
+      console.log(result);
       if (res.ok) {
         navigate("/choseMethodPayment", { state: { ...credentials, totalAmount: TotalAmount, tourName: tour.title } });
       } else {

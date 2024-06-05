@@ -68,7 +68,6 @@ route.post("/paymentPayPal", async(req, res)=>{
                                 }
                             }
                         ],
-    
                         amount: {
                             currency_code: 'USD',
                             value: '10.00',
@@ -81,7 +80,7 @@ route.post("/paymentPayPal", async(req, res)=>{
                         }
                     }
                 ],
-    
+
                 application_context: {
                     return_url:'http://localhost:4000/completePayment',
                     cancel_url:'http://localhost:3000/',
@@ -91,13 +90,13 @@ route.post("/paymentPayPal", async(req, res)=>{
                 }
             }
               )
+       
             })
-        const result = await req.json();
-        console.log("" ,result);
-        console.log("" ,result.id);
-        res.status(200).json({message:"create payment success",data:result});
-        // await checkPaymentSuccess(result.id,token);
-        
+            const result = await req.json();
+            console.log("" ,result);
+            console.log("" ,result.id);
+            res.status(200).json({message:"create payment success",data:result});
+            // await checkPaymentSuccess(result.id,token);
     }catch(error){
         res.status(400).json({message:"Create Payment failed" ,data:error.message});
     }
@@ -112,7 +111,8 @@ route.get("/completePayment",async(req,res)=>{
                 'Authorization': 'Bearer ' + token
             }
         });
-        console.log("" ,req);
+        console.log("callback");
+        console.log("" ,req.json());
         if(!req.ok){
             req.redirect('http://localhost:3000');
         }

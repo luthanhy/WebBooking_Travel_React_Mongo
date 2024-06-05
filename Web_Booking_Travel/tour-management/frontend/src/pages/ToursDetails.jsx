@@ -15,10 +15,7 @@ const ToursDetails = () => {
   const { data: DetailTour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
   const reviewMsgRef = useRef(null);
   const [tourRating, setTourRating] = useState(null);
-  const { user } = useContext(AuthContext);
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editedCommentText, setEditedCommentText] = useState('');
-
+  const { user } = useContext(AuthContext); 
 
   useEffect(() => {
     if (DetailTour && Array.isArray(DetailTour.reviews)) {
@@ -56,63 +53,13 @@ const ToursDetails = () => {
       const result = await res.json();
       if (res.ok) {
         alert('Review submitted successfully!');
-        window.location.reload();  // Reload to fetch the new list of reviews
+        // window.location.reload();  // Reload to fetch the new list of reviews
       } else {
         alert('Error submitting review: ' + result.message);
       }
     } catch (error) {
       alert('Error submitting review: ' + error.message);
     }
-  };
-
-  const handleEditComment = (commentId, commentText) => {
-    setEditingCommentId(commentId);
-    setEditedCommentText(commentText);
-  };
-
-  const handleSaveEdit = async (commentId) => {
-    try {
-      const res = await fetch(`${BASE_URL}/reviews/${commentId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reviewText: editedCommentText }),
-      });
-
-      if (res.ok) {
-        alert('Comment edited successfully!');
-        setEditingCommentId(null);
-        window.location.reload(); // Reload to fetch the updated list of reviews
-      } else {
-        const result = await res.json();
-        alert('Error editing comment: ' + result.message);
-      }
-    } catch (error) {
-      alert('Error editing comment: ' + error.message);
-    }
-  };
-
-  const handleDeleteComment = async (commentId) => {
-    try {
-      const res = await fetch(`${BASE_URL}/reviews/${commentId}`, {
-        method: 'DELETE',
-      });
-
-      if (res.ok) {
-        alert('Comment deleted successfully!');
-        window.location.reload(); // Reload to fetch the updated list of reviews
-      } else {
-        const result = await res.json();
-        alert('Error deleting comment: ' + result.message);
-      }
-    } catch (error) {
-      alert('Error deleting comment: ' + error.message);
-    }
-  };
-
-  const isCurrentUserComment = (review) => {
-    return user && review.username === user.username;
   };
 
   return (
@@ -222,4 +169,3 @@ const ToursDetails = () => {
 };
 
 export default ToursDetails;
-  

@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 
 const route = express.Router();
 
+// ACCESSKEY = "F8BBA842ECF85";
+// SECRETKEY = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 dotenv.config();
 var accessKey = process.env.ACCESSKEY || "";
 var secretkey = process.env.SECRETKEY || "";
@@ -17,7 +19,7 @@ route.post("/paymentmmo",async(req, res) => {
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "http://localhost:3000/thank-you";
-    var ipnUrl = "https://94b3-183-80-39-204.ngrok-free.app/callback";
+    var ipnUrl = "https://da5b-203-205-32-22.ngrok-free.app/callback";
     var amount = "1000";
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
@@ -45,7 +47,7 @@ route.post("/paymentmmo",async(req, res) => {
         extraData : extraData,
         requestType : requestType,
         signature : signature,
-        lang: 'vi'
+        lang: 'en'
     });
     //Create the HTTPS objects
     const options = {
@@ -82,6 +84,7 @@ route.post("/callback",async(req, res) => {
     console.log(req.body);
 
     res.status(200).json({message: "callback success" ,data:req.body});
+
     }catch(error){
 
         res.status(400).json({message: "callback failed" ,data:req.body});
@@ -99,7 +102,7 @@ route.post("/InitiateTransaction",async(req, res) => {
         requestId: orderId,
         orderId,
         signature,
-        lang:'en'
+        lang:'vi'
     })
     try{
         req = await fetch("https:test-payment.momo.vn/v2/gateway/api/query",{

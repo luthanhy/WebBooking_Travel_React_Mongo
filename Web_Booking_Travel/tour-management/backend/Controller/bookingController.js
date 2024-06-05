@@ -33,9 +33,9 @@ export const GetAllBooking = async(req,res) =>{
     }
 }
 export const DeleteSingleBooking = async(req,res) =>{
-    const id = req.params.id;
-    const deleteSingleBooking = await Booking.findByIdAndDelete(id);
+    const id = req.params.id; 
     try{
+        const deleteSingleBooking = await Booking.findByIdAndDelete(id);
         res.status(200).json({success:true,message:'Delete Single Booking Success',data:deleteSingleBooking})
     }catch(error){
         console.log(error);

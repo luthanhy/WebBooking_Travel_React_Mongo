@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+
 import '../styles/login.css';
 import loginImg from '../assets/images/login.png';
 import userIcon from '../assets/images/user.png';
@@ -8,10 +10,7 @@ import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const { dispatch } = useContext(AuthContext);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -29,32 +28,51 @@ const Login = () => {
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // credentials : 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),
       });
-      
+
       const result = await res.json();
-      console.log(result.data);
       if (!res.ok) {
         setError(result.message);
       } else {
-        if(result.data === undefined || result.data.accountType === "admin"){
-        setError("Account is not valid");
-        }else{
-          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data,isAdmin : false ,isLoggedIn : true});
-          console.log(result.data);
-          navigate('/'); // Redirect to homepage or dashboard
+        if (result.data === undefined || result.data.accountType === "admin") {
+          setError("Account is not valid");
+        } else {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+          navigate('/'); 
         }
-        }
+      }
     } catch (err) {
       setError('Login failed. Please try again.');
       dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleLoginSuccess = (response) => {
+    fetch(' https://2f65-171-243-49-68.ngrok-free.app/api/v1/auth/google/callback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: response.credential }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: data.user });
+          navigate('/');
+        } else {
+          setError('Google login failed. Please try again.');
+        }
+      })
+      .catch(() => {
+        setError('Google login failed. Please try again.');
+      });
+  };
+
+  const handleGoogleLoginFailure = () => {
+    setError('Google login failed. Please try again.');
   };
 
   return (
@@ -97,6 +115,12 @@ const Login = () => {
                     {isLoading ? 'Logging in...' : 'Login'}
                   </button>
                 </Form>
+                <div className="google-login">
+                  <GoogleLogin
+                    onSuccess={handleGoogleLoginSuccess}
+                    onError={handleGoogleLoginFailure}
+                  />
+                </div>
                 <p>
                   Don't have an account? <Link to="/register">Register</Link>
                 </p>

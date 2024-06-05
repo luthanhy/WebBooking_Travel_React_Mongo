@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Container, Button, Box, Typography, Grid, Paper, Card, CardContent, CardActions } from '@mui/material';
 import { URL_DOMAIN } from '../utils/config';
-import { Col } from 'reactstrap';
+
 
 const ChoseMethodPayment = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const ChoseMethodPayment = () => {
     payUrl: "",
   });
   const [data] = useState({
-    links: []
+    links:[]
   });
   useEffect(() => {
     if (location.state) {
@@ -56,9 +56,30 @@ const ChoseMethodPayment = () => {
     console.log('Payment Details:', paymentDetails);
     alert('Payment Successful!');
   };
-  const GetMethod = async (res) => {
+  const GetMethodPaypal = async (res) => {
     try {
-      res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
+       res = await fetch(`${URL_DOMAIN}/paymentPayPal`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) {
+        console.log("error");
+      } else {
+        const result = await res.json();
+        console.log("", result.data.links[1].href)
+        const link = result.data.links[1].href;
+       window.location.href = link;
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  }
+  const GetMethod = async (e) => {
+    try {
+      const res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,27 +96,7 @@ const ChoseMethodPayment = () => {
       console.error("Error occurred:", error);
     }
   }
-  const GetMethodPaypal = async (res) => {
-    try {
-      res = await fetch(`${URL_DOMAIN}/paymentPayPal`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      });
-      if (!res.ok) {
-        console.log("error");
-      } else {
-        const result = await res.json();
-        console.log("", result.data.links[1].href)
-        const link = result.data.links[1].href;
-        window.location.href = link;
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  }
+
   if (!totalAmount || !tourName) {
     return null;
   }
@@ -142,20 +143,16 @@ const ChoseMethodPayment = () => {
               <Typography variant="h4" gutterBottom>
                 Choose Payment Method
               </Typography>
-              <Box>
+              <Box mt={4}>
                 <CardActions>
-                  <Col lg='12' className='d-flex align-items-center'>
-                    <Button variant="contained" color="secondary" onClick={GetMethod}>
-                      <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>Momo</Link>
-                    </Button>
-                  </Col>
+                  <Button variant="contained" color="secondary" onClick={GetMethod} sx={{ marginBottom: 2, width: '100%' }}>
+                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>Momo</Link>
+                  </Button>
                 </CardActions>
                 <CardActions>
-                  <Col lg='12' className='d-flex align-items-center'>
-                    <Button variant="contained" color="secondary" onClick={GetMethodPaypal}>
-                      <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
-                    </Button>
-                  </Col>
+                  <Button variant="contained" color="secondary" onClick={GetMethodPaypal} sx={{ marginBottom: 2, width: '100%' }}>
+                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
+                  </Button>
                 </CardActions>
               </Box>
             </CardContent>
