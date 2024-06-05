@@ -111,7 +111,8 @@ route.get("/completePayment",async(req,res)=>{
                 'Authorization': 'Bearer ' + token
             }
         });
-        console.log("" ,req);
+        console.log("callback");
+        console.log("" ,req.json());
         if(!req.ok){
             req.redirect('http://localhost:3000');
         }

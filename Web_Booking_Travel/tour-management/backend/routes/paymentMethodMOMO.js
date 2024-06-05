@@ -19,7 +19,7 @@ route.post("/paymentmmo",async(req, res) => {
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "http://localhost:3000/thank-you";
-    var ipnUrl = "https://17cc-101-99-32-135.ngrok-free.app/callback";
+    var ipnUrl = "https://da5b-203-205-32-22.ngrok-free.app/callback";
     var amount = "1000";
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
@@ -47,7 +47,7 @@ route.post("/paymentmmo",async(req, res) => {
         extraData : extraData,
         requestType : requestType,
         signature : signature,
-        lang: 'vi'
+        lang: 'en'
     });
     //Create the HTTPS objects
     const options = {
@@ -84,6 +84,7 @@ route.post("/callback",async(req, res) => {
     console.log(req.body);
 
     res.status(200).json({message: "callback success" ,data:req.body});
+
     }catch(error){
 
         res.status(400).json({message: "callback failed" ,data:req.body});
