@@ -14,7 +14,7 @@ import reviewProductRoute from './routes/reviewproduct.js';
 import paymentMethodMOMO from './routes/paymentMethodMOMO.js';
 import paymentMethodPayPal from './routes/paymentMethodPayPal.js';
 import sendMail from './routes/SMTPAPIMail.js';
-import './config/passport.js';
+// import './config/passport.js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
