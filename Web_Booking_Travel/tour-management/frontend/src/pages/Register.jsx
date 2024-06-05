@@ -14,7 +14,7 @@ const Register = () => {
     cccd: '',
     phoneNumber: '',
     password: '',
-    accountType: 'user', // Default account type
+    accountType: 'user', 
   });
 
   const [error, setError] = useState('');
@@ -30,14 +30,11 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
-    // Basic validation
     if (!userData.username || !userData.email || !userData.password) {
       setError('Please fill in all fields');
       setIsLoading(false);
       return;
     }
-
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',

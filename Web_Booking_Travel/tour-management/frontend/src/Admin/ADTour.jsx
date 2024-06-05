@@ -20,6 +20,7 @@ const ADTour = () => {
   const [limit] = useState(10);
   const [currentTour, setCurrentTour] = useState(null);
   const navigate = useNavigate();
+
   // Fetch data and set initial state
   useEffect(() => {
     if (featuredData) {
@@ -40,7 +41,7 @@ const ADTour = () => {
       setTourCount(filtered.length);
     }
   }, [searchTerm, featuredData]);  // Add searchTerm and featuredData as dependencies
-  // console.log(featuredData.find(id));
+
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen);
 
@@ -77,15 +78,16 @@ const ADTour = () => {
     toggleEditModal();
   };
 
-  const handleDelete = (tourId) => {
+  const handleDelete = async (tourId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
-
-      const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
-      
-      
-      setFilteredTours(updatedTours);
-      setTourCount(updatedTours.length);
+      try{
+        const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
+        setFilteredTours(updatedTours);
+        setTourCount(updatedTours.length);
+      } catch (error) {
+        console.error('Error deleting tour:', error);
+      }
     }
   };
 
@@ -112,16 +114,12 @@ const ADTour = () => {
     }catch(err){
       setError(err)
     }
-    //setFilteredTours(updatedTours);
-    //setTourCount(updatedTours.length);
     console.log("luthanhy123", updatedTours)
     navigate('/admin/tours');
   };
 
   const displayedTours = filteredTours.slice((page - 1) * limit, page * limit);
-  console.log("lty1", displayedTours);
   const totalPage = Math.ceil(filteredTours.length / limit);
-  console.log("lty2", totalPage );
 
   const handlePageChange = (value) => {
     if (value === "&laquo;") {
@@ -153,9 +151,6 @@ const ADTour = () => {
       <div className="listTour-container">
         <div className="row">
           <div className="d-flex justify-content-between mb-3">
-            {/* <div className="tour-count">
-              <h2>Total Tours: {tourCount}</h2>
-            </div> */}
             <div className="search-bar">
               <Input
                 type="text"
@@ -193,7 +188,7 @@ const ADTour = () => {
           <ModalHeader toggle={toggleEditModal}>Edit Tour</ModalHeader>
           <ModalBody>
           {error && <div className="alert alert-danger">{error}</div>}
-            <FormGroup onSubmit={handleUpdate}>
+            <Form onSubmit={handleUpdate}>
               <FormGroup>
                 <Label for="title">Title</Label>
                 <Input
@@ -222,7 +217,7 @@ const ADTour = () => {
                   type="text"
                   name="distance"
                   id="distance"
-                  value={currentTour.image}
+                  value={currentTour.distance}
                   onChange={handleChange}
                 />
               </FormGroup>
@@ -257,8 +252,6 @@ const ADTour = () => {
                   onChange={handleChange}
                 />
               </FormGroup>
-              </FormGroup>
-              <Form>
               <Button type="submit" color="primary">Update Tour</Button>
             </Form>
           </ModalBody>

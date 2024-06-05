@@ -51,7 +51,7 @@ app.use('/api/v1/reviews',reviewsRoute);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/user', userRoute);
-app.use("", paymentMethodPayPal);
+app.use('', paymentMethodPayPal);
 app.use('', paymentMethodMOMO);
 app.use('/api/v1/reviewproduct', reviewProductRoute);
 app.use('',sendMail);

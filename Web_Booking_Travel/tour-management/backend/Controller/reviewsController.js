@@ -24,14 +24,14 @@ export const DeleteReviewTour = async (req, res) => {
     const tourId = req.params.tourId;  
 
     try {
-        // Xóa review từ collection 'Review' và lấy review đã xóa
+       
         const deletedReview = await Review.findOneAndDelete({ _id: reviewId });
 
         if (!deletedReview) {
             return res.status(404).json({ success: false, message: `Review not found` });
         }
 
-        // Cập nhật Tour để loại bỏ reviewId khỏi mảng reviews
+    
         await Tour.findByIdAndUpdate(tourId, {
             $pull: { reviews: reviewId }
         });

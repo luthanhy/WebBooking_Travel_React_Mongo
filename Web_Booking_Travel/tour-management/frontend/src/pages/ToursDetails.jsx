@@ -18,7 +18,7 @@ const ToursDetails = () => {
   const { user } = useContext(AuthContext);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedCommentText, setEditedCommentText] = useState('');
-  const [selectedRating, setSelectedRating] = useState(null);
+
 
   useEffect(() => {
     if (DetailTour && Array.isArray(DetailTour.reviews)) {
@@ -222,3 +222,4 @@ const ToursDetails = () => {
 };
 
 export default ToursDetails;
+  
