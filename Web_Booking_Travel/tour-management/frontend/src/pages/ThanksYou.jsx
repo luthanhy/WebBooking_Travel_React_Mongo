@@ -4,7 +4,20 @@ import { Container,Col,Row } from 'reactstrap'
 import '../styles/thank-you.css'
 import { useEffect,useState } from 'react';
 const ThanksYou = () => {
-   
+
+    useEffect(() => {
+      const userData = localStorage.getItem('user');
+      let parsedUserData = null;
+      if (userData) {
+        try {
+          parsedUserData = JSON.parse(userData);
+          console.log("", parsedUserData);
+        } catch (e) {
+          console.error('Failed to parse user data:', e);
+        }
+      }
+    }, []);
+  
   return (
     <>
     <Container>
