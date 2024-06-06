@@ -12,6 +12,8 @@ export const getMoMoURL = async(data) => {
         console.log("error");
       } else {
          const result = await res.json();
+         data.requestId = result.data.requestId;
+         console.log("", result.data.requestId)
         const url = result.data.payUrl;
         console.log("ylu",url);
         return url;
@@ -34,6 +36,8 @@ export const getPayPalURL = async(data) => {
      console.log("error");
    } else {
      const result = await res.json();
+     console.log("", )
+     data.id = result.data.id;
      const link = result.data.links[1].href;
     return link;
     }

@@ -34,6 +34,10 @@ const bookingSchema = new mongoose.Schema(
             type:Boolean,
             default: false,
         },
+        MeThodPayment:{
+            type:String,
+            default:"",
+        },
         orderId:{
             type:String
         }

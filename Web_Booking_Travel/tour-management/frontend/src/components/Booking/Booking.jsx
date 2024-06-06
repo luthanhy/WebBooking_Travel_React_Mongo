@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import '../Booking/booking.css';
 import { ListGroup, ListGroupItem, FormGroup, Button, Form } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../../utils/config.js';
 import { useIsLoggedIn } from '../../utils/auth.js';
-
 const Booking = ({ tour, AgvRating }) => {
   const userData = localStorage.getItem("user");
   let parsedUserData = null;
@@ -66,7 +64,7 @@ const Booking = ({ tour, AgvRating }) => {
       alert("The booking date must be within the current year.");
       return;
     }
-    navigate("/choseMethodPayment", { state: { ...credentials, totalAmount: TotalAmount, tourName: tour.title } });
+      navigate("/choseMethodPayment", { state: { ...credentials, totalAmount: TotalAmount, tourName: tour.title } });
   };
 
   return (

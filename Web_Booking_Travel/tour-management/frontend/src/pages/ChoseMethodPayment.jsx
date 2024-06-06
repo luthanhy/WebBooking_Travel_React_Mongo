@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Typography, Grid, Card, CardContent, CardActions } from '@mui/material';
 import { getMoMoURL ,getPayPalURL } from '../hooks/hookPaymentURL';
-
+import { BASE_URL } from '../utils/config';
 let urlPMomo  = '';
 let urlPayPal = '';
 const ChoseMethodPayment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  
   const [totalAmount, setTotalAmount] = useState(null);
   const [tourName, setTourName] = useState(null);
-  const [buyerInfo, setBuyerInfo] = useState({
-    fullName: '',
-    phoneNumber: '',
-    userEmail: '',
-    guestSize: '',
-    BookAt: ''
-  });
+    const [buyerInfo, setBuyerInfo] = useState({
+      fullName: '',
+      phoneNumber: '',
+      tourName:'',
+      userEmail: '',
+      guestSize: '',
+      BookAt: '',
+      MeThodPayment: "",
+      orderId: "",
+    });
   const [credentials] = useState({
-    partnerCode: "",
+    id: "",
     payUrl: "",
   });
   const [data] = useState({
+    
     links:[]
   });
   async function fetchMoMoURL() {
@@ -50,6 +52,7 @@ const ChoseMethodPayment = () => {
       setTotalAmount(location.state.totalAmount);
       setTourName(location.state.tourName);
       setBuyerInfo({
+        tourName:location.state.tourName,
         fullName: location.state.fullName,
         phoneNumber: location.state.phoneNumber,
         userEmail: location.state.userEmail,
@@ -62,8 +65,42 @@ const ChoseMethodPayment = () => {
   }, [location.state, navigate]);
   const GetMethod = (methodType) => {
     if(methodType === 'MoMo') {
+      buyerInfo.MeThodPayment = "MoMo";
+      console.log( credentials.partnerCode)
+      buyerInfo.orderId = credentials.requestId;
+      try{
+        console.log(" ",buyerInfo);
+        const req = fetch(`${BASE_URL}/booking`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(buyerInfo)  
+        })
+        if(req.ok){
+          console.log("create",req.text);
+        }
+        console.log("data fai")
+      }catch(eer){
+        console.log("",eer);
+      }
       window.location.href = urlPMomo;
     }else if(methodType === 'Paypal'){
+      buyerInfo.MeThodPayment = "PayPal";
+      buyerInfo.orderId = data.id;
+      try{
+        const res = fetch(`${BASE_URL}/booking`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(buyerInfo)  
+        })
+        if(res.ok){
+          console.log("create");
+        }
+        console.log("data fai")
+      }catch(eer){}
       window.location.href = urlPayPal;
     }
   };
