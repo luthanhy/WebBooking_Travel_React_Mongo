@@ -11,6 +11,7 @@ const ChoseMethodPayment = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [tourName, setTourName] = useState(null);
     const [buyerInfo, setBuyerInfo] = useState({
+      userId:'1',
       fullName: '',
       phoneNumber: '',
       tourName:'',
@@ -52,6 +53,7 @@ const ChoseMethodPayment = () => {
       setTotalAmount(location.state.totalAmount);
       setTourName(location.state.tourName);
       setBuyerInfo({
+        userId:location.state.userId,
         tourName:location.state.tourName,
         fullName: location.state.fullName,
         phoneNumber: location.state.phoneNumber,
