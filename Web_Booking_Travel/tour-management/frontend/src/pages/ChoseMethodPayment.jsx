@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Container, Button, Box, Typography, Grid, Paper, Card, CardContent, CardActions } from '@mui/material';
-import { URL_DOMAIN } from '../utils/config';
+import { Container, Button, Box, Typography, Grid, Card, CardContent, CardActions } from '@mui/material';
+import { getMoMoURL ,getPayPalURL } from '../hooks/hookPaymentURL';
 
-
+let urlPMomo  = '';
+let urlPayPal = '';
 const ChoseMethodPayment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [paymentDetails, setPaymentDetails] = useState({
-    cardNumber: '',
-    cardHolder: '',
-    expiryDate: '',
-    cvv: '',
-  });
 
+  
   const [totalAmount, setTotalAmount] = useState(null);
   const [tourName, setTourName] = useState(null);
   const [buyerInfo, setBuyerInfo] = useState({
@@ -30,6 +26,25 @@ const ChoseMethodPayment = () => {
   const [data] = useState({
     links:[]
   });
+  async function fetchMoMoURL() {
+    try {
+      urlPMomo = await getMoMoURL(credentials);
+    } catch (error) {
+      console.error("Error fetching MoMo URL:", error);
+    }
+  
+    try {
+      urlPayPal = await getPayPalURL(data);
+    } catch (error) {
+      console.error("Error fetching PayPal URL:", error);
+    }
+  
+  }
+  useEffect(() => {
+    return () => {
+      fetchMoMoURL();
+    };
+  });
   useEffect(() => {
     if (location.state) {
       setTotalAmount(location.state.totalAmount);
@@ -45,57 +60,14 @@ const ChoseMethodPayment = () => {
       navigate('/booking');
     }
   }, [location.state, navigate]);
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setPaymentDetails(prev => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Payment Details:', paymentDetails);
-    alert('Payment Successful!');
-  };
-  const GetMethodPaypal = async (res) => {
-    try {
-       res = await fetch(`${URL_DOMAIN}/paymentPayPal`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      });
-      if (!res.ok) {
-        console.log("error");
-      } else {
-        const result = await res.json();
-        console.log("", result.data.links[1].href)
-        const link = result.data.links[1].href;
-       window.location.href = link;
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
+  const GetMethod = (methodType) => {
+    if(methodType === 'MoMo') {
+      window.location.href = urlPMomo;
+    }else if(methodType === 'Paypal'){
+      window.location.href = urlPayPal;
     }
-  }
-  const GetMethod = async (e) => {
-    try {
-      const res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials)
-      });
-      if (!res.ok) {
-        console.log("error");
-      } else {
-        const result = await res.json();
-        window.location.href = result.data.payUrl;
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  }
+  };
+  
 
   if (!totalAmount || !tourName) {
     return null;
@@ -145,13 +117,13 @@ const ChoseMethodPayment = () => {
               </Typography>
               <Box mt={4}>
                 <CardActions>
-                  <Button variant="contained" color="secondary" onClick={GetMethod} sx={{ marginBottom: 2, width: '100%' }}>
-                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>Momo</Link>
+                  <Button variant="contained" color="secondary" onClick={()=>GetMethod('MoMo')} sx={{ marginBottom: 2, width: '100%' }}>
+                    Momo
                   </Button>
                 </CardActions>
                 <CardActions>
-                  <Button variant="contained" color="secondary" onClick={GetMethodPaypal} sx={{ marginBottom: 2, width: '100%' }}>
-                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
+                  <Button variant="contained" color="secondary" onClick={()=>GetMethod('Paypal')} sx={{ marginBottom: 2, width: '100%' }}>
+                   PayPal
                   </Button>
                 </CardActions>
               </Box>

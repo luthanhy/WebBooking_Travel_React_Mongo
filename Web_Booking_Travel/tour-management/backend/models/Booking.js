@@ -33,6 +33,9 @@ const bookingSchema = new mongoose.Schema(
         Status_Transaction:{
             type:Boolean,
             default: false,
+        },
+        orderId:{
+            type:String
         }
     }
 )
