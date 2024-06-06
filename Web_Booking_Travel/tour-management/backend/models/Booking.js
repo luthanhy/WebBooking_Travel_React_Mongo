@@ -34,6 +34,7 @@ const bookingSchema = new mongoose.Schema(
             type:Boolean,
             default: false,
         }
+        
     }
 )
 export default  mongoose.model("Booking", bookingSchema);

@@ -30,24 +30,24 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
+  
     // Basic validation
     if (!userData.username || !userData.email || !userData.password) {
       setError('Please fill in all fields');
       setIsLoading(false);
       return;
     }
-
+  
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json', // Ensure the header is set
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(userData), // Ensure the body is valid JSON
       });
       const result = await res.json();
-
+  
       if (!res.ok) {
         setError(result.message);
       } else {
@@ -61,7 +61,6 @@ const Register = () => {
       setIsLoading(false);
     }
   };
-
   return (
     <section>
       <Container>
@@ -98,28 +97,6 @@ const Register = () => {
                       onChange={handleChange}
                     />
                   </FormGroup>
-                  {userData.accountType === 'sales' && (
-                    <>
-                      <FormGroup>
-                        <input
-                          type="text"
-                          placeholder="CCCD"
-                          id="cccd"
-                          value={userData.cccd}
-                          onChange={handleChange}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <input
-                          type="text"
-                          placeholder="Phone Number"
-                          id="phoneNumber"
-                          value={userData.phoneNumber}
-                          onChange={handleChange}
-                        />
-                      </FormGroup>
-                    </>
-                  )}
                   <FormGroup>
                     <input
                       type="password"
@@ -137,9 +114,33 @@ const Register = () => {
                       onChange={handleChange}
                     >
                       <option value="user">User</option>
-                      <option value="sales">Sales</option>
+                      <option value="sale">Sales</option> {/* Corrected value */}
                     </select>
                   </FormGroup>
+                  {userData.accountType === 'sale' && ( /* Updated check */
+                    <>
+                      <FormGroup>
+                        <input
+                          type="text"
+                          placeholder="CCCD"
+                          required
+                          id="cccd"
+                          value={userData.cccd}
+                          onChange={handleChange}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <input
+                          type="text"
+                          placeholder="Phone Number"
+                          required
+                          id="phoneNumber"
+                          value={userData.phoneNumber}
+                          onChange={handleChange}
+                        />
+                      </FormGroup>
+                    </>
+                  )}
                   <button className="btn secondary_btn auth_btn" type="submit" disabled={isLoading}>
                     {isLoading ? 'Registering...' : 'Register'}
                   </button>
