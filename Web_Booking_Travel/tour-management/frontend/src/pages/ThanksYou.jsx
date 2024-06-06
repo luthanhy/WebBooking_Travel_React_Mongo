@@ -1,9 +1,10 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container,Col,Row } from 'reactstrap'
 import '../styles/thank-you.css'
+import { useEffect,useState } from 'react';
 const ThanksYou = () => {
-    
+   
   return (
     <>
     <Container>

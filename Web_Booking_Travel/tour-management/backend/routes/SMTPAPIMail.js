@@ -18,12 +18,3 @@ route.get("/sendMail",async(res,req)=>{
 
 export default route;
 
-
-
-
-
-
-
-    
-    
-
