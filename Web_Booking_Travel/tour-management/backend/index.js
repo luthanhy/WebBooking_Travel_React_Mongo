@@ -14,6 +14,8 @@ import reviewProductRoute from './routes/reviewproduct.js';
 import paymentMethodMOMO from './routes/paymentMethodMOMO.js';
 import paymentMethodPayPal from './routes/paymentMethodPayPal.js';
 import sendMail from './routes/SMTPAPIMail.js';
+import bodyParser from 'body-parser';
+
 // import './config/passport.js';
 dotenv.config();
 const app = express();
@@ -37,7 +39,8 @@ const connect = async () => {
         console.log(error);
     }
 };
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions)); 

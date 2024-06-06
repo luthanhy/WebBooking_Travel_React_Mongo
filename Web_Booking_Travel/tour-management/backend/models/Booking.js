@@ -40,6 +40,7 @@ const bookingSchema = new mongoose.Schema(
         orderId:{
             type:String
         }
+        
     }
 )
 export default  mongoose.model("Booking", bookingSchema);

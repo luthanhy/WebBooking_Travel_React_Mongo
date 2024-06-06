@@ -12,15 +12,15 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    cccd:{
-      type:Number,
-      require:true,
-      unique:true,
+    cccd: {
+      type: Number,
+      unique: true,
+      sparse: true, 
     },
-    phoneNumber:{
-      type:Number,
-      require:true,
-      unique:true,
+    phoneNumber: {
+      type: Number,
+      unique: true,
+      sparse: true, 
     },
     password: {
       type: String,
@@ -39,4 +39,15 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+userSchema.pre('save', function(next) {
+  if (this.accountType === 'sale') {
+    if (!this.cccd || !this.phoneNumber) {
+      return next(new Error('cccd and phoneNumber are required for sales account'));
+    }
+  } else {
+    this.cccd = null;
+    this.phoneNumber = null;
+  }
+  next();
+});
 export default mongoose.model("User", userSchema);
