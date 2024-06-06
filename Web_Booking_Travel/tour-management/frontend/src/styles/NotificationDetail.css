@@ -1,0 +1,31 @@
+.notification-detail {
+    max-width: 600px;
+    margin-left: 500px; /* Add margin to the top */
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative; /* Ensure the element's positioning is relative */
+    top: 3rem; /* Adjust this value based on your header's height */
+  }
+  
+  .notification-detail h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .notification-detail p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .notification-detail p strong {
+    display: inline-block;
+    width: 150px;
+    font-weight: 600;
+    color: #333;
+  }
+  
