@@ -92,6 +92,7 @@ const ChoseMethodPayment = () => {
     }else if(methodType === 'Paypal'){
       buyerInfo.MeThodPayment = "PayPal";
       buyerInfo.orderId = data.id;
+      buyerInfo.TimeBook = new Date();
       try{
         const res = fetch(`${BASE_URL}/booking`,{
           method: "POST",

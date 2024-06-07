@@ -5,13 +5,17 @@ import '../styles/thank-you.css'
 import { useEffect,useState } from 'react';
 import { BASE_URL,URL_DOMAIN } from '../utils/config';
 const ThanksYou = () => {
+  const location = useLocation();
+  const [token, setToken] = useState("");
+  
+
     const [getPaymentInfo, setPaymentInfo] = useState({
         MeThodPayment:"",
         orderId:"",
         idBooking:""
     })
     useEffect(() => {
-        
+      
       const userData = localStorage.getItem('user');
       let parsedUserData = null;
       if (userData) {
@@ -23,9 +27,13 @@ const ThanksYou = () => {
         } catch (e) {
           console.error('Failed to parse user data:', e);
         }
-      }
-    }, []);
+        const searchParams = new URLSearchParams(location.search);
+        const tokenParam = searchParams.get('token');
+        if (tokenParam) setToken(tokenParam);
   
+      }
+    }, [location.search]);
+   
     
   const fetchNotifications = async (userId) => {
     try {
@@ -69,7 +77,21 @@ const ThanksYou = () => {
             }
           }
         }else if(MeThodPayment === 'PayPal'){
-          console.log("luthanhy1 ");
+          if(token){
+            console.log("",`${URL_DOMAIN}/completePayment?${token}`);
+              try{
+                const res = await fetch(`${URL_DOMAIN}/completePayment?${token}`,{
+                  method: "GET",
+                  headers : {
+                    "Content-Type": "application/json"	
+                  }
+                })
+                const result = await res.json();
+                console.log(result.data);
+              }catch(error){
+                console.error('',error)
+              }
+          }
         }
     }catch(error){
       console.error("", error);

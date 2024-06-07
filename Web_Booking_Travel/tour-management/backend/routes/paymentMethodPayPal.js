@@ -27,22 +27,22 @@ async function createAuth(){
         console.log("",error);
     }
 }
-async function checkPaymentSuccess(IdOrder,token){
-    try{
-        req = await fetch(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${IdOrder}/capture`,{
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-        });
-        const result = await req.json();
-        console.log ("" ,result);
-        res.status(200).json({message:"Payment PayPal Success", data:result});  
-    }catch(error){
-        res.status(400).json({message:"CapturePayment failed",data:error.message})
-    }
-}
+// async function checkPaymentSuccess(IdOrder){
+//     try{
+//         req = await fetch(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${IdOrder}/capture`,{
+//             method: "POST",
+//             headers:{
+//                 'Content-Type': 'application/json',
+//                 'Authorization': 'Bearer ' + token
+//             }
+//         });
+//         const result = await req.json();
+//         console.log ("" ,result);
+//         res.status(200).json({message:"Payment PayPal Success", data:result});  
+//     }catch(error){
+//         res.status(400).json({message:"CapturePayment failed",data:error.message})
+//     }
+// }
 route.post("/paymentPayPal", async(req, res)=>{
     token =  await createAuth()
     console.log ("" ,token);
@@ -64,17 +64,17 @@ route.post("/paymentPayPal", async(req, res)=>{
                                 quantity: 1,
                                 unit_amount: {
                                     currency_code: 'USD',
-                                    value: '10.00'
+                                    value: '1.00'
                                 }
                             }
                         ],
                         amount: {
                             currency_code: 'USD',
-                            value: '10.00',
+                            value: '1.00',
                             breakdown: {
                                 item_total: {
                                     currency_code: 'USD',
-                                    value: '10.00'
+                                    value: '1.00'
                                 }
                             }
                         }
@@ -82,7 +82,7 @@ route.post("/paymentPayPal", async(req, res)=>{
                 ],
 
                 application_context: {
-                    return_url:'http://localhost:4000/completePayment',
+                    return_url:'http://localhost:3000/thank-you',
                     cancel_url:'http://localhost:3000/',
                     shipping_preference: 'NO_SHIPPING',
                     user_action: 'PAY_NOW',
@@ -111,12 +111,8 @@ route.get("/completePayment",async(req,res)=>{
                 'Authorization': 'Bearer ' + token
             }
         });
-        console.log("callback");
-        console.log("" ,req.json());
-        if(!req.ok){
-            req.redirect('http://localhost:3000');
-        }
-        res.redirect('http://localhost:3000/thank-you');
+        const result = await req.json();
+        res.status(200).json({message:"Success",data: result});
     }catch(error){
         res.status(400).json({message:"CapturePayment failed",data:error.message})
     }
