@@ -1,21 +1,24 @@
-import express from 'express'
-import dotenv from "dotenv";
+import express from 'express';
+import dotenv from 'dotenv';
 import { SMTPSendMail } from "../utils/SMTPMail.js";
 
-const route = express.Router();
 dotenv.config();
 
-var emailAdmin  = process.env.EMAIL_ADMIN || "";
-var emailPass = process.env.EMAIL_PASS || "";
+const route = express.Router();
 
+const emailAdmin = process.env.EMAIL_ADMIN || "";
+const emailPass = process.env.EMAIL_PASS || "";
 
-// var emailDeliver ="luthanhy1@gmail.com";
-const req = SMTPSendMail(emailAdmin,emailPass,"namchau2003@gmail.com");
-// route.get("/sendMail",async(res,req)=>{
-//     const emailDeliver = req.body;
-//     console.log("",emailDeliver);
-//     req = SMTPSendMail(emailAdmin,emailPass,emailDeliver);
-// });
+route.post("/sendMail", async (req, res) => {
+    const { email } = req.body;
+    try {
+        await SMTPSendMail(emailAdmin, emailPass, email);
+        res.status(200).send("Email sent successfully");
+    } catch (error) {
+        console.error('Error in /sendMail route:', error.message);
+        res.status(500).send("Failed to send email");
+    }
+});
+
 
 export default route;
-

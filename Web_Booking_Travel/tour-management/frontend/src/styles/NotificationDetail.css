@@ -24,6 +24,7 @@
   
   .notification-detail p strong {
     display: inline-block;
+    margin-top: 20px;
     width: 150px;
     font-weight: 600;
     color: #333;
