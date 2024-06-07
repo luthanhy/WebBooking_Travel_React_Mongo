@@ -18,19 +18,28 @@ const Newsletter = () => {
                 },
                 body: JSON.stringify({ email }),
             });
-    
+
             if (response.ok) {
                 setSubmittedEmail(email);
                 setMessage('Email sent successfully');
+                setTimeout(() => {
+                    setSubmittedEmail('');
+                    setMessage('');
+                    setEmail(''); // Reset lại input field
+                }, 2000); // Ẩn thông báo sau 2 giây và reset form
             } else {
-                const errorText = await response.text();
-                setMessage(`Failed to send email: ${errorText}`);
+                setMessage('Failed to send email');
+                setTimeout(() => {
+                    setMessage('');
+                }, 2000); // Ẩn thông báo sau 2 giây
             }
         } catch (error) {
-            setMessage(`Failed to send email: ${error.message}`);
+            setMessage('Failed to send email');
+            setTimeout(() => {
+                setMessage('');
+            }, 2000); // Ẩn thông báo sau 2 giây
         }
     };
-    
 
     return (
         <section className='newsletters'>

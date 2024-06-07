@@ -25,3 +25,28 @@ export const SMTPSendMail = async (emailAdmin, emailPass, recipient) => {
         throw error;
     }
 };
+export const sendOTPEmail = async (emailAdmin, emailPass, recipient, otp) => {
+    try {
+        let transporter = NodeMailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: emailAdmin,
+                pass: emailPass,
+            },
+        });
+
+        let info = await transporter.sendMail({
+            from: emailAdmin,
+            to: recipient,
+            subject: "Your OTP Code",
+            html: `<p>Your OTP code is: <strong>${otp}</strong></p>`,
+        });
+
+        console.log("OTP sent: %s", info.messageId);
+    } catch (error) {
+        console.error('Error sending OTP email:', error.message);
+        throw error;
+    }
+};
