@@ -11,6 +11,7 @@ const ChoseMethodPayment = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [tourName, setTourName] = useState(null);
     const [buyerInfo, setBuyerInfo] = useState({
+      userId:'1',
       fullName: '',
       phoneNumber: '',
       tourName:'',
@@ -19,6 +20,7 @@ const ChoseMethodPayment = () => {
       BookAt: '',
       MeThodPayment: "",
       orderId: "",
+      TimeBook :"",
     });
   const [credentials] = useState({
     id: "",
@@ -52,6 +54,7 @@ const ChoseMethodPayment = () => {
       setTotalAmount(location.state.totalAmount);
       setTourName(location.state.tourName);
       setBuyerInfo({
+        userId:location.state.userId,
         tourName:location.state.tourName,
         fullName: location.state.fullName,
         phoneNumber: location.state.phoneNumber,
@@ -68,6 +71,7 @@ const ChoseMethodPayment = () => {
       buyerInfo.MeThodPayment = "MoMo";
       console.log( credentials.partnerCode)
       buyerInfo.orderId = credentials.requestId;
+      buyerInfo.TimeBook = new Date();
       try{
         console.log(" ",buyerInfo);
         const req = fetch(`${BASE_URL}/booking`,{
@@ -88,6 +92,7 @@ const ChoseMethodPayment = () => {
     }else if(methodType === 'Paypal'){
       buyerInfo.MeThodPayment = "PayPal";
       buyerInfo.orderId = data.id;
+      buyerInfo.TimeBook = new Date();
       try{
         const res = fetch(`${BASE_URL}/booking`,{
           method: "POST",

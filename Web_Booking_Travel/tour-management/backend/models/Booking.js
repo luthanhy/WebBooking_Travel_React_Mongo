@@ -39,6 +39,10 @@ const bookingSchema = new mongoose.Schema(
         },
         orderId:{
             type:String
+        },
+        TimeBook:{
+            type:Date,
+            required:true
         }
     }
 )

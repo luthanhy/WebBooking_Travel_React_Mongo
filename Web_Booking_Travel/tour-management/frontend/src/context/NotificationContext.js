@@ -14,7 +14,7 @@ export const NotificationProvider = ({ children }) => {
         parsedUserData = JSON.parse(userData);
         fetchNotifications(parsedUserData._id);
       } catch (e) {
-        console.error('Failed to parse user data:', e);
+        console.log('Failed to parse user data:', e);
       }
     }
   }, []);

@@ -26,8 +26,20 @@ export const GetNotificationsByUserId = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const notifications = await Booking.find({ userId }).sort({ BookAt: -1 });
+    const notifications = await Booking.find({ userId }).sort({ TimeBook: -1 });
     res.status(200).json({ success: true, message: 'Get Notifications by User ID Success', data: notifications });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: 'Get Notifications by User ID Failed' });
+  }
+};
+
+export const GetByUserIdPayment = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const notifications = await Booking.find({ userId }).sort({ TimeBook: -1 });
+    res.status(200).json({ success: true, message: 'Get Notifications by User ID Success', data: notifications[0] });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: 'Get Notifications by User ID Failed' });
@@ -53,3 +65,14 @@ export const DeleteSingleBooking = async (req, res) => {
     res.status(500).json({ success: false, message: 'Delete Single Booking Failed' });
   }
 };
+export const UpdateSingleBooking = async (req, res) => {
+  const id = req.params.id;
+  try{
+    const updateBooking  =  await Booking.findByIdAndUpdate(id,{
+      $set:req.body,
+    },{new:true});
+    res.status(200).json({ success:"Update success " , data: updateBooking });
+  }catch(error){
+    res.status(404).json({ success:"Update failed " });
+  }
+}
