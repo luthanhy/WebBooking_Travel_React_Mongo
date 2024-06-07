@@ -20,6 +20,7 @@ const ChoseMethodPayment = () => {
       BookAt: '',
       MeThodPayment: "",
       orderId: "",
+      TimeBook :"",
     });
   const [credentials] = useState({
     id: "",
@@ -70,6 +71,7 @@ const ChoseMethodPayment = () => {
       buyerInfo.MeThodPayment = "MoMo";
       console.log( credentials.partnerCode)
       buyerInfo.orderId = credentials.requestId;
+      buyerInfo.TimeBook = new Date();
       try{
         console.log(" ",buyerInfo);
         const req = fetch(`${BASE_URL}/booking`,{

@@ -19,7 +19,7 @@ route.post("/paymentmmo",async(req, res) => {
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "http://localhost:3000/thank-you";
-    var ipnUrl = "https://2075-1-53-51-224.ngrok-free.app/callback";
+    var ipnUrl = " https://e8e6-203-205-32-22.ngrok-free.app/callback";
     var amount = "1000";
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
@@ -102,7 +102,7 @@ route.post("/InitiateTransaction",async(req, res) => {
         requestId: orderId,
         orderId,
         signature,
-        lang:'vi'
+        lang:'en'
     })
     try{
         req = await fetch("https:test-payment.momo.vn/v2/gateway/api/query",{
