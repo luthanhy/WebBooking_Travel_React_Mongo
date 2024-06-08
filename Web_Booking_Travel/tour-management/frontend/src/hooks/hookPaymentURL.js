@@ -1,5 +1,5 @@
 import { URL_DOMAIN } from "../utils/config";
-export const getMoMoURL = async(data,value) => {
+export const getMoMoURL = async(data) => {
      try {
       const res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
         method: "POST",

@@ -28,19 +28,20 @@ const ChoseMethodPayment = () => {
     price:totalAmount
   });
   const [data] = useState({
-    
+    price:totalAmount,
     links:[]
   });
   async function fetchMoMoURL() {
     credentials.price =  location.state.totalAmount;
+    data.price = location.state.totalAmount;
     try {
-      urlPMomo = await getMoMoURL(credentials,totalAmount);
+      urlPMomo = await getMoMoURL(credentials);
     } catch (error) {
       console.error("Error fetching MoMo URL:", error);
     }
   
     try {
-      urlPayPal = await getPayPalURL(data,totalAmount);
+      urlPayPal = await getPayPalURL(data);
     } catch (error) {
       console.error("Error fetching PayPal URL:", error);
     }

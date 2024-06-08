@@ -44,6 +44,8 @@ async function createAuth(){
 //     }
 // }
 route.post("/paymentPayPal", async(req, res)=>{
+    const price  = req.body.price;
+    console.log("luthanhy" ,price);
     token =  await createAuth()
     console.log ("" ,token);
     try{
@@ -64,17 +66,17 @@ route.post("/paymentPayPal", async(req, res)=>{
                                 quantity: 1,
                                 unit_amount: {
                                     currency_code: 'USD',
-                                    value: 1
+                                    value: price
                                 }
                             }
                         ],
                         amount: {
                             currency_code: 'USD',
-                            value: 1,
+                            value: price,
                             breakdown: {
                                 item_total: {
                                     currency_code: 'USD',
-                                    value: 1
+                                    value: price
                                 }
                             }
                         }
