@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 import {PriceExchangeRate} from "../utils/exchangerate.js";
 const route = express.Router();
 
-// ACCESSKEY = "F8BBA842ECF85";
-// SECRETKEY = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 dotenv.config();
 var accessKey = process.env.ACCESSKEY || "";
 var secretkey = process.env.SECRETKEY || "";
@@ -71,7 +69,6 @@ route.post("/paymentmmo",async(req, res) => {
             body:requestBody
         });
         const result = await req.json();
-        console.log(result);
         res.status(200).json({message: "Create Link Payment Success",data:result});
     }catch(error){
         res.status(400).json({message: error.message});
@@ -113,7 +110,6 @@ route.post("/InitiateTransaction",async(req, res) => {
             body : requestBody
         })
         const result = await req.json();
-        console.log(result);
         res.status(200).json({message:"Open Check Transaction success ",data:result});
     }catch(error){
         res.status(400).json({message:error.message});
