@@ -25,30 +25,28 @@ const ChoseMethodPayment = () => {
   const [credentials] = useState({
     id: "",
     payUrl: "",
+    price:totalAmount
   });
   const [data] = useState({
     
     links:[]
   });
   async function fetchMoMoURL() {
+    credentials.price =  location.state.totalAmount;
     try {
-      urlPMomo = await getMoMoURL(credentials);
+      urlPMomo = await getMoMoURL(credentials,totalAmount);
     } catch (error) {
       console.error("Error fetching MoMo URL:", error);
     }
   
     try {
-      urlPayPal = await getPayPalURL(data);
+      urlPayPal = await getPayPalURL(data,totalAmount);
     } catch (error) {
       console.error("Error fetching PayPal URL:", error);
     }
   
   }
-  useEffect(() => {
-    return () => {
-      fetchMoMoURL();
-    };
-  });
+
   useEffect(() => {
     if (location.state) {
       setTotalAmount(location.state.totalAmount);
@@ -66,6 +64,11 @@ const ChoseMethodPayment = () => {
       navigate('/booking');
     }
   }, [location.state, navigate]);
+  useEffect(() => {
+    return () => {
+      fetchMoMoURL();
+    };
+  });
   const GetMethod = (methodType) => {
     if(methodType === 'MoMo') {
       buyerInfo.MeThodPayment = "MoMo";

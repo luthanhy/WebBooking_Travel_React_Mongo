@@ -64,17 +64,17 @@ route.post("/paymentPayPal", async(req, res)=>{
                                 quantity: 1,
                                 unit_amount: {
                                     currency_code: 'USD',
-                                    value: '1.00'
+                                    value: 1
                                 }
                             }
                         ],
                         amount: {
                             currency_code: 'USD',
-                            value: '1.00',
+                            value: 1,
                             breakdown: {
                                 item_total: {
                                     currency_code: 'USD',
-                                    value: '1.00'
+                                    value: 1
                                 }
                             }
                         }

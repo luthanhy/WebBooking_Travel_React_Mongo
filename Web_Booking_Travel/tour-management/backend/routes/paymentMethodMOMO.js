@@ -1,7 +1,7 @@
 import express from 'express'
 import crypto from 'crypto'
 import dotenv from 'dotenv';
-
+import {PriceExchangeRate} from "../utils/exchangerate.js";
 const route = express.Router();
 
 // ACCESSKEY = "F8BBA842ECF85";
@@ -9,18 +9,18 @@ const route = express.Router();
 dotenv.config();
 var accessKey = process.env.ACCESSKEY || "";
 var secretkey = process.env.SECRETKEY || "";
+var exchangeKey = process.env.API_KEY_EXCHANGE_RATE || "";
 
-
-// var accessKey = process.env.ACCESSKEY || "";
-// var secretkey = process.env.SECRETKEY || "";
 route.post("/paymentmmo",async(req, res) => {
-    var partnerCode = "MOMO";
+    const price = req.body.price;
+     const convertPrice =   Math.round(await PriceExchangeRate('USD','VND',price))
+     var partnerCode = "MOMO";
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "http://localhost:3000/thank-you";
     var ipnUrl = " https://e8e6-203-205-32-22.ngrok-free.app/callback";
-    var amount = "1000";
+    var amount = convertPrice;
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
 
