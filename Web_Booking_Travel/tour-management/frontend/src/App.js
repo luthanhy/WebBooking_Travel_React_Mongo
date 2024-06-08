@@ -30,5 +30,4 @@ function App() {
     </ReviewProvider>
   );
 }
-
 export default App;

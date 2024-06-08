@@ -78,17 +78,32 @@ const ThanksYou = () => {
           }
         }else if(MeThodPayment === 'PayPal'){
           if(token){
-            console.log("",`${URL_DOMAIN}/completePayment?${token}`);
               try{
-                const res = await fetch(`${URL_DOMAIN}/completePayment?${token}`,{
+                const res = await fetch(`${URL_DOMAIN}/completePayment?token=${token}`,{
                   method: "GET",
                   headers : {
                     "Content-Type": "application/json"	
                   }
+
                 })
-                const result = await res.json();
-                console.log(result.data);
-              }catch(error){
+                const result = await res.json();                
+                console.log(result)
+                if(result.data.status === "COMPLETED"){
+                  try{
+                    const res = await fetch(`${BASE_URL}/booking/${idBooking}`,{
+                      method: "POST",
+                      headers:{
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({Status_Transaction:'true'})
+                    })
+                    const result2 = await res.json();
+                    console.log(result2.data);
+                  }catch(error){
+                    console.error("", error);
+                  }
+                }
+              }catch  (error){
                 console.error('',error)
               }
           }
