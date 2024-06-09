@@ -1,26 +1,24 @@
 import express from 'express'
 import crypto from 'crypto'
 import dotenv from 'dotenv';
-
+import {PriceExchangeRate} from "../utils/exchangerate.js";
 const route = express.Router();
 
-// ACCESSKEY = "F8BBA842ECF85";
-// SECRETKEY = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 dotenv.config();
 var accessKey = process.env.ACCESSKEY || "";
 var secretkey = process.env.SECRETKEY || "";
+var exchangeKey = process.env.API_KEY_EXCHANGE_RATE || "";
 
-
-// var accessKey = process.env.ACCESSKEY || "";
-// var secretkey = process.env.SECRETKEY || "";
 route.post("/paymentmmo",async(req, res) => {
-    var partnerCode = "MOMO";
+    const price = req.body.price;
+     const convertPrice =   Math.round(await PriceExchangeRate('USD','VND',price))
+     var partnerCode = "MOMO";
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "http://localhost:3000/thank-you";
-    var ipnUrl = "https://da5b-203-205-32-22.ngrok-free.app/callback";
-    var amount = "1000";
+    var ipnUrl = " https://e8e6-203-205-32-22.ngrok-free.app/callback";
+    var amount = convertPrice;
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
 
@@ -71,7 +69,6 @@ route.post("/paymentmmo",async(req, res) => {
             body:requestBody
         });
         const result = await req.json();
-        console.log(result);
         res.status(200).json({message: "Create Link Payment Success",data:result});
     }catch(error){
         res.status(400).json({message: error.message});
@@ -102,7 +99,7 @@ route.post("/InitiateTransaction",async(req, res) => {
         requestId: orderId,
         orderId,
         signature,
-        lang:'vi'
+        lang:'en'
     })
     try{
         req = await fetch("https:test-payment.momo.vn/v2/gateway/api/query",{
@@ -113,7 +110,6 @@ route.post("/InitiateTransaction",async(req, res) => {
             body : requestBody
         })
         const result = await req.json();
-        console.log(result);
         res.status(200).json({message:"Open Check Transaction success ",data:result});
     }catch(error){
         res.status(400).json({message:error.message});

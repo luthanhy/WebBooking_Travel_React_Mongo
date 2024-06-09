@@ -13,7 +13,7 @@ import ThankYou from '../pages/ThanksYou.jsx'
 import LoginAdmin from '../Admin/LoginAdmin.jsx';
 import VerifyLoginSale from '../shared/VerifyLoginSale.jsx';
 import ChoseMethodPayment from '../pages/ChoseMethodPayment.jsx';
-
+import Detail from '../pages/Detail.jsx';
 const Routers = () => {
   return (
     <div>
@@ -32,6 +32,7 @@ const Routers = () => {
         <Route path='/choseMethodPayment' element={<ChoseMethodPayment />} />
         <Route path='/thank-you' element = {<ThankYou/>}/>
         <Route path='/uploadTour' element={<UploadContent />} />
+        <Route path="/notifications/:id" element={<Detail />}/>
       </Routes>
     </div>
   );

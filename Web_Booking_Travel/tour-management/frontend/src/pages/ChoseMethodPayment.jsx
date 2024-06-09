@@ -1,40 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Container, Button, Box, Typography, Grid, Paper, Card, CardContent, CardActions } from '@mui/material';
-import { URL_DOMAIN } from '../utils/config';
-
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Container, Button, Box, Typography, Grid, Card, CardContent, CardActions } from '@mui/material';
+import { getMoMoURL ,getPayPalURL } from '../hooks/hookPaymentURL';
+import { BASE_URL } from '../utils/config';
+let urlPMomo  = '';
+let urlPayPal = '';
 const ChoseMethodPayment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [paymentDetails, setPaymentDetails] = useState({
-    cardNumber: '',
-    cardHolder: '',
-    expiryDate: '',
-    cvv: '',
-  });
-
   const [totalAmount, setTotalAmount] = useState(null);
   const [tourName, setTourName] = useState(null);
-  const [buyerInfo, setBuyerInfo] = useState({
-    fullName: '',
-    phoneNumber: '',
-    userEmail: '',
-    guestSize: '',
-    BookAt: ''
-  });
+    const [buyerInfo, setBuyerInfo] = useState({
+      userId:'1',
+      fullName: '',
+      phoneNumber: '',
+      tourName:'',
+      userEmail: '',
+      guestSize: '',
+      BookAt: '',
+      MeThodPayment: "",
+      orderId: "",
+      TimeBook :"",
+    });
   const [credentials] = useState({
-    partnerCode: "",
+    id: "",
     payUrl: "",
+    price:totalAmount
   });
   const [data] = useState({
+    price:totalAmount,
     links:[]
   });
+  async function fetchMoMoURL() {
+    credentials.price =  location.state.totalAmount;
+    data.price = location.state.totalAmount;
+    try {
+      urlPMomo = await getMoMoURL(credentials);
+    } catch (error) {
+      console.error("Error fetching MoMo URL:", error);
+    }
+  
+    try {
+      urlPayPal = await getPayPalURL(data);
+    } catch (error) {
+      console.error("Error fetching PayPal URL:", error);
+    }
+  
+  }
+
   useEffect(() => {
     if (location.state) {
       setTotalAmount(location.state.totalAmount);
       setTourName(location.state.tourName);
       setBuyerInfo({
+        userId:location.state.userId,
+        tourName:location.state.tourName,
         fullName: location.state.fullName,
         phoneNumber: location.state.phoneNumber,
         userEmail: location.state.userEmail,
@@ -45,57 +65,55 @@ const ChoseMethodPayment = () => {
       navigate('/booking');
     }
   }, [location.state, navigate]);
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setPaymentDetails(prev => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Payment Details:', paymentDetails);
-    alert('Payment Successful!');
-  };
-  const GetMethodPaypal = async (res) => {
-    try {
-       res = await fetch(`${URL_DOMAIN}/paymentPayPal`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      });
-      if (!res.ok) {
-        console.log("error");
-      } else {
-        const result = await res.json();
-        console.log("", result.data.links[1].href)
-        const link = result.data.links[1].href;
-       window.location.href = link;
+  useEffect(() => {
+    return () => {
+      fetchMoMoURL();
+    };
+  });
+  const GetMethod = (methodType) => {
+    if(methodType === 'MoMo') {
+      buyerInfo.MeThodPayment = "MoMo";
+      console.log( credentials.partnerCode)
+      buyerInfo.orderId = credentials.requestId;
+      buyerInfo.TimeBook = new Date();
+      try{
+        console.log(" ",buyerInfo);
+        const req = fetch(`${BASE_URL}/booking`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(buyerInfo)  
+        })
+        if(req.ok){
+          console.log("create",req.text);
+        }
+        console.log("data fai")
+      }catch(eer){
+        console.log("",eer);
       }
-    } catch (error) {
-      console.error("Error occurred:", error);
+      window.location.href = urlPMomo;
+    }else if(methodType === 'Paypal'){
+      buyerInfo.MeThodPayment = "PayPal";
+      buyerInfo.orderId = data.id;
+      buyerInfo.TimeBook = new Date();
+      try{
+        const res = fetch(`${BASE_URL}/booking`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(buyerInfo)  
+        })
+        if(res.ok){
+          console.log("create");
+        }
+        console.log("data fai")
+      }catch(eer){}
+      window.location.href = urlPayPal;
     }
-  }
-  const GetMethod = async (e) => {
-    try {
-      const res = await fetch(`${URL_DOMAIN}/paymentmmo`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials)
-      });
-      if (!res.ok) {
-        console.log("error");
-      } else {
-        const result = await res.json();
-        window.location.href = result.data.payUrl;
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  }
+  };
+  
 
   if (!totalAmount || !tourName) {
     return null;
@@ -145,13 +163,13 @@ const ChoseMethodPayment = () => {
               </Typography>
               <Box mt={4}>
                 <CardActions>
-                  <Button variant="contained" color="secondary" onClick={GetMethod} sx={{ marginBottom: 2, width: '100%' }}>
-                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>Momo</Link>
+                  <Button variant="contained" color="secondary" onClick={()=>GetMethod('MoMo')} sx={{ marginBottom: 2, width: '100%' }}>
+                    Momo
                   </Button>
                 </CardActions>
                 <CardActions>
-                  <Button variant="contained" color="secondary" onClick={GetMethodPaypal} sx={{ marginBottom: 2, width: '100%' }}>
-                    <Link to="#" style={{ color: 'white', textDecoration: 'none' }}>PayPal</Link>
+                  <Button variant="contained" color="secondary" onClick={()=>GetMethod('Paypal')} sx={{ marginBottom: 2, width: '100%' }}>
+                   PayPal
                   </Button>
                 </CardActions>
               </Box>

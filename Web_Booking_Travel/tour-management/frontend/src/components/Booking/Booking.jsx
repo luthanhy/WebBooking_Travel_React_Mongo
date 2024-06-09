@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import '../Booking/booking.css';
 import { ListGroup, ListGroupItem, FormGroup, Button, Form } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../../utils/config.js';
 import { useIsLoggedIn } from '../../utils/auth.js';
-
 const Booking = ({ tour, AgvRating }) => {
   const userData = localStorage.getItem("user");
   let parsedUserData = null;
@@ -66,26 +64,7 @@ const Booking = ({ tour, AgvRating }) => {
       alert("The booking date must be within the current year.");
       return;
     }
-
-    try {
-      const res = await fetch(`${BASE_URL}/booking/`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      const result = await res.json();
-      console.log(result);
-      if (res.ok) {
-        navigate("/choseMethodPayment", { state: { ...credentials, totalAmount: TotalAmount, tourName: tour.title } });
-      } else {
-        console.error("Error booking:", result);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
+      navigate("/choseMethodPayment", { state: { ...credentials, totalAmount: TotalAmount, tourName: tour.title } });
   };
 
   return (

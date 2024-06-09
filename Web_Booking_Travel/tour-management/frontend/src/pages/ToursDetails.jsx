@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import '../styles/tour_detail.css';
 import { Container, Row, Col, Form, ListGroup } from 'reactstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CalculateAvgRationg from '../utils/avgRating';
 import Avatar_User from '../assets/images/avatar.jpg';
 import Booking from '../components/Booking/Booking';
@@ -16,6 +16,7 @@ const ToursDetails = () => {
   const reviewMsgRef = useRef(null);
   const [tourRating, setTourRating] = useState(null);
   const { user } = useContext(AuthContext); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (DetailTour && Array.isArray(DetailTour.reviews)) {
@@ -33,6 +34,7 @@ const ToursDetails = () => {
 
     if (!user || !user === undefined || user === null) {
       alert('Please sign in.');
+      navigate("/login");
       return;
     }
     const reviewObj = {

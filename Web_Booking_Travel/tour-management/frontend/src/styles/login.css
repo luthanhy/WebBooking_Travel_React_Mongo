@@ -52,6 +52,7 @@
     background: var(--heading-color) !important;
     width: 100%;
     color:#fff !important;
+    margin-top: 5px;
 }
 
 .login_form p{

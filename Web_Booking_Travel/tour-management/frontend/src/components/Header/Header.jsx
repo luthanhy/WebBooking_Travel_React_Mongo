@@ -1,9 +1,11 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Container, Row, Button } from 'reactstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { FaBell } from 'react-icons/fa';
 import logo from '../../assets/images/logo.png';
 import './Header.css';
 import { AuthContext } from '../../context/AuthContext';
+import NotificationPanel from './Notification';
 
 const nav_link = [
   {
@@ -22,6 +24,8 @@ const nav_link = [
 
 const Header = () => {
   const headerRef = useRef(null);
+  const [showNotifications, setShowNotifications] = useState(false);
+
   const stickyHeaderFunc = () => {
     window.addEventListener('scroll', () => {
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -45,6 +49,10 @@ const Header = () => {
     dispatch({ type: 'LOGOUT' });
     localStorage.removeItem('user'); // Remove user info from localStorage
     navigate('/');
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications((prev) => !prev);
   };
 
   return (
@@ -85,6 +93,7 @@ const Header = () => {
                   <Button className="btn btn-dark" onClick={handleLogout}>
                     Logout
                   </Button>
+                  <FaBell className="notification-icon" onClick={toggleNotifications} />
                 </>
               ) : (
                 <div className="nav__btn">
@@ -104,6 +113,7 @@ const Header = () => {
           </div>
         </Row>
       </Container>
+      <NotificationPanel show={showNotifications} />
     </header>
   );
 };
