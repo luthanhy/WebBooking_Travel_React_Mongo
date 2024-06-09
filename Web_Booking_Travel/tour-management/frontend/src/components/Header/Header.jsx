@@ -93,7 +93,10 @@ const Header = () => {
                   <Button className="btn btn-dark" onClick={handleLogout}>
                     Logout
                   </Button>
-                  <FaBell className="notification-icon" onClick={toggleNotifications} />
+                  <div className="notification-container">
+                    <FaBell className="notification-icon" onClick={toggleNotifications} />
+                    <NotificationPanel show={showNotifications} setShow={setShowNotifications} />
+                  </div>
                 </>
               ) : (
                 <div className="nav__btn">
@@ -113,7 +116,6 @@ const Header = () => {
           </div>
         </Row>
       </Container>
-      <NotificationPanel show={showNotifications} />
     </header>
   );
 };

@@ -152,7 +152,6 @@ const Customer = () => {
                 <TableCell>Email</TableCell>
                 <TableCell>Password</TableCell>
                 <TableCell>Account Type</TableCell>
-                <TableCell>Role</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -163,7 +162,6 @@ const Customer = () => {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.password}</TableCell>
                   <TableCell>{user.accountType}</TableCell>
-                  <TableCell>{user.role}</TableCell>
                   <TableCell>
                     <IconButton onClick={() => handleEdit(user)}>
                       <EditIcon />
