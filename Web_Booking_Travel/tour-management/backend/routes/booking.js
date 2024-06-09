@@ -9,8 +9,8 @@ route.post('/',CreateBooking);
 // todo tao lay tui may dung doi thu tu hai man nay
 
 route.delete('/:id',DeleteSingleBooking);
-route.post('/',CreateBooking)
-route.get('/',GetAllBooking)
+route.post('/',CreateBooking);
+route.get('/',GetAllBooking);
 route.get('/:id',GetSingleBooking);
 
 export default route;
