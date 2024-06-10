@@ -17,7 +17,7 @@ const ADTour = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(8);
   const [currentTour, setCurrentTour] = useState(null);
   const navigate = useNavigate();
   // Fetch data and set initial state
@@ -77,15 +77,24 @@ const ADTour = () => {
     toggleEditModal();
   };
 
-  const handleDelete = (tourId) => {
+  const handleDelete = async (tourId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tour?');
     if (confirmed) {
+      try {
+        const response = await fetch(`${BASE_URL}/tours/${tourId}`, {
+          method: 'DELETE',
+        });
 
-      const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
-      
-      
-      setFilteredTours(updatedTours);
-      setTourCount(updatedTours.length);
+        if (!response.ok) {
+          throw new Error('Failed to delete tour');
+        }
+
+        const updatedTours = filteredTours.filter((tour) => tour._id !== tourId);
+        setFilteredTours(updatedTours);
+        setTourCount(updatedTours.length);
+      } catch (error) {
+        console.error('Error deleting tour:', error);
+      }
     }
   };
 

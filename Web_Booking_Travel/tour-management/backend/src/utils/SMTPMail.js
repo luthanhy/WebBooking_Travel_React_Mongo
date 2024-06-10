@@ -1,5 +1,4 @@
 import NodeMailer from 'nodemailer';
-
 export const SMTPSendMail = async (emailAdmin, emailPass, recipient, bookingInfo) => {
     try {
         let transporter = NodeMailer.createTransport({
@@ -17,9 +16,11 @@ export const SMTPSendMail = async (emailAdmin, emailPass, recipient, bookingInfo
             to: recipient,
             subject: "Booking Confirmation",
             html: `<h1>Thank you for booking with us!</h1><p>Booking details:</p>
-                   <p>Price: $</p><p>Book At: </p><p>Amount: </p>
-                   <p>Tour Name: ${bookingInfo.tourName}</p><p>Full Name: ${bookingInfo.fullName}</p>
-                   <p>Phone Number: ${bookingInfo.phoneNumber}</p><p>Transaction: ${bookingInfo.transactionId}</p>`,
+                 <p>Tour Name: ${bookingInfo.tourName}</p>
+                <p>Full Name: ${bookingInfo.fullName}</p>
+                <p>Phone Number: ${bookingInfo.phoneNumber}</p>
+                <p>Book At: ${new Date(bookingInfo.BookAt).toLocaleString()}</p>
+                <p>Amount: ${bookingInfo.guestSize}</p>`,
         });
 
         console.log("Message sent: %s", info.messageId);

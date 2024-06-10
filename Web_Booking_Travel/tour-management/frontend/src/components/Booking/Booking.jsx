@@ -21,7 +21,7 @@ const Booking = ({ tour, AgvRating }) => {
     tourName: '',
     phoneNumber: '',
     guestSize: 1,
-    BookAt: ''
+    BookAt: '',
   });
 
   const today = new Date().toISOString().split('T')[0];

@@ -36,7 +36,8 @@ const Customer = () => {
         });
         const data = await response.json();
         if (response.ok) {
-          setUsers(data.allUser);
+          const filteredUsers = data.allUser.filter(user => user.accountType !== 'admin');
+          setUsers(filteredUsers);
         } else {
           setError(data.message);
         }
@@ -142,109 +143,113 @@ const Customer = () => {
   const paginatedUsers = sortedUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
-    <div className="customer-container">
-      <Paper>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Username</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Password</TableCell>
-                <TableCell>Account Type</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {paginatedUsers.map(user => (
-                <TableRow key={user._id}>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.password}</TableCell>
-                  <TableCell>{user.accountType}</TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleEdit(user)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleDelete(user._id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleRowsPerPageChange}
-        />
-      </Paper>
+    <>
+      {localStorage.getItem('accountType') !== 'admin' && (
+        <div className="customer-container">
+          <Paper>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Username</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Password</TableCell>
+                    <TableCell>Account Type</TableCell>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {paginatedUsers.map(user => (
+                    <TableRow key={user._id}>
+                      <TableCell>{user.username}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.password}</TableCell>
+                      <TableCell>{user.accountType}</TableCell>
+                      <TableCell>
+                        <IconButton onClick={() => handleEdit(user)}>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleDelete(user._id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              component="div"
+              count={users.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handlePageChange}
+              onRowsPerPageChange={handleRowsPerPageChange}
+            />
+          </Paper>
 
-      <Modal
-        open={editModalOpen}
-        onClose={() => setEditModalOpen(false)}
-      >
-        <div className="edit-modal" style={modalStyle}>
-          <h2>Edit User</h2>
-          <TextField
-            name="username"
-            label="Username"
-            value={editForm.username}
-            onChange={handleEditFormChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="email"
-            label="Email"
-            value={editForm.email}
-            onChange={handleEditFormChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="accountType"
-            label="Account Type"
-            value={editForm.accountType}
-            onChange={handleEditFormChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="role"
-            label="Role"
-            value={editForm.role}
-            onChange={handleEditFormChange}
-            fullWidth
-            margin="normal"
-          />
-          <Button onClick={handleEditSubmit} color="primary" variant="contained" style={{ marginTop: '20px' }}>
-            Save
-          </Button>
-        </div>
-      </Modal>
+          <Modal
+            open={editModalOpen}
+            onClose={() => setEditModalOpen(false)}
+          >
+            <div className="edit-modal" style={modalStyle}>
+              <h2>Edit User</h2>
+              <TextField
+                name="username"
+                label="Username"
+                value={editForm.username}
+                onChange={handleEditFormChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                name="email"
+                label="Email"
+                value={editForm.email}
+                onChange={handleEditFormChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                name="accountType"
+                label="Account Type"
+                value={editForm.accountType}
+                onChange={handleEditFormChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                name="role"
+                label="Role"
+                value={editForm.role}
+                onChange={handleEditFormChange}
+                fullWidth
+                margin="normal"
+              />
+              <Button onClick={handleEditSubmit} color="primary" variant="contained" style={{ marginTop: '20px' }}>
+                Save
+              </Button>
+            </div>
+          </Modal>
 
-      <Modal
-        open={confirmDeleteOpen}
-        onClose={() => setConfirmDeleteOpen(false)}
-      >
-        <div className="confirm-delete-modal" style={modalStyle}>
-          <h2>Confirm Delete</h2>
-          <p>Are you sure you want to delete this user?</p>
-          <Button onClick={() => setConfirmDeleteOpen(false)} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmDelete} color="primary">
-            Confirm
-          </Button>
+          <Modal
+            open={confirmDeleteOpen}
+            onClose={() => setConfirmDeleteOpen(false)}
+          >
+            <div className="confirm-delete-modal" style={modalStyle}>
+              <h2>Confirm Delete</h2>
+              <p>Are you sure you want to delete this user?</p>
+              <Button onClick={() => setConfirmDeleteOpen(false)} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={handleConfirmDelete} color="primary">
+                Confirm
+              </Button>
+            </div>
+          </Modal>
         </div>
-      </Modal>
-    </div>
+      )}
+    </>
   );
 };
 
