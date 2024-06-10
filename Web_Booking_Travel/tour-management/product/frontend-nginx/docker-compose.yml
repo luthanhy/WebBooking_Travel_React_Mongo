@@ -1,7 +1,9 @@
 version: "3.8"
-services: 
+services:
   nginx:
-    build: 
+    build:
       context: .
     ports:
       - 3000:80
+    volumes:
+      - ../../frontend/build:/usr/share/nginx/html
