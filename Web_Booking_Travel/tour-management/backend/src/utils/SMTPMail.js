@@ -1,6 +1,5 @@
 import NodeMailer from 'nodemailer';
-
-export const SMTPSendMail = async (emailAdmin, emailPass, Info) => {
+export const SMTPSendMail = async (emailAdmin, emailPass, recipient, bookingInfo) => {
     try {
         let transporter = NodeMailer.createTransport({
             host: "smtp.gmail.com",
@@ -14,9 +13,14 @@ export const SMTPSendMail = async (emailAdmin, emailPass, Info) => {
 
         let info = await transporter.sendMail({
             from: emailAdmin,
-            to: Info.userEmail,
-            subject: "Subscription Confirmation",
-            html: `<h1>Thank you for subscribing!</h1><p>You have successfully subscribed to our travel newsletter.</p> <h1>Booking Information<h1> <p>Name : ${Info.fullName}</p> <p>Price : ${Info.fullName} </p> <p>Book At : </p> <p>Amount : </p> <p>Tour Name : </p><p>Full Name : </p> <p> Phone Number : </p> <p>Transaction : </p> `,
+            to: recipient,
+            subject: "Booking Confirmation",
+            html: `<h1>Thank you for booking with us!</h1><p>Booking details:</p>
+                 <p>Tour Name: ${bookingInfo.tourName}</p>
+                <p>Full Name: ${bookingInfo.fullName}</p>
+                <p>Phone Number: ${bookingInfo.phoneNumber}</p>
+                <p>Book At: ${new Date(bookingInfo.BookAt).toLocaleString()}</p>
+                <p>Amount: ${bookingInfo.guestSize}</p>`,
         });
 
         console.log("Message sent: %s", info.messageId);
@@ -25,6 +29,7 @@ export const SMTPSendMail = async (emailAdmin, emailPass, Info) => {
         throw error;
     }
 };
+
 export const sendOTPEmail = async (emailAdmin, emailPass, recipient, otp) => {
     try {
         let transporter = NodeMailer.createTransport({

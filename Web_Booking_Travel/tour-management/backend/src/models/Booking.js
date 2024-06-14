@@ -43,7 +43,7 @@ const bookingSchema = new mongoose.Schema(
         TimeBook:{
             type:Date,
             required:true
-        }
+        },
     }
 )
 export default  mongoose.model("Booking", bookingSchema);
