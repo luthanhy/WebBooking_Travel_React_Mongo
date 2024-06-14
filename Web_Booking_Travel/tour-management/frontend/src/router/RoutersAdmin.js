@@ -12,7 +12,7 @@ const RoutersAdmin = () => {
 <div>
         <Routes>
           
-            <Route path='/admin/'element = {<Navigate to = '/admin'/>}/>
+            <Route path='/admin/'element = {<Navigate to = '/admin/customer'/>}/>
             <Route path='*'element = {<PageError/>}/>
             <Route path='/admin/dashboard' element={<Dashboard />}/>
             <Route path='/admin/tours' element={<ADTour/>}/>
