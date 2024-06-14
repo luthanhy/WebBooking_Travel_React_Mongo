@@ -26,7 +26,7 @@ export const NotificationProvider = ({ children }) => {
       if (res.ok) {
         const notificationsWithTime = result.data.map(notification => ({
           ...notification,
-          time: new Date(notification.BookAt).toLocaleString() // Convert to local date string
+          time: new Date(notification.BookAt).toLocaleString() 
         }));
         setNotifications(notificationsWithTime);
       } else {

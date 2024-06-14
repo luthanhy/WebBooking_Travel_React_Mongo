@@ -6,8 +6,6 @@ import '../styles/NotificationDetail.css';
 const NotificationDetail = () => {
   const { id } = useParams();
   const [notification, setNotification] = useState(null);
-  const ServiceFee = 10;
-  const TotalAmount = Number(notification.price) + Number(notification.guestSize) + ServiceFee;
 
   useEffect(() => {
     const fetchNotificationDetail = async () => {
@@ -37,7 +35,6 @@ const NotificationDetail = () => {
       <p><strong>Email:</strong> {notification.userEmail}</p>
       <p><strong>Guest Size:</strong> {notification.guestSize}</p>
       <p><strong>Booked At:</strong> {new Date(notification.BookAt).toLocaleString()}</p>
-      <p><strong>Price:</strong>{TotalAmount}</p>
       <p><strong>Status:</strong> {notification.Status_Transaction ? 'Confirmed' : 'Pending'}</p>
       {/* Add more fields as necessary */}
     </div>
