@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../Booking/booking.css';
+import './booking.css';
 import { ListGroup, ListGroupItem, FormGroup, Button, Form } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { useIsLoggedIn } from '../../utils/auth.js';

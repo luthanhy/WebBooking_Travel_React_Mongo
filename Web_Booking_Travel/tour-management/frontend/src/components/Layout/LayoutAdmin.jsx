@@ -3,7 +3,7 @@ import RoutersAdmin from '../../router/RoutersAdmin'
 // import HeaderAdmin from '../Header/HeaderAdmin'
 import FooterAdmin from '../Footer/FooterAdmin'
 import Adminsiderbar from '../Siderbar/SidebarAdmin'
-import "../Layout/LayoutAD.css"
+import "./LayoutAD.css"
 import Navbar from '../NavBar/navBar'
 
 

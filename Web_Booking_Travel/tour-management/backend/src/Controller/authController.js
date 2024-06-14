@@ -11,13 +11,14 @@ export const Register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPass = await bcrypt.hash(password, salt);
 
+    const hashcccd = await bcrypt.hash(cccd, salt);
     // Create new user instance
     const newUser = new User({
       username,
       email,
       password: hashPass,
       accountType,
-      cccd: accountType === 'sale' ? cccd : undefined,
+      cccd: hashcccd,
       phoneNumber: accountType === 'sale' ? phoneNumber : undefined,
     });
 

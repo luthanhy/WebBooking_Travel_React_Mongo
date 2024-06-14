@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
     cccd: {
-      type: Number,
+      type: String,
       unique: true,
       sparse: true, 
     },

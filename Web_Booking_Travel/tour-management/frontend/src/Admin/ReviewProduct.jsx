@@ -95,6 +95,7 @@ const ReviewProduct = () => {
               <TableRow>
                 <TableCell>Title</TableCell>
                 <TableCell>City</TableCell>
+                <TableCell>Imange</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -103,6 +104,9 @@ const ReviewProduct = () => {
                 <TableRow key={tour._id}>
                   <TableCell>{tour.title}</TableCell>
                   <TableCell>{tour.city}</TableCell>
+                  <TableCell>
+                <img src={tour.photo} style={{ width: '300px', height: 'auto' }} />
+              </TableCell>
                   <TableCell>
                     <Button onClick={() => handleAccept(tour)} variant="contained" color="primary">
                       <CheckIcon />

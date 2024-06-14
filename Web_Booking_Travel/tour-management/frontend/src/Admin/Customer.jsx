@@ -55,7 +55,6 @@ const Customer = () => {
       username: user.username,
       email: user.email,
       accountType: user.accountType,
-      role: user.role
     });
     setEditModalOpen(true);
   };
@@ -154,6 +153,7 @@ const Customer = () => {
                     <TableCell>Username</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Password</TableCell>
+                    <TableCell>CCCD</TableCell>
                     <TableCell>Account Type</TableCell>
                     <TableCell>Actions</TableCell>
                   </TableRow>
@@ -164,6 +164,7 @@ const Customer = () => {
                       <TableCell>{user.username}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.password}</TableCell>
+                      <TableCell>{user.cccd}</TableCell>
                       <TableCell>{user.accountType}</TableCell>
                       <TableCell>
                         <IconButton onClick={() => handleEdit(user)}>
@@ -218,14 +219,7 @@ const Customer = () => {
                 fullWidth
                 margin="normal"
               />
-              <TextField
-                name="role"
-                label="Role"
-                value={editForm.role}
-                onChange={handleEditFormChange}
-                fullWidth
-                margin="normal"
-              />
+              
               <Button onClick={handleEditSubmit} color="primary" variant="contained" style={{ marginTop: '20px' }}>
                 Save
               </Button>

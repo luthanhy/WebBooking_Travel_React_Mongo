@@ -1,5 +1,5 @@
 import React from 'react'
-import "../shared/TourCard.css"
+import "./TourCard.css"
 import { Card,CardBody } from 'reactstrap'
 import {Link} from 'react-router-dom'
 import CalculateAvgRationg from '../utils/avgRating'

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ServiceCard from '../service/service_card'
+import ServiceCard from './service_card'
 import { Col } from 'reactstrap'
 
 import weatherImg from '../assets/images/weather.png'

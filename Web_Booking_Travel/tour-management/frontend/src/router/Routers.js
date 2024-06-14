@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Home from '../pages/Home';
+import Home from '../pages/Home.jsx';
 import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
-import Tours from '../pages/Tours';
+import Tours from '../pages/Tours.jsx';
 import ToursDetails from '../pages/ToursDetails.jsx';
-import SearchResultList from '../pages/SearchResultList';
+import SearchResultList from '../pages/SearchResultList.jsx';
 import About from '../pages/About.jsx';
 import PageError from '../pages/PageError.jsx';
 import UploadContent from '../pages/UploadContent.jsx';
