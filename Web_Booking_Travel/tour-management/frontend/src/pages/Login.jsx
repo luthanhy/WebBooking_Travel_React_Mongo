@@ -61,7 +61,7 @@ const Login = () => {
       .then((data) => {
         if (data.success) {
           dispatch({ type: 'LOGIN_SUCCESS', payload: data.user });
-          navigate('/');
+          navigate('/customer');
         } else {
           setError('Google login failed. Please try again.');
         }

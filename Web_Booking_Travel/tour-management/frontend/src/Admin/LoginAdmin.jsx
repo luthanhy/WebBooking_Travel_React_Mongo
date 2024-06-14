@@ -47,7 +47,7 @@ const LoginAdmin = () => {
           dispatch({ type: 'LOGIN_SUCCESS_ADMIN', payload: result.data ,isAdmin: true,isLoggedIn: true});
           console.log(result.data);
           console.log(dispatch.isAdmin)
-          navigate('/admin/dashboard'); // Redirect to homepage or dashboard
+          navigate('/admin/customer'); // Redirect to homepage or dashboard
         }
         }
     } catch (err) {
