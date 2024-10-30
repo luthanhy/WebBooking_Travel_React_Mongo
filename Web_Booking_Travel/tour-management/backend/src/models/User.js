@@ -39,15 +39,5 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', function(next) {
-  if (this.accountType === 'sale') {
-    if (!this.cccd || !this.phoneNumber) {
-      return next(new Error('cccd and phoneNumber are required for sales account'));
-    }
-  } else {
-    this.cccd = null;
-    this.phoneNumber = null;
-  }
-  next();
-});
+
 export default mongoose.model("User", userSchema);

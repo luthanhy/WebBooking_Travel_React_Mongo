@@ -5,16 +5,18 @@
   "type": "module",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cookie": "^1.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-session": "^1.18.0",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.6.1",
+    "mongodb": "^6.10.0",
     "mongoose": "^8.3.4",
-    "nodemailer": "^6.9.13",
+    "nodemailer": "^6.9.16",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0"
   },
@@ -22,14 +24,13 @@
     "start": "node src/index.js",
     "start-dev": "nodemon src/index.js",
     "build-src": "babel src -d build --copy-files",
-    "build":"node build/index.js"
+    "build": "node build/index.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.7",
     "@babel/core": "^7.24.7",
     "@babel/node": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
-
     "babel-cli": "^6.26.0"
   }
 }

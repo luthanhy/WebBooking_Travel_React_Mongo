@@ -11,8 +11,6 @@ const Register = () => {
   const [userData, setUserData] = useState({
     username: '',
     email: '',
-    cccd: '',
-    phoneNumber: '',
     password: '',
     accountType: 'user', // Default account type
     otp: '',

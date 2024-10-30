@@ -5,21 +5,18 @@ import jwt from 'jsonwebtoken';
 // Register User
 export const Register = async (req, res) => {
   try {
-    const { username, email, password, accountType, cccd, phoneNumber } = req.body;
+    const { username, email, password, accountType } = req.body;
 
     // Generate salt and hash the password
     const salt = await bcrypt.genSalt(10);
     const hashPass = await bcrypt.hash(password, salt);
 
-    const hashcccd = await bcrypt.hash(cccd, salt);
     // Create new user instance
     const newUser = new User({
       username,
       email,
       password: hashPass,
       accountType,
-      cccd: hashcccd,
-      phoneNumber: accountType === 'sale' ? phoneNumber : undefined,
     });
 
     // Save user to the database

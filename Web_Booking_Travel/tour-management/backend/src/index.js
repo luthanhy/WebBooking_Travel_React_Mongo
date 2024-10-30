@@ -20,6 +20,7 @@ import bodyParser from 'body-parser';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
+console.log(port);
 
 const corsOptions = {
     origin: 'http://localhost:3000', 

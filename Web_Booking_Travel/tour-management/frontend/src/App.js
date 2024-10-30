@@ -16,7 +16,6 @@ function App() {
   useEffect(() => {
     const checkUserRole = () => {
       if (!isLoggedIn) {
-        console.log("luthanhy");
         setIsAdminUser(isAdmin);
       }
     };
